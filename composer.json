@@ -1,10 +1,22 @@
 {
+    "name": "lumeng/lumeng-php-db",
+    "description": "A database operation library for PHP.",
+    "keywords": ["library", "database operation library"],
+    "homepage": "https://github.com/zhengb302/LumengPHP-Db",
+    "license": "Apache License 2.0",
+    "authors": [
+        {
+            "name": "Lumeng",
+            "email": "908235332@qq.com",
+            "homepage": "https://github.com/zhengb302/",
+            "role": "Developer"
+        }
+    ],
     "require": {
     },
     "autoload": {
         "psr-4": {
-            "LumengPHP\\Db\\": "src/LumengPHP/Db/",
-            "tests\\": "tests/"
+            "LumengPHP\\Db\\": "src/LumengPHP/Db/"
         }
     }
 }
