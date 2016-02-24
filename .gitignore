@@ -2,5 +2,8 @@
 # 忽略NetBeans项目配置目录
 nbproject/
 
+# 忽略vendor目录
+vendor/
+
 # 忽略单元测试本地配置文件 
 tests/local.config.php
