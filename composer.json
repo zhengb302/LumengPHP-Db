@@ -1,0 +1,10 @@
+{
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "LumengPHP\\Db\\": "src/LumengPHP/Db/",
+            "tests\\": "tests/"
+        }
+    }
+}
