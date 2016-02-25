@@ -10,7 +10,7 @@ function get_config($key) {
 }
 
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
-$loader->add('LumengPHP\\', get_config('LumengPHPRoot'));
+$loader->add('tests\\', dirname(__DIR__));
 
 \LumengPHP\Db\Misc\ShortcutFunctionsLoader::loadShortcutFunctions();
 
