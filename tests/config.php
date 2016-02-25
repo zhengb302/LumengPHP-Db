@@ -46,11 +46,6 @@ $configs = array(
             ),
         ),
     ),
-    /*
-     * LumengPHP项目代码目录配置，用于autoloader，如：
-     * dirname(dirname(__DIR__)) . '/LumengPHP-dev'
-     */
-    'LumengPHPRoot' => '',
 );
 
 $localConfigs = file_exists(__DIR__ . '/local.config.php') ?
