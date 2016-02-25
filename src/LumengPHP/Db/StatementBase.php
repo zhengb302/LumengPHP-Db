@@ -2,6 +2,8 @@
 
 namespace LumengPHP\Db;
 
+use \LumengPHP\Db\Misc\FieldHelper;
+
 /**
  * SQL语句基类
  *
@@ -28,7 +30,7 @@ abstract class StatementBase implements Statement {
     }
 
     protected function makePlaceholder($field) {
-        return ':' . $field . '_' .
+        return ':' . FieldHelper::makePlaceholderField($field) . '_' .
                 $this->statementContext->getParameterCounter()->getNextNum();
     }
 

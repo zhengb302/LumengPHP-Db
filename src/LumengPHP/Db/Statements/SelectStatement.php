@@ -3,6 +3,7 @@
 namespace LumengPHP\Db\Statements;
 
 use \LumengPHP\Db\StatementBase;
+use \LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * SELECT 语句
@@ -12,7 +13,8 @@ use \LumengPHP\Db\StatementBase;
 class SelectStatement extends StatementBase {
 
     public function parse() {
-        $sql = 'SELECT ' . $this->statementContext->getFields() .
+        $fields = $this->statementContext->getFields();
+        $sql = 'SELECT ' . FieldHelper::quoteFields($fields) .
                 ' FROM ' . $this->statementContext->getTableName() .
                 ' WHERE ' . $this->condition->parse();
 

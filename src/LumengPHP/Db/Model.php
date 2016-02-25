@@ -183,6 +183,48 @@ class Model {
     }
 
     /**
+     * 设置别名
+     * @param string $alias
+     * @return Model
+     */
+    public function alias($alias) {
+        $this->statementContext->setAlias($alias);
+        return $this;
+    }
+
+    public function join() {
+        
+    }
+
+    public function leftJoin() {
+        
+    }
+
+    public function count() {
+        
+    }
+
+    public function max() {
+        
+    }
+
+    public function min() {
+        
+    }
+
+    public function avg() {
+        
+    }
+
+    public function sum() {
+        
+    }
+
+    public function orderBy() {
+        
+    }
+
+    /**
      * 返回数据库连接
      * @param int $operation
      * @return Connection

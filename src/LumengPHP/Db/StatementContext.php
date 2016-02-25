@@ -17,9 +17,14 @@ class StatementContext {
     private $fields;
 
     /**
-     * @var string 真是表名
+     * @var string 真实表名
      */
     private $tableName;
+
+    /**
+     * @var string 表别名
+     */
+    private $alias;
 
     /**
      * @var int|string mysql的LIMIT子句的值。如：LIMIT 5 或 LIMIT 22382,10
@@ -50,11 +55,23 @@ class StatementContext {
     }
 
     public function getTableName() {
-        return $this->tableName;
+        $tableName = "`{$this->tableName}`";
+        if (!is_null($this->alias)) {
+            $tableName = "{$tableName} AS {$this->alias}";
+        }
+        return $tableName;
     }
 
     public function setTableName($tableName) {
         $this->tableName = $tableName;
+    }
+
+    public function getAlias() {
+        return $this->alias;
+    }
+
+    public function setAlias($alias) {
+        $this->alias = $alias;
     }
 
     public function getLimit() {
@@ -83,6 +100,7 @@ class StatementContext {
 
     public function clear() {
         $this->fields = null;
+        $this->alias = null;
         $this->limit = null;
         $this->parameters = array();
         $this->parameterCounter->restart();

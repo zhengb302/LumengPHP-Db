@@ -3,6 +3,7 @@
 namespace LumengPHP\Db\Statements;
 
 use \LumengPHP\Db\StatementBase;
+use \LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * UPDATE 语句
@@ -26,7 +27,8 @@ class UpdateStatement extends StatementBase {
             $placeholder = $this->makePlaceholder($field);
             $this->statementContext->addParameter($placeholder, $value);
 
-            $setParameters[] = "{$field} = {$placeholder}";
+            $quotedField = FieldHelper::quoteField($field);
+            $setParameters[] = "{$quotedField} = {$placeholder}";
         }
 
         return 'UPDATE ' . $this->statementContext->getTableName() .

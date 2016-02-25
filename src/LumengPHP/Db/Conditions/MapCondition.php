@@ -24,8 +24,12 @@ class MapCondition extends ConditionBase {
     public function parse() {
         $andCondition = new AndCondition();
         foreach ($this->map as $field => $value) {
-            $condition = $this->buildCondition($field, $value);
+            $condition = $this->buildCondition($value);
             $condition->setStatementContext($this->statementContext);
+
+            //这里的$condition必然是SimpleCondition
+            $condition->setField($field);
+
             $andCondition->add($condition);
         }
 
@@ -34,27 +38,22 @@ class MapCondition extends ConditionBase {
 
     /**
      * 
-     * @param string $field
      * @param mixed $value
      * @return Condition
      */
-    private function buildCondition($field, $value) {
+    private function buildCondition($value) {
         switch (gettype($value)) {
             case 'object':
-                if (!($value instanceof Condition)) {
+                if (!($value instanceof SimpleCondition)) {
                     trigger_error('xxxxxxxxxxxxxxxxxxxxxxx', E_USER_ERROR);
                 }
                 $condition = $value;
-                if ($condition instanceof SimpleCondition) {
-                    $condition->setField($field);
-                }
                 break;
             case 'integer':
             case 'double':
             case 'float':
             case 'string':
                 $condition = new EqualCondition($value);
-                $condition->setField($field);
                 break;
         }
         return $condition;

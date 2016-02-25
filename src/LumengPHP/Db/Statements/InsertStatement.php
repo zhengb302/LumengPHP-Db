@@ -3,6 +3,7 @@
 namespace LumengPHP\Db\Statements;
 
 use \LumengPHP\Db\StatementBase;
+use \LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * INSERT 语句
@@ -27,7 +28,7 @@ class InsertStatement extends StatementBase {
             $placeholder = $this->makePlaceholder($field);
             $this->statementContext->addParameter($placeholder, $value);
 
-            $fields[] = $field;
+            $fields[] = FieldHelper::quoteField($field);
             $placeholders[] = $placeholder;
         }
 
