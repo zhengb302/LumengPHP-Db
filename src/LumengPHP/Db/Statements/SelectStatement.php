@@ -16,7 +16,7 @@ class SelectStatement extends StatementBase {
         $fields = $this->statementContext->getFields();
         $sql = 'SELECT ' . FieldHelper::quoteFields($fields) .
                 ' FROM ' . $this->statementContext->getTableName() .
-                ' WHERE ' . $this->condition->parse();
+                $this->buildWhere();
 
         $limit = $this->statementContext->getLimit();
         if (!is_null($limit)) {

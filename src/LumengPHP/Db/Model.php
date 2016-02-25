@@ -192,32 +192,58 @@ class Model {
         return $this;
     }
 
-    public function join() {
-        
+    /**
+     * 内连接一个表
+     * @param string $table 要连接的表
+     * @param string $alias 要连接的表的别名
+     * @param string $on 连接条件
+     * @return Model
+     */
+    public function join($table, $alias, $on) {
+
+        return $this;
     }
 
-    public function leftJoin() {
-        
+    /**
+     * 左外连接一个表
+     * @param string $table 要连接的表
+     * @param string $alias 要连接的表的别名
+     * @param string $on 连接条件
+     * @return Model
+     */
+    public function leftJoin($table, $alias, $on) {
+
+        return $this;
     }
 
-    public function count() {
-        
+    public function count($field = '*') {
+        $this->statementContext->setFields("COUNT({$field}) AS COUNT");
+        $row = $this->find();
+        return $row['COUNT'];
     }
 
-    public function max() {
-        
+    public function max($field) {
+        $this->statementContext->setFields("MAX({$field}) AS MAX");
+        $row = $this->find();
+        return $row['MAX'];
     }
 
-    public function min() {
-        
+    public function min($field) {
+        $this->statementContext->setFields("MIN({$field}) AS MIN");
+        $row = $this->find();
+        return $row['MIN'];
     }
 
-    public function avg() {
-        
+    public function avg($field) {
+        $this->statementContext->setFields("AVG({$field}) AS AVG");
+        $row = $this->find();
+        return $row['AVG'];
     }
 
-    public function sum() {
-        
+    public function sum($field) {
+        $this->statementContext->setFields("SUM({$field}) AS SUM");
+        $row = $this->find();
+        return $row['SUM'];
     }
 
     public function orderBy() {
@@ -236,6 +262,7 @@ class Model {
 
     private function clear() {
         $this->statementContext->clear();
+        $this->condition = null;
     }
 
 }

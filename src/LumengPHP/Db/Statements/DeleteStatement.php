@@ -13,7 +13,7 @@ class DeleteStatement extends StatementBase {
 
     public function parse() {
         return 'DELETE FROM ' . $this->statementContext->getTableName() .
-                ' WHERE ' . $this->condition->parse();
+                $this->buildWhere();
     }
 
 }

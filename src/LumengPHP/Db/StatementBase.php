@@ -25,8 +25,16 @@ abstract class StatementBase implements Statement {
         $this->statementContext = $statementContext;
     }
 
-    public function setCondition(Condition $condition) {
+    public function setCondition($condition) {
         $this->condition = $condition;
+    }
+
+    protected function buildWhere() {
+        if (!is_null($this->condition)) {
+            return ' WHERE ' . $this->condition->parse();
+        }
+
+        return '';
     }
 
     protected function makePlaceholder($field) {

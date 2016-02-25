@@ -33,7 +33,7 @@ class UpdateStatement extends StatementBase {
 
         return 'UPDATE ' . $this->statementContext->getTableName() .
                 ' SET ' . implode(', ', $setParameters) .
-                ' WHERE ' . $this->condition->parse();
+                $this->buildWhere();
     }
 
 }
