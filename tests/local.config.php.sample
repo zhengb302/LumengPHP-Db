@@ -1,0 +1,26 @@
+<?php
+
+/*
+ * 本地配置文件 样品
+ * 使用示例：
+ *   $ cd tests
+ *   $ cp local.config.php.sample local.config.php
+ * 然后再修改local.config.php，以符合需要
+ */
+
+return array(
+    /* 数据库配置 */
+    'dbConfigs' => array(
+        'group1' => array(
+            'class' => '\LumengPHP\Db\ConnectionGroups\SimpleConnectionGroup',
+            'type' => 'mysql',
+            'tablePrefix' => 'bbs_',
+            'isDefault' => true,
+            'host' => 'localhost',
+            'port' => 3306,
+            'database' => 'bbs',
+            'username' => 'bbs',
+            'password' => 'bbs',
+        ),
+    ),
+);
