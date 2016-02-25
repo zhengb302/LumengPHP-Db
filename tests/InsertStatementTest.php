@@ -23,7 +23,8 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase {
         $statement->setStatementContext($statementContext);
         $sql = $statement->parse();
 
-        $expected = 'INSERT INTO user(username, age, password) VALUES(:username_0, :age_1, :password_2)';
+        $expected = 'INSERT INTO `user`(`username`, `age`, `password`)'
+                . ' VALUES(:username_0, :age_1, :password_2)';
         $this->assertEquals($expected, $sql);
 
         $expectedParameters = array(

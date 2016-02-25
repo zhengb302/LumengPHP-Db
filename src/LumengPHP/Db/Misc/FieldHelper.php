@@ -16,11 +16,17 @@ class FieldHelper {
      * 否则返回打引号之后的字段名
      */
     public static function quoteField($field) {
-        if (trim($field) == '*') {
-            return $field;
+        $trimmedField = trim($field);
+        if ($trimmedField == '*') {
+            return $trimmedField;
         }
 
-        return strpos($field, '.') !== false ? $field : "`{$field}`";
+        if (strpos($trimmedField, ' ') !== false) {
+            return $trimmedField;
+        }
+
+        return strpos($trimmedField, '.') !== false ?
+                $trimmedField : "`{$trimmedField}`";
     }
 
     /**
