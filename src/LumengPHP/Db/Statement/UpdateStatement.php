@@ -1,9 +1,8 @@
 <?php
 
-namespace LumengPHP\Db\Statements;
+namespace LumengPHP\Db\Statement;
 
-use \LumengPHP\Db\StatementBase;
-use \LumengPHP\Db\Misc\FieldHelper;
+use LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * UPDATE 语句

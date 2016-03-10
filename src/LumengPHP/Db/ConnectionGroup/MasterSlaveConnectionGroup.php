@@ -1,9 +1,8 @@
 <?php
 
-namespace LumengPHP\Db\ConnectionGroups;
+namespace LumengPHP\Db\ConnectionGroup;
 
-use \LumengPHP\Db\ConnectionGroupBase;
-use \LumengPHP\Db\Connection;
+use LumengPHP\Db\Connection;
 
 /**
  * 主从数据库连接组

@@ -1,6 +1,6 @@
 <?php
 
-namespace LumengPHP\Db\Conditions;
+namespace LumengPHP\Db\Condition;
 
 /**
  * 大于（或等于） 条件

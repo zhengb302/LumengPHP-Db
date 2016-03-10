@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use \PDO;
+use PDO;
 
 /**
  * 数据库连接

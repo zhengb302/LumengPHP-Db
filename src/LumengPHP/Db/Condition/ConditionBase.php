@@ -1,6 +1,8 @@
 <?php
 
-namespace LumengPHP\Db;
+namespace LumengPHP\Db\Condition;
+
+use LumengPHP\Db\StatementContext;
 
 /**
  * 条件基类

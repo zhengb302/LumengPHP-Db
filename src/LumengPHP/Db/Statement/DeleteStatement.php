@@ -1,8 +1,6 @@
 <?php
 
-namespace LumengPHP\Db\Statements;
-
-use \LumengPHP\Db\StatementBase;
+namespace LumengPHP\Db\Statement;
 
 /**
  * DELETE 语句

@@ -1,6 +1,6 @@
 <?php
 
-namespace LumengPHP\Db\Conditions;
+namespace LumengPHP\Db\Condition;
 
 /**
  * 不相等条件

@@ -1,6 +1,6 @@
 <?php
 
-namespace LumengPHP\Db\Conditions;
+namespace LumengPHP\Db\Condition;
 
 /**
  * （NOT）LIKE 条件

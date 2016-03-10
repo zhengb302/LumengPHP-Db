@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use \LumengPHP\Db\Misc\ParameterCounter;
+use LumengPHP\Db\Misc\ParameterCounter;
 
 /**
  * SQL语句环境

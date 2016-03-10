@@ -3,8 +3,8 @@
 namespace tests;
 
 use \LumengPHP\Db\StatementContext;
-use \LumengPHP\Db\Conditions\MapCondition;
-use \LumengPHP\Db\Statements\SelectStatement;
+use \LumengPHP\Db\Condition\MapCondition;
+use \LumengPHP\Db\Statement\SelectStatement;
 
 /**
  * 

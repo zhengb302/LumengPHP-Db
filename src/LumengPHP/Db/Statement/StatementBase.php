@@ -1,8 +1,9 @@
 <?php
 
-namespace LumengPHP\Db;
+namespace LumengPHP\Db\Statement;
 
-use \LumengPHP\Db\Misc\FieldHelper;
+use LumengPHP\Db\StatementContext;
+use LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * SQL语句基类

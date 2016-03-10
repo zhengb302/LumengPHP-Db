@@ -12,7 +12,7 @@ return array(
     /* 数据库配置 */
     'dbConfigs' => array(
         'group1' => array(
-            'class' => '\LumengPHP\Db\ConnectionGroups\SimpleConnectionGroup',
+            'class' => '\LumengPHP\Db\ConnectionGroup\SimpleConnectionGroup',
             'type' => 'mysql',
             'tablePrefix' => 'bbs_',
             'isDefault' => true,

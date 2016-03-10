@@ -2,12 +2,14 @@
 
 namespace LumengPHP\Db;
 
-use \PDO;
-use LumengPHP\Db\Statements\SelectStatement;
-use LumengPHP\Db\Statements\InsertStatement;
-use LumengPHP\Db\Statements\UpdateStatement;
-use LumengPHP\Db\Statements\DeleteStatement;
-use LumengPHP\Db\Conditions\MapCondition;
+use PDO;
+use LumengPHP\Db\ConnectionGroup\ConnectionGroup;
+use LumengPHP\Db\Statement\SelectStatement;
+use LumengPHP\Db\Statement\InsertStatement;
+use LumengPHP\Db\Statement\UpdateStatement;
+use LumengPHP\Db\Statement\DeleteStatement;
+use LumengPHP\Db\Condition\Condition;
+use LumengPHP\Db\Condition\MapCondition;
 use LumengPHP\Utils\StringHelper;
 
 /**
@@ -194,7 +196,7 @@ class Model {
 
     /**
      * 内连接一个表
-     * @param string $table 要连接的表
+     * @param string $table 要连接的表(不带表前缀)，如UserProfile
      * @param string $alias 要连接的表的别名
      * @param string $on 连接条件
      * @return Model
@@ -206,7 +208,7 @@ class Model {
 
     /**
      * 左外连接一个表
-     * @param string $table 要连接的表
+     * @param string $table 要连接的表(不带表前缀)，如UserProfile
      * @param string $alias 要连接的表的别名
      * @param string $on 连接条件
      * @return Model
@@ -247,6 +249,23 @@ class Model {
     }
 
     public function orderBy() {
+        
+    }
+
+    /**
+     * 分页
+     * @param int $pageNum 页号(从1开始)
+     * @param int $pageSize 页大小
+     */
+    public function paging($pageNum, $pageSize) {
+        
+    }
+
+    /**
+     * 设置limit子句
+     * @param mixed $limit limit子句
+     */
+    public function limit($limit) {
         
     }
 

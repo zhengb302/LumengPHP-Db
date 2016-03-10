@@ -1,9 +1,8 @@
 <?php
 
-namespace LumengPHP\Db\Conditions;
+namespace LumengPHP\Db\Condition;
 
-use \LumengPHP\Db\ConditionBase;
-use \LumengPHP\Db\Misc\FieldHelper;
+use LumengPHP\Db\Misc\FieldHelper;
 
 /**
  * 简单条件（相对于复合条件，即CompositeCondition）

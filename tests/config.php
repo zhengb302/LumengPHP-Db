@@ -5,7 +5,7 @@ $configs = array(
     'dbConfigs' => array(
         //groupName => groupConfigs
         'group1' => array(
-            'class' => '\LumengPHP\Db\ConnectionGroups\SimpleConnectionGroup',
+            'class' => '\LumengPHP\Db\ConnectionGroup\SimpleConnectionGroup',
             //数据库类型：mysql、pgsql、oracle、mssql等
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -20,7 +20,7 @@ $configs = array(
             'password' => '',
         ),
         'group2' => array(
-            'class' => '\LumengPHP\Db\ConnectionGroups\MasterSlaveConnectionGroup',
+            'class' => '\LumengPHP\Db\ConnectionGroup\MasterSlaveConnectionGroup',
             //数据库类型：mysql、pgsql、oracle、mssql等
             'type' => 'mysql',
             //表前缀，如：bbs_

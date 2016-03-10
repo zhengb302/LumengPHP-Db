@@ -1,6 +1,6 @@
 <?php
 
-namespace LumengPHP\Db;
+namespace LumengPHP\Db\ConnectionGroup;
 
 /**
  * 数据库连接组基类

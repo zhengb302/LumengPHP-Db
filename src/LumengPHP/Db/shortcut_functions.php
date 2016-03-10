@@ -4,16 +4,16 @@
  * SQL条件 快捷函数
  */
 
-use LumengPHP\Db\Condition;
-use LumengPHP\Db\Conditions\AndCondition;
-use LumengPHP\Db\Conditions\OrCondition;
-use LumengPHP\Db\Conditions\BetweenCondition;
-use LumengPHP\Db\Conditions\InCondition;
-use LumengPHP\Db\Conditions\EqualCondition;
-use LumengPHP\Db\Conditions\NotEqualCondition;
-use LumengPHP\Db\Conditions\GreaterThanCondition;
-use LumengPHP\Db\Conditions\LessThanCondition;
-use LumengPHP\Db\Conditions\LikeCondition;
+use LumengPHP\Db\Condition\Condition;
+use LumengPHP\Db\Condition\AndCondition;
+use LumengPHP\Db\Condition\OrCondition;
+use LumengPHP\Db\Condition\BetweenCondition;
+use LumengPHP\Db\Condition\InCondition;
+use LumengPHP\Db\Condition\EqualCondition;
+use LumengPHP\Db\Condition\NotEqualCondition;
+use LumengPHP\Db\Condition\GreaterThanCondition;
+use LumengPHP\Db\Condition\LessThanCondition;
+use LumengPHP\Db\Condition\LikeCondition;
 
 /**
  * 

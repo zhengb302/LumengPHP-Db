@@ -1,9 +1,6 @@
 <?php
 
-namespace LumengPHP\Db\Conditions;
-
-use LumengPHP\Db\Condition;
-use LumengPHP\Db\ConditionBase;
+namespace LumengPHP\Db\Condition;
 
 /**
  * 复合条件（相对于简单条件，即SimpleCondition）

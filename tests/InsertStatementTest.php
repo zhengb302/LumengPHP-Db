@@ -19,7 +19,7 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase {
             'password' => md5('123456'),
         );
 
-        $statement = new \LumengPHP\Db\Statements\InsertStatement($data);
+        $statement = new \LumengPHP\Db\Statement\InsertStatement($data);
         $statement->setStatementContext($statementContext);
         $sql = $statement->parse();
 

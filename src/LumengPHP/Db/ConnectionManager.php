@@ -2,6 +2,8 @@
 
 namespace LumengPHP\Db;
 
+use LumengPHP\Db\ConnectionGroup\ConnectionGroup;
+
 /**
  * 连接管理器
  *
