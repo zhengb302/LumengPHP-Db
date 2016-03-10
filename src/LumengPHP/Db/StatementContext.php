@@ -2,6 +2,7 @@
 
 namespace LumengPHP\Db;
 
+use LumengPHP\Db\Join\JoinClause;
 use LumengPHP\Db\Misc\ParameterCounter;
 
 /**
@@ -27,6 +28,11 @@ class StatementContext {
     private $alias;
 
     /**
+     * @var JoinClause join子句
+     */
+    private $joinClause;
+
+    /**
      * @var int|string mysql的LIMIT子句的值。如：LIMIT 5 或 LIMIT 22382,10
      */
     private $limit;
@@ -42,6 +48,7 @@ class StatementContext {
     private $parameterCounter;
 
     public function __construct() {
+        $this->joinClause = new JoinClause();
         $this->parameters = array();
         $this->parameterCounter = new ParameterCounter();
     }
@@ -64,6 +71,14 @@ class StatementContext {
 
     public function setTableName($tableName) {
         $this->tableName = $tableName;
+    }
+
+    /**
+     * 
+     * @return JoinClause
+     */
+    public function getJoinClause() {
+        return $this->joinClause;
     }
 
     public function getAlias() {
@@ -100,6 +115,7 @@ class StatementContext {
 
     public function clear() {
         $this->fields = null;
+        $this->joinClause->clear();
         $this->alias = null;
         $this->limit = null;
         $this->parameters = array();

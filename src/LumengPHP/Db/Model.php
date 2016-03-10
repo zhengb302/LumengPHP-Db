@@ -11,6 +11,7 @@ use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\Condition;
 use LumengPHP\Db\Condition\MapCondition;
 use LumengPHP\Utils\StringHelper;
+use LumengPHP\Db\Join\Join;
 
 /**
  * Model基类
@@ -196,25 +197,54 @@ class Model {
 
     /**
      * 内连接一个表
-     * @param string $table 要连接的表(不带表前缀)，如UserProfile
-     * @param string $alias 要连接的表的别名
+     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件
      * @return Model
      */
     public function join($table, $alias, $on) {
+        $trueTableName = $this->connGroup->getTablePrefix()
+                . StringHelper::camel2id($table, '_');
 
+        $join = new Join($trueTableName, $alias, $on);
+
+        $this->statementContext->getJoinClause()->addJoin($join);
         return $this;
     }
 
     /**
      * 左外连接一个表
-     * @param string $table 要连接的表(不带表前缀)，如UserProfile
-     * @param string $alias 要连接的表的别名
+     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件
      * @return Model
      */
     public function leftJoin($table, $alias, $on) {
+        $trueTableName = $this->connGroup->getTablePrefix()
+                . StringHelper::camel2id($table, '_');
 
+        $join = new Join($trueTableName, $alias, $on);
+        $join->setType(Join::LEFT_JOIN);
+
+        $this->statementContext->getJoinClause()->addJoin($join);
+        return $this;
+    }
+
+    /**
+     * 右外连接一个表
+     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $alias 要连接的表的别名，如"u"。可以为空
+     * @param string $on 连接条件
+     * @return Model
+     */
+    public function rightJoin($table, $alias, $on) {
+        $trueTableName = $this->connGroup->getTablePrefix()
+                . StringHelper::camel2id($table, '_');
+
+        $join = new Join($trueTableName, $alias, $on);
+        $join->setType(Join::RIGHT_JOIN);
+
+        $this->statementContext->getJoinClause()->addJoin($join);
         return $this;
     }
 
