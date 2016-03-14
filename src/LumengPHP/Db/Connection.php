@@ -3,6 +3,7 @@
 namespace LumengPHP\Db;
 
 use PDO;
+use Exception;
 
 /**
  * 数据库连接
@@ -52,6 +53,16 @@ class Connection {
 
         //设置PDO错误模式为"抛出异常"
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    private function execute($sql, array $parameters = null) {
+        try {
+            $pdoStmt = $this->pdo->prepare($sql);
+            $pdoStmt->execute($parameters);
+            return $pdoStmt;
+        } catch (Exception $e) {
+            
+        }
     }
 
 }
