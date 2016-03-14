@@ -49,7 +49,7 @@ class Model {
 
     /**
      * 返回本model所属的数据库连接组组名
-     * @return string|null
+     * @return string|null 如果返回null，则会使得当前model使用默认连接组
      */
     public function getGroupName() {
         return null;
