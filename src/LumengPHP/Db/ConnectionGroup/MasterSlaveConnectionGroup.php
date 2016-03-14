@@ -35,11 +35,8 @@ class MasterSlaveConnectionGroup extends ConnectionGroupBase {
         $conn = null;
         switch ($operation) {
             case Connection::OP_READ:
-
-                /*
-                 * 如果要读取的表已经被更新过，则从Master读取；或者，
-                 * 当前操作在某个事务里，则也从Master读取
-                 */
+                //如果要读取的表已经被更新过，则从Master读取；或者，
+                //当前操作在某个事务里，则也从Master读取
                 if (in_array($tableName, $this->dirtyTables) ||
                         $this->inTransaction) {
                     $conn = $this->getMasterConnection();
@@ -75,7 +72,7 @@ class MasterSlaveConnectionGroup extends ConnectionGroupBase {
 
         $type = $this->groupConfig['type'];
         $config = $this->groupConfig['servers'][0];
-        $this->masterConnection = Connection::makeConnection($type, $config);
+        $this->masterConnection = new Connection($type, $config);
         return $this->masterConnection;
     }
 
@@ -84,13 +81,13 @@ class MasterSlaveConnectionGroup extends ConnectionGroupBase {
             return $this->slaveConnection;
         }
 
-        //随机选取从服务器
+        //随机选取"从服务器"
         $slaveIndex = mt_rand(1, count($this->groupConfig['servers']) - 1);
 
         $type = $this->groupConfig['type'];
         $config = $this->groupConfig['servers'][$slaveIndex];
-        $this->masterConnection = Connection::makeConnection($type, $config);
-        return $this->masterConnection;
+        $this->slaveConnection = new Connection($type, $config);
+        return $this->slaveConnection;
     }
 
     public function beginTransaction() {

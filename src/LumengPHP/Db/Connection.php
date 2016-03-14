@@ -9,7 +9,7 @@ use PDO;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class Connection extends PDO {
+class Connection {
 
     /**
      * 读操作
@@ -22,21 +22,24 @@ class Connection extends PDO {
     const OP_WRITE = 1;
 
     /**
+     * @var PDO PDO实例
+     */
+    private $pdo;
+
+    /**
      * 构造连接
      * @param string $type 数据库类型
-     * @param array $config
-     * @return Connection
+     * @param array $config 数据库配置
      */
-    public static function makeConnection($type, $config) {
+    public function __construct($type, $config) {
         $lowerCaseType = strtolower($type);
 
-        $conn = null;
         if ($lowerCaseType == 'mysql') {
             $dsn = "mysql:dbname={$config['database']};host={$config['host']}";
             $user = $config['username'];
             $password = $config['password'];
 
-            $conn = new self($dsn, $user, $password);
+            $this->pdo = new PDO($dsn, $user, $password);
         } elseif ($lowerCaseType == 'pgsql') {
             //@todo ...
         } elseif ($lowerCaseType == 'oracle') {
@@ -47,7 +50,8 @@ class Connection extends PDO {
             //@todo ...
         }
 
-        return $conn;
+        //设置PDO错误模式为"抛出异常"
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
 }

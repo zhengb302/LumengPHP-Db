@@ -43,7 +43,7 @@ class SimpleConnectionGroup extends ConnectionGroupBase {
             'username' => $this->groupConfig['username'],
             'password' => $this->groupConfig['password'],
         );
-        $this->connection = Connection::makeConnection($type, $config);
+        $this->connection = new Connection($type, $config);
         return $this->connection;
     }
 

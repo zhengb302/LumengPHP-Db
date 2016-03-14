@@ -102,89 +102,6 @@ class Model {
         return $this;
     }
 
-    public function find() {
-        $this->statementContext->setLimit(1);
-
-        $statement = new SelectStatement();
-        $statement->setStatementContext($this->statementContext);
-        $statement->setCondition($this->condition);
-        $sql = $statement->parse();
-
-        $conn = $this->getConnection(Connection::OP_READ);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
-        $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->clear();
-
-        return $row;
-    }
-
-    public function select() {
-        $statement = new SelectStatement();
-        $statement->setStatementContext($this->statementContext);
-        $statement->setCondition($this->condition);
-        $sql = $statement->parse();
-
-        $conn = $this->getConnection(Connection::OP_READ);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
-        $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $this->clear();
-
-        return $rows;
-    }
-
-    public function add($data) {
-        $statement = new InsertStatement($data);
-        $statement->setStatementContext($this->statementContext);
-        $sql = $statement->parse();
-
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
-
-        $this->clear();
-
-        return $conn->lastInsertId();
-    }
-
-    public function save($data) {
-        $statement = new UpdateStatement($data);
-        $statement->setStatementContext($this->statementContext);
-        $statement->setCondition($this->condition);
-        $sql = $statement->parse();
-
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
-
-        $this->clear();
-
-        return $pdoStmt->rowCount();
-    }
-
-    public function delete() {
-        $statement = new DeleteStatement();
-        $statement->setStatementContext($this->statementContext);
-        $statement->setCondition($this->condition);
-        $sql = $statement->parse();
-
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
-
-        $this->clear();
-
-        return $pdoStmt->rowCount();
-    }
-
     /**
      * 设置别名
      * @param string $alias
@@ -248,36 +165,6 @@ class Model {
         return $this;
     }
 
-    public function count($field = '*') {
-        $this->statementContext->setFields("COUNT({$field}) AS COUNT");
-        $row = $this->find();
-        return $row['COUNT'];
-    }
-
-    public function max($field) {
-        $this->statementContext->setFields("MAX({$field}) AS MAX");
-        $row = $this->find();
-        return $row['MAX'];
-    }
-
-    public function min($field) {
-        $this->statementContext->setFields("MIN({$field}) AS MIN");
-        $row = $this->find();
-        return $row['MIN'];
-    }
-
-    public function avg($field) {
-        $this->statementContext->setFields("AVG({$field}) AS AVG");
-        $row = $this->find();
-        return $row['AVG'];
-    }
-
-    public function sum($field) {
-        $this->statementContext->setFields("SUM({$field}) AS SUM");
-        $row = $this->find();
-        return $row['SUM'];
-    }
-
     /**
      * 设置"order by"子句
      * @param string $orderByClause
@@ -315,6 +202,119 @@ class Model {
     public function limit($limit) {
         $this->statementContext->setLimit($limit);
         return $this;
+    }
+
+    public function find() {
+        $this->statementContext->setLimit(1);
+
+        $statement = new SelectStatement();
+        $statement->setStatementContext($this->statementContext);
+        $statement->setCondition($this->condition);
+        $sql = $statement->parse();
+
+        $conn = $this->getConnection(Connection::OP_READ);
+
+        $pdoStmt = $conn->prepare($sql);
+        $pdoStmt->execute($this->statementContext->getParameters());
+        $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->clear();
+
+        return $row;
+    }
+
+    public function select() {
+        $statement = new SelectStatement();
+        $statement->setStatementContext($this->statementContext);
+        $statement->setCondition($this->condition);
+        $sql = $statement->parse();
+
+        $conn = $this->getConnection(Connection::OP_READ);
+
+        $pdoStmt = $conn->prepare($sql);
+        $pdoStmt->execute($this->statementContext->getParameters());
+        $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->clear();
+
+        return $rows;
+    }
+
+    public function count($field = '*') {
+        $this->statementContext->setFields("COUNT({$field}) AS COUNT");
+        $row = $this->find();
+        return $row['COUNT'];
+    }
+
+    public function max($field) {
+        $this->statementContext->setFields("MAX({$field}) AS MAX");
+        $row = $this->find();
+        return $row['MAX'];
+    }
+
+    public function min($field) {
+        $this->statementContext->setFields("MIN({$field}) AS MIN");
+        $row = $this->find();
+        return $row['MIN'];
+    }
+
+    public function avg($field) {
+        $this->statementContext->setFields("AVG({$field}) AS AVG");
+        $row = $this->find();
+        return $row['AVG'];
+    }
+
+    public function sum($field) {
+        $this->statementContext->setFields("SUM({$field}) AS SUM");
+        $row = $this->find();
+        return $row['SUM'];
+    }
+
+    public function add($data) {
+        $statement = new InsertStatement($data);
+        $statement->setStatementContext($this->statementContext);
+        $sql = $statement->parse();
+
+        $conn = $this->getConnection(Connection::OP_WRITE);
+
+        $pdoStmt = $conn->prepare($sql);
+        $pdoStmt->execute($this->statementContext->getParameters());
+
+        $this->clear();
+
+        return $conn->lastInsertId();
+    }
+
+    public function save($data) {
+        $statement = new UpdateStatement($data);
+        $statement->setStatementContext($this->statementContext);
+        $statement->setCondition($this->condition);
+        $sql = $statement->parse();
+
+        $conn = $this->getConnection(Connection::OP_WRITE);
+
+        $pdoStmt = $conn->prepare($sql);
+        $pdoStmt->execute($this->statementContext->getParameters());
+
+        $this->clear();
+
+        return $pdoStmt->rowCount();
+    }
+
+    public function delete() {
+        $statement = new DeleteStatement();
+        $statement->setStatementContext($this->statementContext);
+        $statement->setCondition($this->condition);
+        $sql = $statement->parse();
+
+        $conn = $this->getConnection(Connection::OP_WRITE);
+
+        $pdoStmt = $conn->prepare($sql);
+        $pdoStmt->execute($this->statementContext->getParameters());
+
+        $this->clear();
+
+        return $pdoStmt->rowCount();
     }
 
     /**
