@@ -18,6 +18,11 @@ class SelectStatement extends StatementBase {
                 $this->statementContext->getJoinClause()->parse() .
                 $this->buildWhere();
 
+        $orderBy = $this->statementContext->getOrderBy();
+        if (!is_null($orderBy)) {
+            $sql = "{$sql} ORDER BY {$orderBy}";
+        }
+
         $limit = $this->statementContext->getLimit();
         if (!is_null($limit)) {
             $sql = "{$sql} LIMIT {$limit}";

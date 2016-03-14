@@ -278,25 +278,43 @@ class Model {
         return $row['SUM'];
     }
 
-    public function orderBy() {
-        
+    /**
+     * 设置"order by"子句
+     * @param string $orderByClause
+     * @return Model
+     */
+    public function orderBy($orderByClause) {
+        $this->statementContext->setOrderBy($orderByClause);
+        return $this;
     }
 
     /**
-     * 分页
+     * 设置分页<br />
+     * 注意：设置分页和设置limit子句会导致互相覆盖
      * @param int $pageNum 页号(从1开始)
      * @param int $pageSize 页大小
+     * @return Model
      */
     public function paging($pageNum, $pageSize) {
-        
+        $offset = ($pageNum - 1) * $pageSize;
+        $this->statementContext->setLimit("{$offset}, {$pageSize}");
+        return $this;
     }
 
     /**
-     * 设置limit子句
-     * @param mixed $limit limit子句
+     * 设置limit子句<br />
+     * 注意：设置分页和设置limit子句会导致互相覆盖
+     * @param mixed $limit limit子句，注意，不包括LIMIT关键字<br />
+     * 示例：<br />
+     * //结果SQL：... LIMIT 5 ...
+     * $model->limit(5);
+     * //结果SQL：... LIMIT 40,10 ...
+     * $model->limit('40,10');
+     * @return Model
      */
     public function limit($limit) {
-        
+        $this->statementContext->setLimit($limit);
+        return $this;
     }
 
     /**

@@ -33,6 +33,11 @@ class StatementContext {
     private $joinClause;
 
     /**
+     * @var string order by子句
+     */
+    private $orderBy;
+
+    /**
      * @var int|string mysql的LIMIT子句的值。如：LIMIT 5 或 LIMIT 22382,10
      */
     private $limit;
@@ -73,6 +78,14 @@ class StatementContext {
         $this->tableName = $tableName;
     }
 
+    public function getAlias() {
+        return $this->alias;
+    }
+
+    public function setAlias($alias) {
+        $this->alias = $alias;
+    }
+
     /**
      * 
      * @return JoinClause
@@ -81,12 +94,12 @@ class StatementContext {
         return $this->joinClause;
     }
 
-    public function getAlias() {
-        return $this->alias;
+    public function getOrderBy() {
+        return $this->orderBy;
     }
 
-    public function setAlias($alias) {
-        $this->alias = $alias;
+    public function setOrderBy($orderBy) {
+        $this->orderBy = $orderBy;
     }
 
     public function getLimit() {
@@ -115,9 +128,11 @@ class StatementContext {
 
     public function clear() {
         $this->fields = null;
-        $this->joinClause->clear();
         $this->alias = null;
+        $this->joinClause->clear();
+        $this->orderBy = null;
         $this->limit = null;
+
         $this->parameters = array();
         $this->parameterCounter->restart();
     }
