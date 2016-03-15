@@ -3,6 +3,7 @@
 namespace LumengPHP\Db;
 
 use PDO;
+use PDOStatement;
 use Exception;
 
 /**
@@ -55,14 +56,31 @@ class Connection {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    private function execute($sql, array $parameters = null) {
+    /**
+     * 预编译并执行一个SQL语句
+     * @param string $sql 带占位符的SQL语句
+     * @param array $parameters 预编译参数
+     * @return PDOStatement|false SQL执行成功则返回一个PDOStatement对象，
+     * SQL执行错误则返回false。注意：这里所谓的"执行成功"只是SQL执行没发生错误，
+     * 并不意味着找到了数据或更新了数据。
+     */
+    public function execute($sql, array $parameters = null) {
         try {
             $pdoStmt = $this->pdo->prepare($sql);
             $pdoStmt->execute($parameters);
             return $pdoStmt;
         } catch (Exception $e) {
-            
+            //@todo log error message
+            return false;
         }
+    }
+
+    /**
+     * 返回最新插入的记录id
+     * @return string
+     */
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
     }
 
 }

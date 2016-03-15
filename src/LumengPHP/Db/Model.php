@@ -204,6 +204,11 @@ class Model {
         return $this;
     }
 
+    /**
+     * 查询一条记录
+     * @return array|null|false 成功则返回一个关联数组；未找到数据返回null，
+     * SQL执行发生错误则返回false
+     */
     public function find() {
         $this->statementContext->setLimit(1);
 
@@ -212,32 +217,44 @@ class Model {
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $conn = $this->getConnection(Connection::OP_READ);
+        $pdoStmt = $this->getConnection(Connection::OP_READ)
+                ->execute($sql, $this->statementContext->getParameters());
 
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
+        //SQL执行发生错误
+        if ($pdoStmt === false) {
+            return false;
+        }
+
         $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
 
         $this->clear();
 
-        return $row;
+        return $row ? $row : null;
     }
 
+    /**
+     * 查询多条记录
+     * @return array|null|false 成功则返回一个结果数组；未找到数据返回null，
+     * SQL执行发生错误则返回false
+     */
     public function select() {
         $statement = new SelectStatement();
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $conn = $this->getConnection(Connection::OP_READ);
+        $pdoStmt = $this->getConnection(Connection::OP_READ)
+                ->execute($sql, $this->statementContext->getParameters());
 
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
+        if ($pdoStmt === false) {
+            return false;
+        }
+
         $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
 
         $this->clear();
 
-        return $rows;
+        return $rows ? $rows : null;
     }
 
     public function count($field = '*') {
@@ -270,6 +287,11 @@ class Model {
         return $row['SUM'];
     }
 
+    /**
+     * 插入一条记录
+     * @param array $data 要插入的数据
+     * @return string|false 插入成功则返回新插入记录的id，SQL执行发生错误返回false
+     */
     public function add($data) {
         $statement = new InsertStatement($data);
         $statement->setStatementContext($this->statementContext);
@@ -277,8 +299,11 @@ class Model {
 
         $conn = $this->getConnection(Connection::OP_WRITE);
 
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
+        $pdoStmt = $conn->execute($sql, $this->statementContext->getParameters());
+
+        if ($pdoStmt === false) {
+            return false;
+        }
 
         $this->clear();
 
