@@ -220,14 +220,14 @@ class Model {
         $pdoStmt = $this->getConnection(Connection::OP_READ)
                 ->execute($sql, $this->statementContext->getParameters());
 
+        $this->clear();
+
         //SQL执行发生错误
         if ($pdoStmt === false) {
             return false;
         }
 
         $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->clear();
 
         return $row ? $row : null;
     }
@@ -246,13 +246,13 @@ class Model {
         $pdoStmt = $this->getConnection(Connection::OP_READ)
                 ->execute($sql, $this->statementContext->getParameters());
 
+        $this->clear();
+
         if ($pdoStmt === false) {
             return false;
         }
 
         $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $this->clear();
 
         return $rows ? $rows : null;
     }
@@ -301,43 +301,58 @@ class Model {
 
         $pdoStmt = $conn->execute($sql, $this->statementContext->getParameters());
 
+        $this->clear();
+
         if ($pdoStmt === false) {
             return false;
         }
 
-        $this->clear();
-
         return $conn->lastInsertId();
     }
 
+    /**
+     * 更新数据
+     * @param array $data 要更新的数据，关联数组
+     * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
+     * 注意返回<b>0</b>和返回<b>false</b>的区别。
+     */
     public function save($data) {
         $statement = new UpdateStatement($data);
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
+        $pdoStmt = $this->getConnection(Connection::OP_WRITE)
+                ->execute($sql, $this->statementContext->getParameters());
 
         $this->clear();
+
+        if ($pdoStmt === false) {
+            return false;
+        }
 
         return $pdoStmt->rowCount();
     }
 
+    /**
+     * 删除数据
+     * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
+     * 注意返回<b>0</b>和返回<b>false</b>的区别。
+     */
     public function delete() {
         $statement = new DeleteStatement();
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->prepare($sql);
-        $pdoStmt->execute($this->statementContext->getParameters());
+        $pdoStmt = $this->getConnection(Connection::OP_WRITE)
+                ->execute($sql, $this->statementContext->getParameters());
 
         $this->clear();
+
+        if ($pdoStmt === false) {
+            return false;
+        }
 
         return $pdoStmt->rowCount();
     }
