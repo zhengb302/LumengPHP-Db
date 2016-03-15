@@ -257,33 +257,92 @@ class Model {
         return $rows ? $rows : null;
     }
 
+    /**
+     * 执行count聚簇函数
+     * @param string $field
+     * @return int|false 如果成功则返回相应的值；SQL执行发生错误则返回false
+     */
     public function count($field = '*') {
         $this->statementContext->setFields("COUNT({$field}) AS COUNT");
         $row = $this->find();
+
+        //SQL执行发生错误
+        if ($row === false) {
+            return false;
+        }
+
         return $row['COUNT'];
     }
 
+    /**
+     * 执行max聚簇函数
+     * @param string $field
+     * @return mixed|null|false 如果成功则返回相应的值；不存在相应的记录返回null；
+     * SQL执行发生错误则返回false
+     */
     public function max($field) {
         $this->statementContext->setFields("MAX({$field}) AS MAX");
         $row = $this->find();
+
+        //SQL执行发生错误
+        if ($row === false) {
+            return false;
+        }
+
         return $row['MAX'];
     }
 
+    /**
+     * 执行min聚簇函数
+     * @param string $field
+     * @return mixed|null|false 如果成功则返回相应的值；不存在相应的记录返回null；
+     * SQL执行发生错误则返回false
+     */
     public function min($field) {
         $this->statementContext->setFields("MIN({$field}) AS MIN");
         $row = $this->find();
+
+        //SQL执行发生错误
+        if ($row === false) {
+            return false;
+        }
+
         return $row['MIN'];
     }
 
+    /**
+     * 执行avg聚簇函数
+     * @param string $field
+     * @return mixed|null|false 如果成功则返回相应的值；不存在相应的记录返回null；
+     * SQL执行发生错误则返回false
+     */
     public function avg($field) {
         $this->statementContext->setFields("AVG({$field}) AS AVG");
         $row = $this->find();
+
+        //SQL执行发生错误
+        if ($row === false) {
+            return false;
+        }
+
         return $row['AVG'];
     }
 
+    /**
+     * 执行sum聚簇函数
+     * @param string $field
+     * @return mixed|null|false 如果成功则返回相应的值；不存在相应的记录返回null；
+     * SQL执行发生错误则返回false
+     */
     public function sum($field) {
         $this->statementContext->setFields("SUM({$field}) AS SUM");
         $row = $this->find();
+
+        //SQL执行发生错误
+        if ($row === false) {
+            return false;
+        }
+
         return $row['SUM'];
     }
 
