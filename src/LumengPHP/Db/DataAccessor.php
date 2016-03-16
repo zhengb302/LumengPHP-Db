@@ -14,11 +14,11 @@ use LumengPHP\Utils\StringHelper;
 use LumengPHP\Db\Join\Join;
 
 /**
- * Model基类
+ * An database access layer.
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class Model {
+class DataAccessor {
 
     /**
      * @var ConnectionGroup 所属的数据库连接组
@@ -40,37 +40,18 @@ class Model {
      */
     private $condition;
 
-    public function __construct() {
-        $this->connGroup = ConnectionManager::getConnectionManager()
-                ->getConnectionGroup($this->getGroupName());
+    /**
+     * 
+     * @param ConnectionGroup $connGroup 数据库连接组
+     * @param string $tableName 驼峰风格的表名，不含表前缀，如"UserProfile"
+     */
+    public function __construct(ConnectionGroup $connGroup, $tableName) {
+        $this->connGroup = $connGroup;
+        $this->tableName = $this->connGroup->getTablePrefix() .
+                StringHelper::camel2id($tableName, '_');
+
         $this->statementContext = new StatementContext();
-        $this->statementContext->setTableName($this->getTableName());
-    }
-
-    /**
-     * 返回本model所属的数据库连接组组名
-     * @return string|null 如果返回null，则会使得当前model使用默认连接组
-     */
-    public function getGroupName() {
-        return null;
-    }
-
-    /**
-     * 返回表名称（包括表前缀）
-     * @return string
-     */
-    protected function getTableName() {
-        if (is_null($this->tableName)) {
-            $basename = StringHelper::basename(get_called_class());
-
-            //去掉末尾的”Model“
-            $nakedTableName = substr($basename, 0, strlen($basename) - 5);
-
-            $tmpName = StringHelper::camel2id($nakedTableName, '_');
-            $this->tableName = $this->connGroup->getTablePrefix() . $tmpName;
-        }
-
-        return $this->tableName;
+        $this->statementContext->setTableName($this->tableName);
     }
 
     /**
@@ -423,7 +404,7 @@ class Model {
      */
     protected function getConnection($operation) {
         return $this->connGroup
-                        ->selectConnection($operation, $this->getTableName());
+                        ->selectConnection($operation, $this->tableName);
     }
 
     private function clear() {
