@@ -10,12 +10,11 @@
 
 return array(
     /* 数据库配置 */
-    'dbConfigs' => array(
+    'database' => array(
         'group1' => array(
             'class' => '\LumengPHP\Db\ConnectionGroup\SimpleConnectionGroup',
             'type' => 'mysql',
             'tablePrefix' => 'bbs_',
-            'isDefault' => true,
             'host' => 'localhost',
             'port' => 3306,
             'database' => 'bbs',

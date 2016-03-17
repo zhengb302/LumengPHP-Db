@@ -51,7 +51,8 @@ class ConnectionManager {
             $connGroup = new $groupConfig['class']($groupName, $groupConfig);
             $this->connectionGroupMap[$groupName] = $connGroup;
 
-            if ($groupConfig['isDefault']) {
+            //这会使第一个数据库组成为默认组
+            if (is_null($this->defaultConnectionGroup)) {
                 $this->defaultConnectionGroup = $connGroup;
             }
         }

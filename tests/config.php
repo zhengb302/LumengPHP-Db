@@ -1,7 +1,8 @@
 <?php
 
 $configs = array(
-    /* 数据库配置 */
+    //数据库配置
+    //第一个数据库组为默认组
     'database' => array(
         //groupName => groupConfigs
         'group1' => array(
@@ -10,8 +11,6 @@ $configs = array(
             'type' => 'mysql',
             //表前缀，如：bbs_
             'tablePrefix' => '',
-            //是否是默认组
-            'isDefault' => true,
             //数据库配置
             'host' => '',
             'port' => 3306,
@@ -25,8 +24,6 @@ $configs = array(
             'type' => 'mysql',
             //表前缀，如：bbs_
             'tablePrefix' => '',
-            //是否是默认组
-            'isDefault' => false,
             //数据库服务器列表，第一个为master服务器，剩下的为从服务器
             'servers' => array(
                 array(
