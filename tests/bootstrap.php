@@ -12,8 +12,11 @@ function get_config($key) {
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
 $loader->add('tests\\', dirname(__DIR__));
 
-require(\LumengPHP\Db\Misc\ShortcutFunctionHelper::getPath());
+use LumengPHP\Db\Misc\ShortcutFunctionHelper;
+use LumengPHP\Db\ConnectionManager;
 
-$dbConfigs = get_config('dbConfigs');
-$connManager = \LumengPHP\Db\ConnectionManager::getConnectionManager();
+require(ShortcutFunctionHelper::getPath());
+
+$dbConfigs = get_config('database');
+$connManager = ConnectionManager::getConnectionManager();
 $connManager->loadDbConfigs($dbConfigs);

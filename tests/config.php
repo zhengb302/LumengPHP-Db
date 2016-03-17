@@ -2,7 +2,7 @@
 
 $configs = array(
     /* 数据库配置 */
-    'dbConfigs' => array(
+    'database' => array(
         //groupName => groupConfigs
         'group1' => array(
             'class' => '\LumengPHP\Db\ConnectionGroup\SimpleConnectionGroup',
