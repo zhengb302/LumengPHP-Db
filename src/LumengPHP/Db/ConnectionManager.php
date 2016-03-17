@@ -16,17 +16,31 @@ class ConnectionManager {
      */
     private static $connectionManager;
 
+    public static function create($dbConfigs) {
+        if (!is_null(self::$connectionManager)) {
+            //@todo trigger error
+        }
+
+        self::$connectionManager = new self($dbConfigs);
+        return self::$connectionManager;
+    }
+
     /**
      * 返回连接管理器实例
      * @return ConnectionManager
      */
     public static function getConnectionManager() {
         if (is_null(self::$connectionManager)) {
-            self::$connectionManager = new self();
+            //@todo trigger error
         }
 
         return self::$connectionManager;
     }
+
+    /**
+     * @var array 数据库配置
+     */
+    private $dbConfigs;
 
     /**
      * @var ConnectionGroup 默认的数据库连接组实例
@@ -38,15 +52,7 @@ class ConnectionManager {
      */
     private $connectionGroupMap = array();
 
-    private function __construct() {
-        
-    }
-
-    public function __clone() {
-        trigger_error(__CLASS__ . '不能复制呦~', E_USER_ERROR);
-    }
-
-    public function loadDbConfigs($dbConfigs) {
+    private function __construct($dbConfigs) {
         foreach ($dbConfigs as $groupName => $groupConfig) {
             $connGroup = new $groupConfig['class']($groupName, $groupConfig);
             $this->connectionGroupMap[$groupName] = $connGroup;
@@ -56,6 +62,10 @@ class ConnectionManager {
                 $this->defaultConnectionGroup = $connGroup;
             }
         }
+    }
+
+    public function __clone() {
+        trigger_error(__CLASS__ . '不能复制呦~', E_USER_ERROR);
     }
 
     /**
