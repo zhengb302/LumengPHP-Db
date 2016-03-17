@@ -16,12 +16,18 @@ class ConnectionManager {
      */
     private static $connectionManager;
 
+    /**
+     * 创建并返回连接管理器实例
+     * @param array $dbConfigs 数据库配置
+     * @return ConnectionManager
+     */
     public static function create($dbConfigs) {
         if (!is_null(self::$connectionManager)) {
             //@todo trigger error
         }
 
         self::$connectionManager = new self($dbConfigs);
+
         return self::$connectionManager;
     }
 
@@ -29,18 +35,13 @@ class ConnectionManager {
      * 返回连接管理器实例
      * @return ConnectionManager
      */
-    public static function getConnectionManager() {
+    public static function getInstance() {
         if (is_null(self::$connectionManager)) {
             //@todo trigger error
         }
 
         return self::$connectionManager;
     }
-
-    /**
-     * @var array 数据库配置
-     */
-    private $dbConfigs;
 
     /**
      * @var ConnectionGroup 默认的数据库连接组实例
@@ -57,7 +58,7 @@ class ConnectionManager {
             $connGroup = new $groupConfig['class']($groupName, $groupConfig);
             $this->connectionGroupMap[$groupName] = $connGroup;
 
-            //这会使第一个数据库组成为默认组
+            //这会使第一个数据库连接组成为默认组
             if (is_null($this->defaultConnectionGroup)) {
                 $this->defaultConnectionGroup = $connGroup;
             }
@@ -69,7 +70,7 @@ class ConnectionManager {
     }
 
     /**
-     * 
+     * 根据数据库连接组名称返回数据库连接组对象
      * @param string|null $groupName 组名，为null则返回默认组
      * @return ConnectionGroup
      */
@@ -83,30 +84,6 @@ class ConnectionManager {
         }
 
         trigger_error("未定义的数据库连接组，组名：{$groupName}", E_USER_ERROR);
-    }
-
-    /**
-     * （在默认连接组中）开始事务
-     * @return bool TRUE on success or FALSE on failure.
-     */
-    public function beginTransaction() {
-        return $this->defaultConnectionGroup->beginTransaction();
-    }
-
-    /**
-     * （在默认连接组中）提交事务
-     * @return bool TRUE on success or FALSE on failure.
-     */
-    public function commit() {
-        return $this->defaultConnectionGroup->commit();
-    }
-
-    /**
-     * （在默认连接组中）回滚事务
-     * @return bool TRUE on success or FALSE on failure.
-     */
-    public function rollback() {
-        return $this->defaultConnectionGroup->rollback();
     }
 
 }

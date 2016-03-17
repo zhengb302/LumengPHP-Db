@@ -17,7 +17,7 @@ class Model {
     private $dataAccessor;
 
     public function __construct() {
-        $connGroup = ConnectionManager::getConnectionManager()
+        $connGroup = ConnectionManager::getInstance()
                 ->getConnectionGroup($this->getGroupName());
 
         $basename = StringHelper::basename(get_called_class());

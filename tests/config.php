@@ -2,7 +2,7 @@
 
 $configs = array(
     //数据库配置
-    //第一个数据库组为默认组
+    //第一个数据库连接组为默认组
     'database' => array(
         //groupName => groupConfigs
         'group1' => array(
