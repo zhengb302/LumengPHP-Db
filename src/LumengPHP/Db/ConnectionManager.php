@@ -74,7 +74,7 @@ class ConnectionManager {
      * @param string|null $groupName 组名，为null则返回默认组
      * @return ConnectionGroup
      */
-    public function getConnectionGroup($groupName) {
+    public function getConnectionGroup($groupName = null) {
         if (is_null($groupName)) {
             return $this->defaultConnectionGroup;
         }
