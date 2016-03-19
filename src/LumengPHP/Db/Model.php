@@ -9,12 +9,7 @@ use LumengPHP\Utils\StringHelper;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class Model {
-
-    /**
-     * @var DataAccessor 
-     */
-    private $dataAccessor;
+class Model extends DataAccessor {
 
     public function __construct() {
         $connGroup = ConnectionManager::getInstance()
@@ -24,7 +19,7 @@ class Model {
         //去掉末尾的”Model“，得到的是驼峰风格的表名，如"UserProfile"
         $tableName = substr($basename, 0, strlen($basename) - 5);
 
-        $this->dataAccessor = new DataAccessor($connGroup, $tableName);
+        parent::__construct($connGroup, $tableName);
     }
 
     /**
@@ -33,15 +28,6 @@ class Model {
      */
     public function getGroupName() {
         return null;
-    }
-
-    public function __call($name, $arguments) {
-        if (!method_exists($this->dataAccessor, $name)) {
-            trigger_error("您访问的方法\"{$name}\"不存在~", E_USER_ERROR);
-        }
-
-        $callable = array($this->dataAccessor, $name);
-        return call_user_func_array($callable, $arguments);
     }
 
 }

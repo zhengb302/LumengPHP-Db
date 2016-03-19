@@ -12,11 +12,6 @@ use LumengPHP\Db\Connection;
 class MasterSlaveConnectionGroup extends ConnectionGroupBase {
 
     /**
-     * @var array 脏的数据库表数组
-     */
-    private $dirtyTables = array();
-
-    /**
      * @var Connection 主数据库连接
      */
     private $masterConnection;

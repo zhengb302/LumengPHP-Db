@@ -403,8 +403,7 @@ class DataAccessor {
      * @return Connection
      */
     protected function getConnection($operation) {
-        return $this->connGroup
-                        ->selectConnection($operation, $this->tableName);
+        return $this->connGroup->selectConnection($operation);
     }
 
     private function clear() {
