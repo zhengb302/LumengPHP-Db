@@ -74,7 +74,7 @@ class DataAccessor {
         } elseif ($condition instanceof Condition) {
             $this->condition = $condition;
         } else {
-            trigger_error('错误的参数类型！', E_USER_ERROR);
+            trigger_error('where: invalid argument type.', E_USER_ERROR);
         }
 
         $this->condition->setStatementContext($this->statementContext);

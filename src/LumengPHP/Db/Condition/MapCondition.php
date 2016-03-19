@@ -42,7 +42,9 @@ class MapCondition extends ConditionBase {
         switch (gettype($value)) {
             case 'object':
                 if (!($value instanceof SimpleCondition)) {
-                    trigger_error('xxxxxxxxxxxxxxxxxxxxxxx', E_USER_ERROR);
+                    $errMsg = 'the value of a MapCondition element must be a '
+                            . 'SimpleCondition instance if it is a object.';
+                    trigger_error($errMsg, E_USER_ERROR);
                 }
                 $condition = $value;
                 break;

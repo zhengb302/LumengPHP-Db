@@ -23,7 +23,7 @@ class ConnectionManager {
      */
     public static function create($dbConfigs) {
         if (!is_null(self::$connectionManager)) {
-            //@todo trigger error
+            trigger_error(__CLASS__ . ' can not be created more than once.', E_USER_ERROR);
         }
 
         self::$connectionManager = new self($dbConfigs);
@@ -65,7 +65,7 @@ class ConnectionManager {
     }
 
     public function __clone() {
-        trigger_error(__CLASS__ . '不能复制呦~', E_USER_ERROR);
+        trigger_error(__CLASS__ . ' can not be cloned.', E_USER_ERROR);
     }
 
     /**
@@ -83,7 +83,7 @@ class ConnectionManager {
         }
 
         if (!isset($this->dbConfigs[$name])) {
-            trigger_error("未定义的数据库连接，连接名称：{$name}", E_USER_ERROR);
+            trigger_error("undefined database connection \"{$name}\".", E_USER_ERROR);
         }
 
         $connConfig = $this->dbConfigs[$name];
