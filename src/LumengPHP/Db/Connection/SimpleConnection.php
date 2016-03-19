@@ -16,30 +16,51 @@ class SimpleConnection extends ConnectionBase {
      */
     private $pdo;
 
+    /**
+     * {@inheritdoc}
+     */
     public function query($sql, $parameters = null) {
         return $this->doQuery($this->getPdo(), $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function queryAll($sql, $parameters = null) {
         return $this->doQueryAll($this->getPdo(), $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute($sql, array $parameters = null) {
         return $this->doExecute($this->getPdo(), $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function lastInsertId($name = null) {
         return $this->getPdo()->lastInsertId($name);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function beginTransaction() {
         return $this->getPdo()->beginTransaction();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function commit() {
         return $this->getPdo()->commit();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function rollback() {
         return $this->getPdo()->rollBack();
     }
@@ -59,6 +80,14 @@ class SimpleConnection extends ConnectionBase {
         $this->pdo = $this->makePdo($dsn, $username, $password);
 
         return $this->pdo;
+    }
+
+    public function disableSlaves() {
+        //do nothing
+    }
+
+    public function enableSlaves() {
+        //do nothing
     }
 
 }

@@ -99,7 +99,7 @@ abstract class ConnectionBase implements Connection {
      * SQL执行错误则返回false。注意：这里所谓的"执行成功"只是SQL执行没发生错误，
      * 并不意味着找到了数据或更新了数据。
      */
-    protected function executeSql(PDO $pdo, $sql, array $parameters = null) {
+    private function executeSql(PDO $pdo, $sql, array $parameters = null) {
         try {
             $pdoStmt = $pdo->prepare($sql);
             $pdoStmt->execute($parameters);

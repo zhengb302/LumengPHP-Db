@@ -21,7 +21,7 @@ interface Connection {
     public function getTablePrefix();
 
     /**
-     * 执行一条SELECT查询语句，并返回一条记录（如果有）
+     * 执行一条<b>SELECT</b>查询语句，并返回第一条记录（如果有）
      * @param string $sql 带占位符的SQL语句
      * @param array $parameters 绑定参数。参数个数必须和SQL语句中的占位符数量一样多
      * @return array|null|false 成功则返回相应的数据，没有符合条件的记录则返回null，
@@ -31,7 +31,7 @@ interface Connection {
     public function query($sql, $parameters = null);
 
     /**
-     * 执行一条SELECT查询语句，并返回多条记录（如果有）
+     * 执行一条<b>SELECT</b>查询语句，并返回多条记录（如果有）
      * @param string $sql 带占位符的SQL语句
      * @param array $parameters 绑定参数。参数个数必须和SQL语句中的占位符数量一样多
      * @return array|null|false 成功则返回相应的数据，没有符合条件的记录则返回null，
@@ -41,7 +41,7 @@ interface Connection {
     public function queryAll($sql, $parameters = null);
 
     /**
-     * 执行一条INSERT、UPDATE或DELETE语句，并返回相应的执行结果
+     * 执行一条<b>INSERT</b>、<b>UPDATE</b>或<b>DELETE</b>语句，并返回相应的执行结果
      * @param string $sql 带占位符的SQL语句
      * @param array $parameters 绑定参数。参数个数必须和SQL语句中的占位符数量一样多
      * @return int|false 成功则返回受影响的行数，SQL执行错误则返回false。
@@ -50,7 +50,7 @@ interface Connection {
     public function execute($sql, array $parameters = null);
 
     /**
-     * 返回最近一次执行INSERT语句所生成的新记录的ID
+     * 返回最近一次执行<b>INSERT</b>语句所生成的新记录的ID
      * @param string $name 应该返回ID的那个序列对象的名称。
      * @return int 
      */
@@ -73,4 +73,18 @@ interface Connection {
      * @return bool TRUE on success or FALSE on failure.
      */
     public function rollback();
+
+    /**
+     * 禁用”从服务器“。执行此方法会导致该连接上的所有<b>读</b>操作都在master上进行，
+     * 直到调用了enableSlaves()方法为止。该方法一般和enableSlaves()方法一起使用。<br />
+     * 注意：这只对配置了主从模式的架构起作用
+     */
+    public function disableSlaves();
+
+    /**
+     * 启用”从服务器“。执行此方法会恢复之前的读写分离模式，
+     * 该方法一般和disableSlaves()方法一起使用。<br />
+     * 注意：这只对配置了主从模式的架构起作用
+     */
+    public function enableSlaves();
 }

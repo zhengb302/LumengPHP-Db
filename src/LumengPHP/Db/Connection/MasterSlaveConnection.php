@@ -26,26 +26,67 @@ class MasterSlaveConnection extends ConnectionBase {
      */
     private $inTransaction = false;
 
+    /**
+     * @var bool 是否只使用master服务器(这会导致该连接上的所有读写操作都在master上进行)
+     */
+    private $onlyUseMaster = false;
+
+    /**
+     * {@inheritdoc}
+     */
     public function query($sql, $parameters = null) {
-        $pdo = $this->inTransaction ? $this->getMasterPdo() :
-                $this->selectSlavePdo();
+        $pdo = $this->inTransaction || $this->onlyUseMaster ?
+                $this->getMasterPdo() : $this->selectSlavePdo();
 
         return $this->doQuery($pdo, $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function queryAll($sql, $parameters = null) {
-        $pdo = $this->inTransaction ? $this->getMasterPdo() :
-                $this->selectSlavePdo();
+        $pdo = $this->inTransaction || $this->onlyUseMaster ?
+                $this->getMasterPdo() : $this->selectSlavePdo();
 
         return $this->doQueryAll($pdo, $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute($sql, array $parameters = null) {
         return $this->doExecute($this->getMasterPdo(), $sql, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function lastInsertId($name = null) {
         return $this->getMasterPdo()->lastInsertId($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function beginTransaction() {
+        $this->inTransaction = true;
+        return $this->getMasterPdo()->beginTransaction();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function commit() {
+        $this->inTransaction = false;
+        return $this->getMasterPdo()->commit();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rollback() {
+        $this->inTransaction = false;
+        return $this->getMasterPdo()->rollBack();
     }
 
     /**
@@ -85,19 +126,18 @@ class MasterSlaveConnection extends ConnectionBase {
         return $this->slavePdo;
     }
 
-    public function beginTransaction() {
-        $this->inTransaction = true;
-        return $this->getMasterPdo()->beginTransaction();
+    /**
+     * {@inheritdoc}
+     */
+    public function disableSlaves() {
+        $this->onlyUseMaster = true;
     }
 
-    public function commit() {
-        $this->inTransaction = false;
-        return $this->getMasterPdo()->commit();
-    }
-
-    public function rollback() {
-        $this->inTransaction = false;
-        return $this->getMasterPdo()->rollBack();
+    /**
+     * {@inheritdoc}
+     */
+    public function enableSlaves() {
+        $this->onlyUseMaster = false;
     }
 
 }
