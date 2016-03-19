@@ -1,9 +1,10 @@
 # todo list
 
-* 增加对EXISTS、NOT EXISTS条件子句的支持
-* 增加对GROUP BY、HAVING子句的支持
+* ~~增加对EXISTS、NOT EXISTS条件子句的支持~~
+* 完成代码注释中的各todo项
 * 完善测试环境，增加必要的测试用例
 * 发布1.0.0版
+* 增加对GROUP BY、HAVING子句的支持
 * 完善注释及文档
 
 #### 2016-03-19

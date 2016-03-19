@@ -14,10 +14,14 @@ use LumengPHP\Db\Condition\NotEqualCondition;
 use LumengPHP\Db\Condition\GreaterThanCondition;
 use LumengPHP\Db\Condition\LessThanCondition;
 use LumengPHP\Db\Condition\LikeCondition;
+use LumengPHP\Db\Condition\ExistsCondition;
 
 /**
- * 
- * @param array $conditions
+ * Usage:
+ *   $cond1 = ...
+ *   $cond2 = ...
+ *   $andCond = sqlAnd(array($cond1, $cond2));
+ * @param array $conditions 各子条件
  * @return Condition
  */
 function sqlAnd(array $conditions) {
@@ -30,7 +34,7 @@ function sqlAnd(array $conditions) {
 
 /**
  * 
- * @param array $conditions
+ * @param array $conditions 各子条件
  * @return Condition
  */
 function sqlOr(array $conditions) {
@@ -149,4 +153,22 @@ function sqlLike($pattern) {
  */
 function sqlNotLike($pattern) {
     return new LikeCondition($pattern, true);
+}
+
+/**
+ * 
+ * @param string $subSql
+ * @return Condition
+ */
+function sqlExists($subSql) {
+    return new ExistsCondition($subSql);
+}
+
+/**
+ * 
+ * @param string $subSql
+ * @return Condition
+ */
+function sqlNotExists($subSql) {
+    return new ExistsCondition($subSql, true);
 }
