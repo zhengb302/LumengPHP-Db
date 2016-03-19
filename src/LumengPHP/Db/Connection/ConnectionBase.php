@@ -50,6 +50,9 @@ abstract class ConnectionBase implements Connection {
         //设置PDO错误模式为"抛出异常"
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        //设置字符集
+        $pdo->exec("SET NAMES {$this->config['charset']}");
+
         return $pdo;
     }
 
