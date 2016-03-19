@@ -5,7 +5,7 @@ namespace LumengPHP\Db\ConnectionGroup;
 use LumengPHP\Db\Connection;
 
 /**
- * 主从数据库连接组
+ * 主从数据库连接组，支持数据库读写分离
  *
  * @author Lumeng <zhengb302@163.com>
  */
@@ -31,14 +31,12 @@ class MasterSlaveConnectionGroup extends ConnectionGroupBase {
      */
     private $inTransaction = false;
 
-    public function selectConnection($operation, $tableName) {
+    public function selectConnection($operation) {
         $conn = null;
         switch ($operation) {
             case Connection::OP_READ:
-                //如果要读取的表已经被更新过，则从Master读取；或者，
-                //当前操作在某个事务里，则也从Master读取
-                if (in_array($tableName, $this->dirtyTables) ||
-                        $this->inTransaction) {
+                //当前操作在某个事务里，则从Master读取
+                if ($this->inTransaction) {
                     $conn = $this->getMasterConnection();
                     break;
                 }
@@ -47,12 +45,6 @@ class MasterSlaveConnectionGroup extends ConnectionGroupBase {
                 break;
             case Connection::OP_WRITE:
                 $conn = $this->getMasterConnection();
-
-                //要更新的表加入到dirtyTables中
-                if (!in_array($tableName, $this->dirtyTables)) {
-                    $this->dirtyTables[] = $tableName;
-                }
-
                 break;
             default:
                 trigger_error('不受支持的数据库操作！', E_USER_ERROR);

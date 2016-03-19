@@ -23,10 +23,9 @@ interface ConnectionGroup {
     /**
      * 选择数据库连接
      * @param int $operation 操作：OP_READ、OP_WRITE
-     * @param string $tableName 要操作的表名
      * @return Connection
      */
-    public function selectConnection($operation, $tableName);
+    public function selectConnection($operation);
 
     /**
      * 开始事务

@@ -19,10 +19,9 @@ class SimpleConnectionGroup extends ConnectionGroupBase {
     /**
      * 
      * @param int $operation
-     * @param string $tableName
      * @return Connection
      */
-    public function selectConnection($operation, $tableName) {
+    public function selectConnection($operation) {
         return $this->getConnection();
     }
 
