@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use LumengPHP\Utils\StringHelper;
+use LumengPHP\Db\Misc\TableNameHelper;
 
 /**
  * Model基类
@@ -15,7 +15,7 @@ class Model extends DataAccessor {
         $connection = ConnectionManager::getInstance()
                 ->getConnection($this->getConnectionName());
 
-        $basename = StringHelper::basename(get_called_class());
+        $basename = TableNameHelper::basename(get_called_class());
         //去掉末尾的”Model“，得到的是驼峰风格的表名，如"UserProfile"
         $tableName = substr($basename, 0, strlen($basename) - 5);
 

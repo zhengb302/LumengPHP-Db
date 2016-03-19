@@ -9,8 +9,8 @@ use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\Condition;
 use LumengPHP\Db\Condition\MapCondition;
-use LumengPHP\Utils\StringHelper;
 use LumengPHP\Db\Join\Join;
+use LumengPHP\Db\Misc\TableNameHelper;
 
 /**
  * An abstract database access layer.
@@ -47,7 +47,7 @@ class DataAccessor {
     public function __construct(Connection $connection, $tableName) {
         $this->connection = $connection;
         $this->tableName = $this->connection->getTablePrefix() .
-                StringHelper::camel2id($tableName, '_');
+                TableNameHelper::camel2id($tableName, '_');
 
         $this->statementContext = new StatementContext();
         $this->statementContext->setTableName($this->tableName);
@@ -101,7 +101,7 @@ class DataAccessor {
      */
     public function join($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
-                . StringHelper::camel2id($table, '_');
+                . TableNameHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
 
@@ -118,7 +118,7 @@ class DataAccessor {
      */
     public function leftJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
-                . StringHelper::camel2id($table, '_');
+                . TableNameHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
         $join->setType(Join::LEFT_JOIN);
@@ -136,7 +136,7 @@ class DataAccessor {
      */
     public function rightJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
-                . StringHelper::camel2id($table, '_');
+                . TableNameHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
         $join->setType(Join::RIGHT_JOIN);
