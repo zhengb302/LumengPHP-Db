@@ -2,41 +2,37 @@
 
 $configs = array(
     //数据库配置
-    //第一个数据库连接组为默认组
+    //第一个数据库连接为默认连接
     'database' => array(
-        //groupName => groupConfigs
-        'group1' => array(
-            'class' => '\LumengPHP\Db\ConnectionGroup\SimpleConnectionGroup',
-            //数据库类型：mysql、pgsql、oracle、mssql等
-            'type' => 'mysql',
+        //connectionName => connectionConfig
+        //first connection
+        'db1' => array(
+            'class' => 'LumengPHP\Db\Connection\SimpleConnection',
             //表前缀，如：bbs_
             'tablePrefix' => '',
+            //数据库字符集
+            'charset' => 'utf8',
             //数据库配置
-            'host' => '',
-            'port' => 3306,
-            'database' => '',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=bbs',
             'username' => '',
             'password' => '',
         ),
-        'group2' => array(
-            'class' => '\LumengPHP\Db\ConnectionGroup\MasterSlaveConnectionGroup',
-            //数据库类型：mysql、pgsql、oracle、mssql等
-            'type' => 'mysql',
+        //second connection
+        'db2' => array(
+            'class' => 'LumengPHP\Db\Connection\MasterSlaveConnection',
             //表前缀，如：bbs_
             'tablePrefix' => '',
+            //数据库字符集
+            'charset' => 'utf8',
             //数据库服务器列表，第一个为master服务器，剩下的为从服务器
             'servers' => array(
                 array(
-                    'host' => '',
-                    'port' => 3306,
-                    'database' => '',
+                    'dsn' => 'mysql:host=127.0.0.1;dbname=bbs',
                     'username' => '',
                     'password' => '',
                 ),
                 array(
-                    'host' => '',
-                    'port' => 3306,
-                    'database' => '',
+                    'dsn' => 'mysql:host=127.0.0.1;dbname=bbs',
                     'username' => '',
                     'password' => '',
                 ),
