@@ -402,7 +402,7 @@ class DataAccessor {
      * @param int $operation
      * @return Connection
      */
-    protected function getConnection($operation) {
+    private function getConnection($operation) {
         return $this->connGroup->selectConnection($operation);
     }
 
