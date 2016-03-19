@@ -3,6 +3,8 @@
 namespace LumengPHP\Db\Connection;
 
 use PDO;
+use PDOStatement;
+use Exception;
 
 /**
  * 数据库连接基类
@@ -49,6 +51,63 @@ abstract class ConnectionBase implements Connection {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $pdo;
+    }
+
+    protected function doQuery(PDO $pdo, $sql, array $parameters = null) {
+        $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
+
+        //SQL执行发生错误
+        if ($pdoStmt === false) {
+            return false;
+        }
+
+        $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row ? $row : null;
+    }
+
+    protected function doQueryAll(PDO $pdo, $sql, $parameters = null) {
+        $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
+
+        //SQL执行发生错误
+        if ($pdoStmt === false) {
+            return false;
+        }
+
+        $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows ? $rows : null;
+    }
+
+    protected function doExecute(PDO $pdo, $sql, $parameters = null) {
+        $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
+
+        //SQL执行发生错误
+        if ($pdoStmt === false) {
+            return false;
+        }
+
+        return $pdoStmt->rowCount();
+    }
+
+    /**
+     * 预编译并执行一个SQL语句
+     * @param PDO $pdo PDO实例
+     * @param string $sql 带占位符的SQL语句
+     * @param array $parameters 预编译参数
+     * @return PDOStatement|false SQL执行成功则返回一个PDOStatement对象，
+     * SQL执行错误则返回false。注意：这里所谓的"执行成功"只是SQL执行没发生错误，
+     * 并不意味着找到了数据或更新了数据。
+     */
+    protected function executeSql(PDO $pdo, $sql, array $parameters = null) {
+        try {
+            $pdoStmt = $pdo->prepare($sql);
+            $pdoStmt->execute($parameters);
+            return $pdoStmt;
+        } catch (Exception $e) {
+            //@todo log error message
+            return false;
+        }
     }
 
 }

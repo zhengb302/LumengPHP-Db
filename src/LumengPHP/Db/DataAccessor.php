@@ -2,8 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use PDO;
-use LumengPHP\Db\ConnectionGroup\ConnectionGroup;
+use LumengPHP\Db\Connection\Connection;
 use LumengPHP\Db\Statement\SelectStatement;
 use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
@@ -14,16 +13,16 @@ use LumengPHP\Utils\StringHelper;
 use LumengPHP\Db\Join\Join;
 
 /**
- * An database access layer.
+ * An abstract database access layer.
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
 class DataAccessor {
 
     /**
-     * @var ConnectionGroup 所属的数据库连接组
+     * @var Connection 所属的数据库连接
      */
-    private $connGroup;
+    private $connection;
 
     /**
      * @var StatementContext SQL语句环境
@@ -31,7 +30,7 @@ class DataAccessor {
     private $statementContext;
 
     /**
-     * @var string 表名（包含表前缀）
+     * @var string 真实表名（包含表前缀）
      */
     private $tableName;
 
@@ -42,12 +41,12 @@ class DataAccessor {
 
     /**
      * 
-     * @param ConnectionGroup $connGroup 数据库连接组
-     * @param string $tableName 驼峰风格的表名，不含表前缀，如"UserProfile"
+     * @param Connection $connection 数据库连接
+     * @param string $tableName 抽象表名，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct(ConnectionGroup $connGroup, $tableName) {
-        $this->connGroup = $connGroup;
-        $this->tableName = $this->connGroup->getTablePrefix() .
+    public function __construct(Connection $connection, $tableName) {
+        $this->connection = $connection;
+        $this->tableName = $this->connection->getTablePrefix() .
                 StringHelper::camel2id($tableName, '_');
 
         $this->statementContext = new StatementContext();
@@ -101,7 +100,7 @@ class DataAccessor {
      * @return Model
      */
     public function join($table, $alias, $on) {
-        $trueTableName = $this->connGroup->getTablePrefix()
+        $trueTableName = $this->connection->getTablePrefix()
                 . StringHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
@@ -118,7 +117,7 @@ class DataAccessor {
      * @return Model
      */
     public function leftJoin($table, $alias, $on) {
-        $trueTableName = $this->connGroup->getTablePrefix()
+        $trueTableName = $this->connection->getTablePrefix()
                 . StringHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
@@ -136,7 +135,7 @@ class DataAccessor {
      * @return Model
      */
     public function rightJoin($table, $alias, $on) {
-        $trueTableName = $this->connGroup->getTablePrefix()
+        $trueTableName = $this->connection->getTablePrefix()
                 . StringHelper::camel2id($table, '_');
 
         $join = new Join($trueTableName, $alias, $on);
@@ -198,19 +197,11 @@ class DataAccessor {
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $pdoStmt = $this->getConnection(Connection::OP_READ)
-                ->execute($sql, $this->statementContext->getParameters());
+        $row = $this->connection->query($sql, $this->statementContext->getParameters());
 
         $this->clear();
 
-        //SQL执行发生错误
-        if ($pdoStmt === false) {
-            return false;
-        }
-
-        $row = $pdoStmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row ? $row : null;
+        return $row;
     }
 
     /**
@@ -224,18 +215,11 @@ class DataAccessor {
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $pdoStmt = $this->getConnection(Connection::OP_READ)
-                ->execute($sql, $this->statementContext->getParameters());
+        $rows = $this->connection->queryAll($sql, $this->statementContext->getParameters());
 
         $this->clear();
 
-        if ($pdoStmt === false) {
-            return false;
-        }
-
-        $rows = $pdoStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $rows ? $rows : null;
+        return $rows;
     }
 
     /**
@@ -337,17 +321,15 @@ class DataAccessor {
         $statement->setStatementContext($this->statementContext);
         $sql = $statement->parse();
 
-        $conn = $this->getConnection(Connection::OP_WRITE);
-
-        $pdoStmt = $conn->execute($sql, $this->statementContext->getParameters());
+        $result = $this->connection->execute($sql, $this->statementContext->getParameters());
 
         $this->clear();
 
-        if ($pdoStmt === false) {
+        if ($result === false) {
             return false;
         }
 
-        return $conn->lastInsertId();
+        return $this->connection->lastInsertId();
     }
 
     /**
@@ -362,16 +344,11 @@ class DataAccessor {
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $pdoStmt = $this->getConnection(Connection::OP_WRITE)
-                ->execute($sql, $this->statementContext->getParameters());
+        $rowCount = $this->connection->execute($sql, $this->statementContext->getParameters());
 
         $this->clear();
 
-        if ($pdoStmt === false) {
-            return false;
-        }
-
-        return $pdoStmt->rowCount();
+        return $rowCount;
     }
 
     /**
@@ -385,25 +362,11 @@ class DataAccessor {
         $statement->setCondition($this->condition);
         $sql = $statement->parse();
 
-        $pdoStmt = $this->getConnection(Connection::OP_WRITE)
-                ->execute($sql, $this->statementContext->getParameters());
+        $rowCount = $this->connection->execute($sql, $this->statementContext->getParameters());
 
         $this->clear();
 
-        if ($pdoStmt === false) {
-            return false;
-        }
-
-        return $pdoStmt->rowCount();
-    }
-
-    /**
-     * 返回数据库连接
-     * @param int $operation
-     * @return Connection
-     */
-    private function getConnection($operation) {
-        return $this->connGroup->selectConnection($operation);
+        return $rowCount;
     }
 
     private function clear() {

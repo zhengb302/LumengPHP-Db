@@ -26,20 +26,26 @@ class MasterSlaveConnection extends ConnectionBase {
      */
     private $inTransaction = false;
 
-    public function execute($sql, array $parameters = null) {
-        
-    }
-
-    public function lastInsertId($name = null) {
-        
-    }
-
     public function query($sql, $parameters = null) {
-        
+        $pdo = $this->inTransaction ? $this->getMasterPdo() :
+                $this->selectSlavePdo();
+
+        return $this->doQuery($pdo, $sql, $parameters);
     }
 
     public function queryAll($sql, $parameters = null) {
-        
+        $pdo = $this->inTransaction ? $this->getMasterPdo() :
+                $this->selectSlavePdo();
+
+        return $this->doQueryAll($pdo, $sql, $parameters);
+    }
+
+    public function execute($sql, array $parameters = null) {
+        return $this->doExecute($this->getMasterPdo(), $sql, $parameters);
+    }
+
+    public function lastInsertId($name = null) {
+        return $this->getMasterPdo()->lastInsertId($name);
     }
 
     /**

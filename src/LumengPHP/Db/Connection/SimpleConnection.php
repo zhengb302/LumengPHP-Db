@@ -16,20 +16,20 @@ class SimpleConnection extends ConnectionBase {
      */
     private $pdo;
 
-    public function execute($sql, array $parameters = null) {
-        
-    }
-
-    public function lastInsertId($name = null) {
-        
-    }
-
     public function query($sql, $parameters = null) {
-        
+        return $this->doQuery($this->getPdo(), $sql, $parameters);
     }
 
     public function queryAll($sql, $parameters = null) {
-        
+        return $this->doQueryAll($this->getPdo(), $sql, $parameters);
+    }
+
+    public function execute($sql, array $parameters = null) {
+        return $this->doExecute($this->getPdo(), $sql, $parameters);
+    }
+
+    public function lastInsertId($name = null) {
+        return $this->getPdo()->lastInsertId($name);
     }
 
     public function beginTransaction() {

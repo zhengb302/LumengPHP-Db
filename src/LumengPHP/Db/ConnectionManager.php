@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use LumengPHP\Db\ConnectionGroup\ConnectionGroup;
+use LumengPHP\Db\Connection\Connection;
 
 /**
  * 连接管理器
@@ -36,32 +36,31 @@ class ConnectionManager {
      * @return ConnectionManager
      */
     public static function getInstance() {
-        if (is_null(self::$connectionManager)) {
-            //@todo trigger error
-        }
-
         return self::$connectionManager;
     }
 
     /**
-     * @var ConnectionGroup 默认的数据库连接组实例
+     * @var array 数据库配置
      */
-    private $defaultConnectionGroup;
+    private $dbConfigs;
 
     /**
-     * @var array 数据库连接组map，格式：groupName => groupInstance
+     * @var string 默认的数据库连接名称
      */
-    private $connectionGroupMap = array();
+    private $defaultConnectionName;
+
+    /**
+     * @var array 数据库连接map，格式：name => connectionInstance
+     */
+    private $connectionMap = array();
 
     private function __construct($dbConfigs) {
-        foreach ($dbConfigs as $groupName => $groupConfig) {
-            $connGroup = new $groupConfig['class']($groupName, $groupConfig);
-            $this->connectionGroupMap[$groupName] = $connGroup;
+        $this->dbConfigs = $dbConfigs;
 
-            //这会使第一个数据库连接组成为默认组
-            if (is_null($this->defaultConnectionGroup)) {
-                $this->defaultConnectionGroup = $connGroup;
-            }
+        foreach ($dbConfigs as $name => $config) {
+            //选取第一个连接名称作为默认连接名称之后，退出循环
+            $this->defaultConnectionName = $name;
+            break;
         }
     }
 
@@ -70,20 +69,31 @@ class ConnectionManager {
     }
 
     /**
-     * 根据数据库连接组名称返回数据库连接组对象
-     * @param string|null $groupName 组名，为null则返回默认组
-     * @return ConnectionGroup
+     * 根据数据库连接名称返回数据库连接对象
+     * @param string|null $name 连接名称，为null则返回默认连接
+     * @return Connection
      */
-    public function getConnectionGroup($groupName = null) {
-        if (is_null($groupName)) {
-            return $this->defaultConnectionGroup;
+    public function getConnection($name = null) {
+        if (is_null($name)) {
+            $name = $this->defaultConnectionName;
         }
 
-        if (isset($this->connectionGroupMap[$groupName])) {
-            return $this->connectionGroupMap[$groupName];
+        if (isset($this->connectionMap[$name])) {
+            return $this->connectionMap[$name];
         }
 
-        trigger_error("未定义的数据库连接组，组名：{$groupName}", E_USER_ERROR);
+        if (!isset($this->dbConfigs[$name])) {
+            trigger_error("未定义的数据库连接，连接名称：{$name}", E_USER_ERROR);
+        }
+
+        $connConfig = $this->dbConfigs[$name];
+        $class = $connConfig['class'];
+        unset($connConfig['class']);
+
+        $conn = new $class($name, $connConfig);
+        $this->connectionMap[$name] = $conn;
+
+        return $conn;
     }
 
 }
