@@ -1,5 +1,6 @@
 # todo list
 
+* 支持Logger组件，用以进行数据库相关操作的日志记录
 * 完善测试环境，增加必要的测试用例
 * 发布1.0.0版
 * 合并StatementContext类和各Statement类为QueryBuilder类
