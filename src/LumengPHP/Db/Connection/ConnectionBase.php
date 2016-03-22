@@ -5,6 +5,7 @@ namespace LumengPHP\Db\Connection;
 use PDO;
 use PDOStatement;
 use Exception;
+use Psr\Log\LoggerInterface;
 
 /**
  * 数据库连接基类
@@ -23,9 +24,15 @@ abstract class ConnectionBase implements Connection {
      */
     protected $config;
 
-    public function __construct($name, $config) {
+    /**
+     * @var LoggerInterface 日志组件
+     */
+    protected $logger;
+
+    public function __construct($name, $config, LoggerInterface $logger = null) {
         $this->name = $name;
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     public function getName() {
@@ -107,8 +114,13 @@ abstract class ConnectionBase implements Connection {
             $pdoStmt = $pdo->prepare($sql);
             $pdoStmt->execute($parameters);
             return $pdoStmt;
-        } catch (Exception $e) {
-            //@todo log error message
+        } catch (Exception $ex) {
+            if ($this->logger) {
+                $this->logger->error($ex->getMessage());
+            }
+
+            //@todo 这里可以再抛出异常
+
             return false;
         }
     }
