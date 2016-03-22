@@ -3,6 +3,7 @@
 namespace LumengPHP\Db;
 
 use LumengPHP\Db\Connection\Connection;
+use Psr\Log\LoggerInterface;
 
 /**
  * 连接管理器
@@ -71,9 +72,10 @@ class ConnectionManager {
     /**
      * 根据数据库连接名称返回数据库连接对象
      * @param string|null $name 连接名称，为null则返回默认连接
+     * @param LoggerInterface $logger 可选的Logger组件
      * @return Connection
      */
-    public function getConnection($name = null) {
+    public function getConnection($name = null, LoggerInterface $logger = null) {
         if (is_null($name)) {
             $name = $this->defaultConnectionName;
         }
@@ -90,7 +92,7 @@ class ConnectionManager {
         $class = $connConfig['class'];
         unset($connConfig['class']);
 
-        $conn = new $class($name, $connConfig);
+        $conn = new $class($name, $connConfig, $logger);
         $this->connectionMap[$name] = $conn;
 
         return $conn;
