@@ -9,11 +9,10 @@ use LumengPHP\Db\Misc\TableNameHelper;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class Model extends DataAccessor {
+abstract class Model extends DataAccessor {
 
-    public function __construct() {
-        $connection = ConnectionManager::getInstance()
-                ->getConnection($this->getConnectionName());
+    public function __construct(ConnectionManager $connManager) {
+        $connection = $connManager->getConnection($this->getConnectionName());
 
         $basename = TableNameHelper::basename(get_called_class());
         //去掉末尾的”Model“，得到的是驼峰风格的表名，如"UserProfile"

@@ -13,34 +13,6 @@ use Psr\Log\LoggerInterface;
 class ConnectionManager {
 
     /**
-     * @var ConnectionManager 连接管理器唯一实例
-     */
-    private static $connectionManager;
-
-    /**
-     * 创建并返回连接管理器实例
-     * @param array $dbConfigs 数据库配置
-     * @return ConnectionManager
-     */
-    public static function create($dbConfigs) {
-        if (!is_null(self::$connectionManager)) {
-            trigger_error(__CLASS__ . ' can not be created more than once.', E_USER_ERROR);
-        }
-
-        self::$connectionManager = new self($dbConfigs);
-
-        return self::$connectionManager;
-    }
-
-    /**
-     * 返回连接管理器实例
-     * @return ConnectionManager
-     */
-    public static function getInstance() {
-        return self::$connectionManager;
-    }
-
-    /**
      * @var array 数据库配置
      */
     private $dbConfigs;
@@ -55,27 +27,26 @@ class ConnectionManager {
      */
     private $connectionMap = array();
 
-    private function __construct($dbConfigs) {
+    /**
+     * @var LoggerInterface 可选的日志组件
+     */
+    private $logger;
+
+    public function __construct($dbConfigs, LoggerInterface $logger = null) {
         $this->dbConfigs = $dbConfigs;
 
-        foreach ($dbConfigs as $name => $config) {
-            //选取第一个连接名称作为默认连接名称之后，退出循环
-            $this->defaultConnectionName = $name;
-            break;
-        }
-    }
+        //选取第一个连接名称作为默认连接名称
+        $this->defaultConnectionName = array_keys($dbConfigs)[0];
 
-    public function __clone() {
-        trigger_error(__CLASS__ . ' can not be cloned.', E_USER_ERROR);
+        $this->logger = $logger;
     }
 
     /**
      * 根据数据库连接名称返回数据库连接对象
      * @param string|null $name 连接名称，为null则返回默认连接
-     * @param LoggerInterface $logger 可选的Logger组件
      * @return Connection
      */
-    public function getConnection($name = null, LoggerInterface $logger = null) {
+    public function getConnection($name = null) {
         if (is_null($name)) {
             $name = $this->defaultConnectionName;
         }
@@ -92,7 +63,7 @@ class ConnectionManager {
         $class = $connConfig['class'];
         unset($connConfig['class']);
 
-        $conn = new $class($name, $connConfig, $logger);
+        $conn = new $class($name, $connConfig, $this->logger);
         $this->connectionMap[$name] = $conn;
 
         return $conn;

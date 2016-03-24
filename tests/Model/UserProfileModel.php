@@ -7,6 +7,6 @@ namespace tests\Model;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class UserProfileModel extends \LumengPHP\Db\Model {
+class UserProfileModel extends BaseModel {
     
 }

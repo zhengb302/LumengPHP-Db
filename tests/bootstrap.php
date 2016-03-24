@@ -18,4 +18,4 @@ use LumengPHP\Db\ConnectionManager;
 require(ShortcutFunctionHelper::getPath());
 
 $dbConfigs = get_config('database');
-ConnectionManager::create($dbConfigs);
+$connManager = new ConnectionManager($dbConfigs);
