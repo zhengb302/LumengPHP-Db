@@ -7,7 +7,7 @@ namespace LumengPHP\Db\Statement;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class DeleteStatement extends StatementBase {
+class DeleteStatement extends BaseStatement {
 
     public function parse() {
         return 'DELETE FROM ' . $this->statementContext->getTableName() .

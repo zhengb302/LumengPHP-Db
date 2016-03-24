@@ -10,7 +10,7 @@ use LumengPHP\Db\Misc\FieldHelper;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-abstract class StatementBase implements Statement {
+abstract class BaseStatement implements Statement {
 
     /**
      * @var StatementContext 

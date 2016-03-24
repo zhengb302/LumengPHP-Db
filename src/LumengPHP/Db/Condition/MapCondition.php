@@ -7,7 +7,7 @@ namespace LumengPHP\Db\Condition;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class MapCondition extends ConditionBase {
+class MapCondition extends BaseCondition {
 
     /**
      * @var array 关联数组，key是字段名称，value是字段值

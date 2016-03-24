@@ -9,7 +9,7 @@ use PDO;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class MasterSlaveConnection extends ConnectionBase {
+class MasterSlaveConnection extends BaseConnection {
 
     /**
      * @var PDO 主数据库连接

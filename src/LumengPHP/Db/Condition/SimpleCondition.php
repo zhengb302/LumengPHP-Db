@@ -9,7 +9,7 @@ use LumengPHP\Db\Misc\FieldHelper;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-abstract class SimpleCondition extends ConditionBase {
+abstract class SimpleCondition extends BaseCondition {
 
     /**
      * @var string 原始字段值

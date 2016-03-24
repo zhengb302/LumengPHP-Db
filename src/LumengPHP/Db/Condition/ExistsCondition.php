@@ -7,7 +7,7 @@ namespace LumengPHP\Db\Condition;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class ExistsCondition extends ConditionBase {
+class ExistsCondition extends BaseCondition {
 
     /**
      * @var string （NOT）EXISTS条件的sql子句

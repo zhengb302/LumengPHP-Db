@@ -7,7 +7,7 @@ namespace LumengPHP\Db\Condition;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-abstract class CompositeCondition extends ConditionBase {
+abstract class CompositeCondition extends BaseCondition {
 
     /**
      * @var array 

@@ -9,7 +9,7 @@ use LumengPHP\Db\StatementContext;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-abstract class ConditionBase implements Condition {
+abstract class BaseCondition implements Condition {
 
     /**
      * @var StatementContext 

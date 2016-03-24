@@ -9,7 +9,7 @@ use PDO;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class SimpleConnection extends ConnectionBase {
+class SimpleConnection extends BaseConnection {
 
     /**
      * @var PDO 

@@ -9,7 +9,7 @@ use LumengPHP\Db\Misc\FieldHelper;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class UpdateStatement extends StatementBase {
+class UpdateStatement extends BaseStatement {
 
     /**
      * @var array 要保存的数据，field => value 形式

@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-abstract class ConnectionBase implements Connection {
+abstract class BaseConnection implements Connection {
 
     /**
      * @var string 连接名称
