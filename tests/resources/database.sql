@@ -5,6 +5,13 @@
 -- 数据库密码：bbs
 -- 表前缀：bbs_
 
+
+-- 创建用户及授权
+CREATE USER 'bbs'@'%' IDENTIFIED BY  'bbs';
+GRANT USAGE ON * . * TO  'bbs'@'%' IDENTIFIED BY  'bbs' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON  `bbsdb` . * TO  'bbs'@'%';
+
+
 CREATE TABLE `bbs_user` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(15) NOT NULL COMMENT '用户名，3到15位。全系统唯一',
