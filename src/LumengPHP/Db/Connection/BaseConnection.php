@@ -101,7 +101,7 @@ abstract class BaseConnection implements Connection {
     }
 
     /**
-     * 预编译并执行一个SQL语句
+     * 预编译并执行一个SQL语句（这是一个更为底层的方法，供其他更高层的方法调用）
      * @param PDO $pdo PDO实例
      * @param string $sql 带占位符的SQL语句
      * @param array $parameters 预编译参数
@@ -116,10 +116,9 @@ abstract class BaseConnection implements Connection {
             return $pdoStmt;
         } catch (Exception $ex) {
             if ($this->logger) {
-                $this->logger->error($ex->getMessage());
+                $encodedParameters = json_encode($parameters);
+                $this->logger->error($ex->getMessage() . ". SQL: {$sql}, parameters: {$encodedParameters}.");
             }
-
-            //@todo 这里可以再抛出异常
 
             return false;
         }
