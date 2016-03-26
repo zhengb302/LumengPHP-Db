@@ -38,4 +38,20 @@ class UpdateTest extends BaseDatabaseTestCase {
         $this->assertEquals(md5('mypassword'), $user['password']);
     }
 
+    /**
+     * 测试不带条件的数据更新
+     * @expectedException \LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException
+     */
+    public function testUpdateWithoutAnyConditions() {
+        $userModel = new UserModel();
+
+        //更新密码和邮箱
+        $newData = array(
+            'password' => md5('mypassword'),
+            'email' => 'hanmeimei@gmail.com',
+        );
+
+        $userModel->save($newData);
+    }
+
 }
