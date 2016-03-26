@@ -1,10 +1,10 @@
 <?php
 
-namespace tests;
+namespace tests\TestCases;
 
-use \LumengPHP\Db\StatementContext;
-use \LumengPHP\Db\Condition\MapCondition;
-use \LumengPHP\Db\Statement\SelectStatement;
+use LumengPHP\Db\StatementContext;
+use LumengPHP\Db\Condition\MapCondition;
+use LumengPHP\Db\Statement\SelectStatement;
 
 /**
  * 

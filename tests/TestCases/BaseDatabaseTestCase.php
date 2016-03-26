@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace tests\TestCases;
 
 use LumengPHP\Db\Test\DatabaseTestCase;
 
