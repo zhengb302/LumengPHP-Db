@@ -20,16 +20,16 @@ use LumengPHP\Db\Condition\ExistsCondition;
  * Usage:
  *   $cond1 = ...
  *   $cond2 = ...
- *   $andCond = sqlAnd(array($cond1, $cond2));
+ *   $andCond = sqlAnd(array(
+ *       $cond1,
+ *       $cond2,
+ *       'username' => 'hanmeimei',
+ *   ));
  * @param array $conditions 各子条件
  * @return Condition
  */
 function sqlAnd(array $conditions) {
-    $andCondition = new AndCondition();
-    foreach ($conditions as $condition) {
-        $andCondition->add($condition);
-    }
-    return $andCondition;
+    return new AndCondition($conditions);
 }
 
 /**
@@ -38,11 +38,7 @@ function sqlAnd(array $conditions) {
  * @return Condition
  */
 function sqlOr(array $conditions) {
-    $orCondition = new OrCondition();
-    foreach ($conditions as $condition) {
-        $orCondition->add($condition);
-    }
-    return $orCondition;
+    return new OrCondition($conditions);
 }
 
 /**

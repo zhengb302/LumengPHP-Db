@@ -8,7 +8,7 @@ use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\Condition;
-use LumengPHP\Db\Condition\MapCondition;
+use LumengPHP\Db\Condition\AndCondition;
 use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
 
@@ -54,7 +54,7 @@ class DataAccessor {
     }
 
     /**
-     * 
+     * 设置查询字段
      * @param string $fields
      * @return Model
      */
@@ -64,13 +64,13 @@ class DataAccessor {
     }
 
     /**
-     * 
+     * 设置查询条件
      * @param array|Condition $condition
      * @return Model
      */
     public function where($condition) {
         if (is_array($condition)) {
-            $this->condition = new MapCondition($condition);
+            $this->condition = new AndCondition($condition);
         } elseif ($condition instanceof Condition) {
             $this->condition = $condition;
         } else {
