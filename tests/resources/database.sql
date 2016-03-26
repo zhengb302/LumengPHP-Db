@@ -13,16 +13,14 @@ GRANT ALL PRIVILEGES ON  `bbsdb` . * TO  'bbs'@'%';
 
 
 CREATE TABLE `bbs_user` (
- `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(15) NOT NULL COMMENT '用户名，3到15位。全系统唯一',
- `password` varchar(80) NOT NULL COMMENT '用户密码hash',
+ `password` char(32) NOT NULL COMMENT 'md5 hash过的用户密码',
  `email` varchar(50) NOT NULL COMMENT '注册邮箱，一个邮箱只能注册一次',
- `nickname` varchar(50) NOT NULL COMMENT '用户昵称，全系统唯一',
- `avatar` varchar(30) NOT NULL COMMENT '头像名称，不包含扩展名和大小信息，如 d4a578fab，用户上传的头像都会被转化为jpg格式。',
- `register_time` int(10) unsigned NOT NULL COMMENT '注册时间',
- PRIMARY KEY (`id`),
+ `nickname` varchar(50) NOT NULL COMMENT '用户昵称',
+ `add_time` int(10) unsigned NOT NULL COMMENT '注册时间',
+ PRIMARY KEY (`uid`),
  UNIQUE KEY `username` (`username`),
- UNIQUE KEY `nickname` (`nickname`),
  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 

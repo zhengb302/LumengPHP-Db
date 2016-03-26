@@ -7,34 +7,41 @@ use tests\Model\UserModel;
 /**
  * 全流程测试 - select
  *
- * @author Lumeng <zhengb302@163.com>
+ * @author Lumeng <zheng@163.com>
  */
-class FullSelectTest extends \PHPUnit_Framework_TestCase {
+class FullSelectTest extends BaseDatabaseTestCase {
+
+    protected function getDataSet() {
+        $xmlFileArray = array(
+            
+        );
+        return $this->createCompositeMySQLXMLDataSet($xmlFileArray);
+    }
 
     public function testNormal() {
         $conditions = array(
-            'username' => 'zhengb302',
+            'username' => 'zheng',
         );
 
         $userModel = new UserModel();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
-        $this->assertEquals('zhengb302', $user['username']);
+        $this->assertEquals('zheng', $user['username']);
     }
 
     public function testSelectTwice() {
         $conditions = array(
-            'username' => 'zhengb302',
+            'username' => 'zheng',
         );
 
         $userModel = new UserModel();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
-        $this->assertEquals('zhengb302', $user['username']);
+        $this->assertEquals('zheng', $user['username']);
 
         $user2 = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user2);
-        $this->assertEquals('zhengb302', $user2['username']);
+        $this->assertEquals('zheng', $user2['username']);
     }
 
     public function testCount() {
