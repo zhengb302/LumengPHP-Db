@@ -138,8 +138,4 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $this->assertEquals('“呵呵”是啥意思？', $posts[2]['content']);
     }
 
-    public function testAnd() {
-        
-    }
-
 }
