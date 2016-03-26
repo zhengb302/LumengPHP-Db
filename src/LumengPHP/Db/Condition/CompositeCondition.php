@@ -28,7 +28,10 @@ abstract class CompositeCondition extends BaseCondition {
         $parsedConditions = array();
 
         foreach ($this->conditions as $field => $value) {
+            //first, resolve
             $condition = $this->resolveCondition($field, $value);
+
+            //then, parse
             $parsedConditions[] = $condition->parse();
         }
 
@@ -45,7 +48,7 @@ abstract class CompositeCondition extends BaseCondition {
     private function resolveCondition($field, $value) {
         if (is_int($field)) {
             if (!$value instanceof Condition) {
-                $errMsg = 'the value of an AndCondition element must be a '
+                $errMsg = 'the value of a CompositeCondition element must be a '
                         . 'Condition instance if its index is a integer.';
                 throw new InvalidConditionException($errMsg);
             }
@@ -53,11 +56,12 @@ abstract class CompositeCondition extends BaseCondition {
             $condition = $value;
         } else {
             $condition = $this->buildCondition($value);
-            $condition->setStatementContext($this->statementContext);
-
             //这里的$condition必然是SimpleCondition
             $condition->setField($field);
         }
+
+        //复合条件的子条件在“外面”八成是没有被注入过StatementContext对象的
+        $condition->setStatementContext($this->statementContext);
 
         return $condition;
     }
