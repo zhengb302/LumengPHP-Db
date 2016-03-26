@@ -26,7 +26,7 @@ class LikeCondition extends SimpleCondition {
 
     public function parse() {
         $placeholder = $this->makePlaceholder();
-        $this->statementContext->addParameter($placeholder, $this->value);
+        $this->statementContext->addParameter($placeholder, $this->pattern);
 
         $symbol = $this->withNot ? 'NOT LIKE' : 'LIKE';
         return "{$this->field} {$symbol} {$placeholder}";
