@@ -74,4 +74,23 @@ class FullSelectTest extends BaseDatabaseTestCase {
         $this->assertEquals(6, $result);
     }
 
+    /**
+     * 测试不设置字段的查询
+     */
+    public function testQueryWithoutSettingFields() {
+        $conditions = array(
+            'username' => 'xiaoming',
+        );
+
+        $userModel = new UserModel();
+
+        //without setting fields
+        $user = $userModel->where($conditions)->find();
+        $this->assertNotFalse($user);
+
+        //query again
+        $user2 = $userModel->where($conditions)->find();
+        $this->assertNotFalse($user2);
+    }
+
 }
