@@ -7,41 +7,41 @@ use tests\Model\UserModel;
 /**
  * 全流程测试 - select
  *
- * @author Lumeng <zheng@163.com>
+ * @author Lumeng <zhengb302@163.com>
  */
 class FullSelectTest extends BaseDatabaseTestCase {
 
     protected function getDataSet() {
         $xmlFileArray = array(
-            
+            TEST_ROOT . '/resources/full-select-fixture.xml',
         );
         return $this->createCompositeMySQLXMLDataSet($xmlFileArray);
     }
 
     public function testNormal() {
         $conditions = array(
-            'username' => 'zheng',
+            'username' => 'xiaoming',
         );
 
         $userModel = new UserModel();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
-        $this->assertEquals('zheng', $user['username']);
+        $this->assertEquals('xiaoming', $user['username']);
     }
 
     public function testSelectTwice() {
         $conditions = array(
-            'username' => 'zheng',
+            'username' => 'xiaoming',
         );
 
         $userModel = new UserModel();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
-        $this->assertEquals('zheng', $user['username']);
+        $this->assertEquals('xiaoming', $user['username']);
 
         $user2 = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user2);
-        $this->assertEquals('zheng', $user2['username']);
+        $this->assertEquals('xiaoming', $user2['username']);
     }
 
     public function testCount() {
@@ -52,25 +52,25 @@ class FullSelectTest extends BaseDatabaseTestCase {
 
     public function testMax() {
         $userModel = new UserModel();
-        $result = $userModel->max('id');
+        $result = $userModel->max('uid');
         $this->assertEquals(3, $result);
     }
 
     public function testMin() {
         $userModel = new UserModel();
-        $result = $userModel->min('id');
+        $result = $userModel->min('uid');
         $this->assertEquals(1, $result);
     }
 
     public function testAvg() {
         $userModel = new UserModel();
-        $result = $userModel->avg('id');
+        $result = $userModel->avg('uid');
         $this->assertEquals(2, $result);
     }
 
     public function testSum() {
         $userModel = new UserModel();
-        $result = $userModel->sum('id');
+        $result = $userModel->sum('uid');
         $this->assertEquals(6, $result);
     }
 

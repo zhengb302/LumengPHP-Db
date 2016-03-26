@@ -1,5 +1,7 @@
 <?php
 
+define('TEST_ROOT', __DIR__);
+
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
 $loader->add('tests\\', dirname(__DIR__));
 
