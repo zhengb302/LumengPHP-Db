@@ -3,7 +3,11 @@
 namespace LumengPHP\Db\Condition;
 
 /**
- * 关联数组条件
+ * 关联数组条件，如：
+ * array(
+ *     'uid' => 3,
+ *     'is_deleted' => 0,
+ * );
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
