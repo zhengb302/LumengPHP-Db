@@ -9,6 +9,6 @@ use Exception;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class InvalidConditionException extends Exception {
+class InvalidSQLConditionException extends Exception {
     
 }
