@@ -1,10 +1,14 @@
 # todo list
 
-* ~~增加数据库事务操作相关的测试用例~~
-* 创建1.0分支，发布1.0.0版
+* DataAccessor增加addAll方法，以支持数据的批量插入
 * 重构StatementContext类和各Statement类为QueryBuilder类
 * 增加对GROUP BY、HAVING子句的支持
 * 完善注释及文档
+
+#### 2016-03-27
+
+* ~~增加数据库事务操作相关的测试用例~~
+* ~~创建1.0分支，发布1.0.0版~~
 
 #### 2016-03-26
 
