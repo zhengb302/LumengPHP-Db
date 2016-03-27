@@ -120,4 +120,35 @@ class QueryTest extends BaseDatabaseTestCase {
         $this->assertEquals('张三', $rows[1]['nickname']);
     }
 
+    /**
+     * 测试SQL语句执行出错的情况
+     */
+    public function testQueryWithWrongSql() {
+        $userModel = new UserModel();
+
+        //找出韩梅梅，然而并没有"qq_number"这个字段，会导致SQL执行出错
+        $hanmeimei = $userModel->field('uid,username,qq_number')
+                ->where(array('uid' => 3))
+                ->find();
+
+        //SQL执行出错，会返回false
+        $this->assertFalse($hanmeimei);
+    }
+
+    /**
+     * 测试没有找到数据的情况(注意：这种情况下SQL执行并没有出错)
+     */
+    public function testQueryWithNoResult() {
+        $userModel = new UserModel();
+
+        //找出username为"linda"的这个用户，然而并没有这个用户
+        $linda = $userModel->where(array('username' => 'linda'))->find();
+
+        //只是没找到数据，并不是SQL执行出错，所以不是返回false
+        $this->assertNotFalse($linda);
+
+        //当前查询没有找到数据，会返回null
+        $this->assertNull($linda);
+    }
+
 }

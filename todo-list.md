@@ -1,6 +1,6 @@
 # todo list
 
-* 增加数据库事务操作相关的测试用例
+* ~~增加数据库事务操作相关的测试用例~~
 * 创建1.0分支，发布1.0.0版
 * 重构StatementContext类和各Statement类为QueryBuilder类
 * 增加对GROUP BY、HAVING子句的支持
