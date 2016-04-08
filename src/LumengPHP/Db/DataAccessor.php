@@ -8,7 +8,7 @@ use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\Condition;
-use LumengPHP\Db\Condition\MapCondition;
+use LumengPHP\Db\Condition\AndCondition;
 use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
 
@@ -54,7 +54,7 @@ class DataAccessor {
     }
 
     /**
-     * 
+     * 设置查询字段
      * @param string $fields
      * @return Model
      */
@@ -64,13 +64,13 @@ class DataAccessor {
     }
 
     /**
-     * 
+     * 设置查询条件
      * @param array|Condition $condition
      * @return Model
      */
     public function where($condition) {
         if (is_array($condition)) {
-            $this->condition = new MapCondition($condition);
+            $this->condition = new AndCondition($condition);
         } elseif ($condition instanceof Condition) {
             $this->condition = $condition;
         } else {
@@ -94,9 +94,9 @@ class DataAccessor {
 
     /**
      * 内连接一个表
-     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
-     * @param string $on 连接条件
+     * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
     public function join($table, $alias, $on) {
@@ -111,9 +111,9 @@ class DataAccessor {
 
     /**
      * 左外连接一个表
-     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
-     * @param string $on 连接条件
+     * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
     public function leftJoin($table, $alias, $on) {
@@ -129,9 +129,9 @@ class DataAccessor {
 
     /**
      * 右外连接一个表
-     * @param string $table 要连接的表(不带表前缀)，如"UserProfile"
+     * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
-     * @param string $on 连接条件
+     * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
     public function rightJoin($table, $alias, $on) {

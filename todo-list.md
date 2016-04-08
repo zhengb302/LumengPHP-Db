@@ -1,11 +1,19 @@
 # todo list
 
-* 支持Logger组件，用以进行数据库相关操作的日志记录
-* 完善测试环境，增加必要的测试用例
-* 发布1.0.0版
-* 合并StatementContext类和各Statement类为QueryBuilder类
+* DataAccessor增加addAll方法，以支持数据的批量插入
+* 重构StatementContext类和各Statement类为QueryBuilder类
 * 增加对GROUP BY、HAVING子句的支持
 * 完善注释及文档
+
+#### 2016-03-27
+
+* ~~增加数据库事务操作相关的测试用例~~
+* ~~创建1.0分支，发布1.0.0版~~
+
+#### 2016-03-26
+
+* ~~支持Logger组件，用以进行数据库相关操作的日志记录~~
+* ~~完善测试环境，增加必要的测试用例~~
 
 #### 2016-03-19
 

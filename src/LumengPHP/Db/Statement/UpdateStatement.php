@@ -3,6 +3,7 @@
 namespace LumengPHP\Db\Statement;
 
 use LumengPHP\Db\Misc\FieldHelper;
+use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
 
 /**
  * UPDATE 语句
@@ -30,9 +31,15 @@ class UpdateStatement extends BaseStatement {
             $setParameters[] = "{$quotedField} = {$placeholder}";
         }
 
+        $where = $this->buildWhere();
+        if (empty($where)) {
+            $errMsg = 'update without any conditions is forbidden.';
+            throw new ForbiddenDatabaseOperationException($errMsg);
+        }
+
         return 'UPDATE ' . $this->statementContext->getTableName() .
                 ' SET ' . implode(', ', $setParameters) .
-                $this->buildWhere();
+                $where;
     }
 
 }

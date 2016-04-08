@@ -59,7 +59,7 @@ class StatementContext {
     }
 
     public function getFields() {
-        return $this->fields;
+        return !is_null($this->fields) ? $this->fields : '*';
     }
 
     public function setFields($fields) {

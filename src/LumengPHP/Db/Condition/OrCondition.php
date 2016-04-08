@@ -10,11 +10,8 @@ namespace LumengPHP\Db\Condition;
 class OrCondition extends CompositeCondition {
 
     public function parse() {
-        $tmpArr = array();
-        foreach ($this->conditions as $condition) {
-            $tmpArr[] = $condition->parse();
-        }
-        return '(' . implode(' OR ', $tmpArr) . ')';
+        $parsedConditions = $this->resolveAndParseConditions();
+        return '(' . implode(' OR ', $parsedConditions) . ')';
     }
 
 }

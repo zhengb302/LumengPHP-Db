@@ -10,11 +10,8 @@ namespace LumengPHP\Db\Condition;
 class AndCondition extends CompositeCondition {
 
     public function parse() {
-        $tmpArr = array();
-        foreach ($this->conditions as $condition) {
-            $tmpArr[] = $condition->parse();
-        }
-        return '(' . implode(' AND ', $tmpArr) . ')';
+        $parsedConditions = $this->resolveAndParseConditions();
+        return '(' . implode(' AND ', $parsedConditions) . ')';
     }
 
 }
