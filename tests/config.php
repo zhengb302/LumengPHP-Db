@@ -1,9 +1,9 @@
 <?php
 
 $configs = array(
-    //数据库配置
+    //数据库连接配置
     //第一个数据库连接为默认连接
-    'database' => array(
+    'connections' => array(
         //connectionName => connectionConfig
         //first connection
         'db1' => array(

@@ -13,9 +13,9 @@ use Psr\Log\LoggerInterface;
 class ConnectionManager {
 
     /**
-     * @var array 数据库配置
+     * @var array 数据库配置，格式：connectionName => connectionConfig
      */
-    private $dbConfigs;
+    private $connectionConfigs;
 
     /**
      * @var string 默认的数据库连接名称
@@ -32,13 +32,21 @@ class ConnectionManager {
      */
     private $logger;
 
-    public function __construct($dbConfigs, LoggerInterface $logger = null) {
-        $this->dbConfigs = $dbConfigs;
+    public function __construct($connectionConfigs, LoggerInterface $logger = null) {
+        $this->connectionConfigs = $connectionConfigs;
 
         //选取第一个连接名称作为默认连接名称
-        $this->defaultConnectionName = array_keys($dbConfigs)[0];
+        $this->defaultConnectionName = array_keys($connectionConfigs)[0];
 
         $this->logger = $logger;
+    }
+
+    /**
+     * 返回默认的数据库连接对象
+     * @return Connection
+     */
+    public function getDefaultConnection() {
+        return $this->getConnection();
     }
 
     /**
@@ -55,11 +63,11 @@ class ConnectionManager {
             return $this->connectionMap[$name];
         }
 
-        if (!isset($this->dbConfigs[$name])) {
+        if (!isset($this->connectionConfigs[$name])) {
             trigger_error("undefined database connection \"{$name}\".", E_USER_ERROR);
         }
 
-        $connConfig = $this->dbConfigs[$name];
+        $connConfig = $this->connectionConfigs[$name];
         $class = $connConfig['class'];
         unset($connConfig['class']);
 
