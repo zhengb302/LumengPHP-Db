@@ -1,8 +1,10 @@
 ## 查询语言
 
+### 简单查询
+
 注意：所有的查询操作符都是小写格式
 
-### 简单查询
+#### 等于
 
 ```php
 $userModel = new Model('User');
@@ -14,7 +16,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### 不等于：neq
+#### 不等于：neq
 
 ```php
 $userModel = new Model('User');
@@ -26,7 +28,8 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### 大于：gt，大于或等于：gte
+#### 大于：gt，大于或等于：gte
+
 ```php
 $userModel = new Model('User');
 
@@ -43,7 +46,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### 小于：lt，小于或等于：lte
+#### 小于：lt，小于或等于：lte
 
 ```php
 $userModel = new Model('User');
@@ -61,7 +64,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### in、not in
+#### in、not in
 
 ```php
 $userModel = new Model('User');
@@ -79,7 +82,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### between、not between
+#### between、not between
 
 ```php
 $userModel = new Model('User');
@@ -97,7 +100,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-### like、not like
+#### like、not like
 
 ```php
 $userModel = new Model('User');
@@ -114,3 +117,24 @@ $conditions = [
 ];
 $userData = $userModel->where($conditions)->find();
 ```
+
+#### exists、not exists
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user u WHERE EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)
+$conditions = [
+    '_string' => 'EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)',
+];
+$userData = $userModel->alias('u')->where($conditions)->find();
+
+//SQL：SELECT * FROM user u WHERE NOT EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)
+$conditions = [
+    '_string' => 'NOT EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)',
+];
+$userData = $userModel->alias('u')->where($conditions)->find();
+```
+
+### 复杂查询
+
