@@ -1,5 +1,7 @@
 ## 查询语言
 
+注意：所有的查询操作符都是小写格式
+
 ### 简单查询
 
 ```php
@@ -73,6 +75,42 @@ $userData = $userModel->where($conditions)->find();
 //SQL：SELECT * FROM user WHERE user_id NOT IN (2, 3, 8)
 $conditions = [
     'user_id' => ['not in', [2, 3, 8]],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+### between、not between
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE age BETWEEN 18 AND 25
+$conditions = [
+    'age' => ['between', [18, 25]],
+];
+$userData = $userModel->where($conditions)->find();
+
+//SQL：SELECT * FROM user WHERE age NOT BETWEEN 18 AND 25
+$conditions = [
+    'age' => ['not between', [18, 25]],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+### like、not like
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE nickname LIKE '%耐克%'
+$conditions = [
+    'nickname' => ['like', '%耐克%'],
+];
+$userData = $userModel->where($conditions)->find();
+
+//SQL：SELECT * FROM user WHERE nickname NOT LIKE '%耐克%'
+$conditions = [
+    'nickname' => ['not like', '%耐克%'],
 ];
 $userData = $userModel->where($conditions)->find();
 ```
