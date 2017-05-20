@@ -173,7 +173,7 @@ $userData = $userModel->where($conditions)->find();
 
 #### 同一个字段出现多次
 
-可以使用**#number**这样的形式为字段编号，这样同一个字段就可以出现多次。
+可以使用#**number**这样的形式为字段编号，这样同一个字段就可以出现多次。
 按约定，**number**从0开始。
 
 ```php
