@@ -17,6 +17,8 @@ $newUserId = $userModel->add($data);
 ```
 ### 查询
 
+查询返回的每一条记录都是关联数组。
+
 #### 查找一条记录
 
 查找用户名为*zhangsan*的用户：
@@ -45,7 +47,7 @@ $fields = 'username,nickname,age';
 $userData = $userModel->field($fields)->where(['username' => 'zhangsan'])->find();
 ```
 
-包含别名的字段列表，跟平时直接写SQL时一样：
+字段别名：
 ```php
 $fields = 'username AS 用户名,nickname 昵称,age';
 ```
