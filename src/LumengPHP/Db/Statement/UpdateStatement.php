@@ -10,7 +10,7 @@ use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class UpdateStatement extends BaseStatement {
+class UpdateStatement extends AbstractStatement {
 
     /**
      * @var array 要保存的数据，field => value 形式

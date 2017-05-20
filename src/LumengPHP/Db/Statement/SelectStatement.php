@@ -9,7 +9,7 @@ use LumengPHP\Db\Misc\FieldHelper;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class SelectStatement extends BaseStatement {
+class SelectStatement extends AbstractStatement {
 
     public function parse() {
         $fields = $this->statementContext->getFields();

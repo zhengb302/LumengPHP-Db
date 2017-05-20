@@ -6,11 +6,11 @@ use LumengPHP\Db\StatementContext;
 use LumengPHP\Db\Misc\FieldHelper;
 
 /**
- * SQL语句基类
+ * SQL语句抽象基类
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-abstract class BaseStatement implements Statement {
+abstract class AbstractStatement implements StatementInterface {
 
     /**
      * @var StatementContext 

@@ -9,7 +9,7 @@ use LumengPHP\Db\Misc\FieldHelper;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class InsertStatement extends BaseStatement {
+class InsertStatement extends AbstractStatement {
 
     /**
      * @var array 要插入的数据，field => value 形式

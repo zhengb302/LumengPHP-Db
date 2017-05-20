@@ -9,7 +9,7 @@ use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
  *
  * @author zhengluming <luming.zheng@baozun.cn>
  */
-class DeleteStatement extends BaseStatement {
+class DeleteStatement extends AbstractStatement {
 
     public function parse() {
         $where = $this->buildWhere();
