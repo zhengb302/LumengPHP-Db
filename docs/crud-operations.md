@@ -1,10 +1,9 @@
 ## CRUD操作
 
-### 插入数据
+### 插入
 
 代码示例：
 ```php
-<?php
 $data = [
     'username' => 'zhangsan',
     'nickname' => '张三',
@@ -18,3 +17,10 @@ $newUserId = $userModel->add($data);
 ```
 ### 查询
 
+#### 查询一条记录
+
+下面的例子查找用户名为*zhangsan*的用户。
+```php
+$userModel = new Model('User');
+$userData = $userModel->where(['username' => 'zhangsan'])->find();
+```
