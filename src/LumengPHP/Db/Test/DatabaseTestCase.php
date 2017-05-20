@@ -2,12 +2,14 @@
 
 namespace LumengPHP\Db\Test;
 
+use PHPUnit_Extensions_Database_TestCase;
+
 /**
  * 单元测试 数据库测试用例
  *
  * @author zhengluming <908235332@qq.com>
  */
-abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase {
+abstract class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase {
 
     /**
      * @var \PHPUnit_Extensions_Database_DB_IDatabaseConnection Only instantiate 
