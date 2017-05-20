@@ -35,7 +35,7 @@ $girls = $userModel->where(['sex' => 1])->select();
 
 #### 字段限制
 
-上面的例子未限制要返回的字段，会返回该用户的所有字段，现在只想要获得用户名、昵称和年龄三个字段：
+上面的例子未限制要返回的字段，会返回所有字段，现在只想要获得用户名、昵称和年龄三个字段：
 ```php
 $userModel = new Model('User');
 
@@ -45,12 +45,12 @@ $fields = 'username,nickname,age';
 $userData = $userModel->field($fields)->where(['username' => 'zhangsan'])->find();
 ```
 
-或者包含别名的字段列表，跟平时直接写SQL时一样：
+包含别名的字段列表，跟平时直接写SQL时一样：
 ```php
 $fields = 'username AS 用户名,nickname 昵称,age';
 ```
 
-如果未限制要返回的字段，会返回该用户的所有字段。下面的设置效果相同：
+下面的设置也会返回所有字段：
 ```php
 $fields = '*';
 ```
