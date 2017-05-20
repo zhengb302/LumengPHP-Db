@@ -9,7 +9,7 @@ use PDO;
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class MasterSlaveConnection extends BaseConnection {
+class MasterSlaveConnection extends AbstractConnection {
 
     /**
      * @var PDO 主数据库连接
@@ -91,7 +91,7 @@ class MasterSlaveConnection extends BaseConnection {
 
     /**
      * 获取Master连接
-     * @return Connection
+     * @return ConnectionInterface
      */
     private function getMasterPdo() {
         if (!is_null($this->masterPdo)) {

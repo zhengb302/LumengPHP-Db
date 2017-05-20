@@ -6,7 +6,7 @@ namespace LumengPHP\Db\Connection;
  * 数据库连接接口
  * @author Lumeng <zhengb302@163.com>
  */
-interface Connection {
+interface ConnectionInterface {
 
     /**
      * 返回连接名称

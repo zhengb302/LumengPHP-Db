@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use LumengPHP\Db\Connection\Connection;
+use LumengPHP\Db\Connection\ConnectionInterface;
 use LumengPHP\Db\Statement\SelectStatement;
 use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
@@ -20,7 +20,7 @@ use LumengPHP\Db\Misc\TableNameHelper;
 class DataAccessor {
 
     /**
-     * @var Connection 所属的数据库连接
+     * @var ConnectionInterface 所属的数据库连接
      */
     private $connection;
 
@@ -41,10 +41,10 @@ class DataAccessor {
 
     /**
      * 
-     * @param Connection $connection 数据库连接
+     * @param ConnectionInterface $connection 数据库连接
      * @param string $tableName 抽象表名，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct(Connection $connection, $tableName) {
+    public function __construct(ConnectionInterface $connection, $tableName) {
         $this->connection = $connection;
         $this->tableName = $this->connection->getTablePrefix() .
                 TableNameHelper::camel2id($tableName, '_');

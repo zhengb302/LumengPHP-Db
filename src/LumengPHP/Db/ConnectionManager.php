@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db;
 
-use LumengPHP\Db\Connection\Connection;
+use LumengPHP\Db\Connection\ConnectionInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -43,7 +43,7 @@ class ConnectionManager {
 
     /**
      * 返回默认的数据库连接对象
-     * @return Connection
+     * @return ConnectionInterface
      */
     public function getDefaultConnection() {
         return $this->getConnection();
@@ -52,7 +52,7 @@ class ConnectionManager {
     /**
      * 根据数据库连接名称返回数据库连接对象
      * @param string|null $name 连接名称，为null则返回默认连接
-     * @return Connection
+     * @return ConnectionInterface
      */
     public function getConnection($name = null) {
         if (is_null($name)) {
