@@ -229,7 +229,7 @@ $userData = $userModel->where($conditions)->find();
 
 #### 原生SQL条件语句：_string
 
-exists、not exists就是通过_**string**实现的
+exists、not exists就是通过_**string**实现的。
 
 ```php
 $userModel = new Model('User');
