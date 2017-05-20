@@ -157,7 +157,7 @@ $userData = $userModel->where($conditions)->find();
 #### OR查询
 
 如果不提供逻辑连接词，则默认是AND查询。
-若要进行OR查询，则需要使用_logic操作来修改逻辑连接词为**or**。
+若要进行OR查询，则需要使用_**logic**操作来修改逻辑连接词为**or**。
 
 ```php
 $userModel = new Model('User');
