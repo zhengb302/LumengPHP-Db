@@ -226,3 +226,33 @@ $conditions = [
 ];
 $userData = $userModel->where($conditions)->find();
 ```
+
+#### 原生SQL条件语句：_string
+
+exists、not exists就是通过_**string**实现的
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
+$conditions = [
+    'sex' => 1,
+    '_string' => 'age < 18 OR age > 25',
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+#### 多个_string
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE sex = 1 
+//        AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
+$conditions = [
+    'sex' => 1,
+    '_string#0' => 'age < 18 OR age > 25',
+    '_string#1' => "nickname LIKE '张%' OR nickname LIKE '李%'",
+];
+$userData = $userModel->where($conditions)->find();
+```
