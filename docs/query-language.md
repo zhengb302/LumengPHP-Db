@@ -42,6 +42,7 @@ $userData = $userModel->where($conditions)->find();
 ```
 
 ### 小于：lt，小于或等于：lte
+
 ```php
 $userModel = new Model('User');
 
@@ -58,3 +59,20 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
+### in、not in
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE user_id IN (2, 3, 8)
+$conditions = [
+    'user_id' => ['in', [2, 3, 8]],
+];
+$userData = $userModel->where($conditions)->find();
+
+//SQL：SELECT * FROM user WHERE user_id NOT IN (2, 3, 8)
+$conditions = [
+    'user_id' => ['not in', [2, 3, 8]],
+];
+$userData = $userModel->where($conditions)->find();
+```
