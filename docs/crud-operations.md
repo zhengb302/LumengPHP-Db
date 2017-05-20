@@ -41,10 +41,16 @@ $userModel = new Model('User');
 
 //字段列表，跟平时直接写SQL时一样
 $fields = 'username,nickname,age';
-//或者包含别名的字段列表，跟平时直接写SQL时一样
-$fields = 'username AS 用户名,nickname 昵称,age';
-//返回所有字段。不设置字段列表的时候，也会返回所有字段
-$fields = '*';
 
 $userData = $userModel->field($fields)->where(['username' => 'zhangsan'])->find();
+```
+
+或者包含别名的字段列表，跟平时直接写SQL时一样：
+```php
+$fields = 'username AS 用户名,nickname 昵称,age';
+```
+
+如果未限制要返回的字段，会返回该用户的所有字段。下面的设置效果相同：
+```php
+$fields = '*';
 ```
