@@ -56,7 +56,7 @@ class DataAccessor {
     /**
      * 设置查询字段
      * @param string $fields
-     * @return Model
+     * @return DataAccessor
      */
     public function field($fields) {
         $this->statementContext->setFields($fields);
@@ -66,7 +66,7 @@ class DataAccessor {
     /**
      * 设置查询条件
      * @param array|ConditionInterface $condition
-     * @return Model
+     * @return DataAccessor
      */
     public function where($condition) {
         if (is_array($condition)) {
@@ -85,7 +85,7 @@ class DataAccessor {
     /**
      * 设置别名
      * @param string $alias
-     * @return Model
+     * @return DataAccessor
      */
     public function alias($alias) {
         $this->statementContext->setAlias($alias);
@@ -97,7 +97,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Model
+     * @return DataAccessor
      */
     public function join($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -114,7 +114,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Model
+     * @return DataAccessor
      */
     public function leftJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -132,7 +132,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Model
+     * @return DataAccessor
      */
     public function rightJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -148,7 +148,7 @@ class DataAccessor {
     /**
      * 设置"order by"子句
      * @param string $orderByClause
-     * @return Model
+     * @return DataAccessor
      */
     public function orderBy($orderByClause) {
         $this->statementContext->setOrderBy($orderByClause);
@@ -160,7 +160,7 @@ class DataAccessor {
      * 注意：设置分页和设置limit子句会导致互相覆盖
      * @param int $pageNum 页号(从1开始)
      * @param int $pageSize 页大小
-     * @return Model
+     * @return DataAccessor
      */
     public function paging($pageNum, $pageSize) {
         $offset = ($pageNum - 1) * $pageSize;
@@ -177,7 +177,7 @@ class DataAccessor {
      * $model->limit(5);
      * //结果SQL：... LIMIT 40,10 ...
      * $model->limit('40,10');
-     * @return Model
+     * @return DataAccessor
      */
     public function limit($limit) {
         $this->statementContext->setLimit($limit);
