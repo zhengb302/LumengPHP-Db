@@ -186,3 +186,42 @@ $conditions = [
 ];
 $userData = $userModel->where($conditions)->find();
 ```
+
+#### 子条件
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
+$conditions = [
+    'sex' => 1,
+    '_sub' => [
+        'age#0' => ['lt', 18],
+        'age#1' => ['gt', 25],
+        '_logic' => 'or',
+    ],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+#### 多个子条件
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
+$conditions = [
+    'sex' => 1,
+    '_sub#0' => [
+        'age#0' => ['lt', 18],
+        'age#1' => ['gt', 25],
+        '_logic' => 'or',
+    ],
+    ‘_sub#1' => [
+        'nickname#0' => ['like', '张%'],
+        'nickname#1' => ['like', '李%'],
+        '_logic' => 'or',
+    ],
+];
+$userData = $userModel->where($conditions)->find();
+```
