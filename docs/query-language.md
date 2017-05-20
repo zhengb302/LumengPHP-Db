@@ -157,7 +157,7 @@ $userData = $userModel->where($conditions)->find();
 #### OR查询
 
 如果不提供逻辑连接词，则默认是AND查询。
-若要进行OR查询，则需要使用_logic操作修改逻辑连接词为**or**。
+若要进行OR查询，则需要使用_logic操作来修改逻辑连接词为**or**。
 
 ```php
 $userModel = new Model('User');
@@ -166,14 +166,14 @@ $userModel = new Model('User');
 $conditions = [
     'age' => ['gt', 18],
     'sex' => 1,
-    ‘_logic’ => 'or',
+    '_logic' => 'or',
 ];
 $userData = $userModel->where($conditions)->find();
 ```
 
 #### 同一个字段出现多次
 
-可以使用#number这样的形式为字段编号，这样同一个字段就可以出现多次。
+可以使用**#number**这样的形式为字段编号，这样同一个字段就可以出现多次。
 按约定，**number**从0开始。
 
 ```php
