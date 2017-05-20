@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Test;
 /**
  * 单元测试 数据库测试用例
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase {
 

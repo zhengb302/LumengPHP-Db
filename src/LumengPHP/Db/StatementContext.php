@@ -8,7 +8,7 @@ use LumengPHP\Db\Misc\ParameterCounter;
 /**
  * SQL语句环境
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class StatementContext {
 

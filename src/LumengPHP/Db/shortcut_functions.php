@@ -4,7 +4,7 @@
  * SQL条件 快捷函数
  */
 
-use LumengPHP\Db\Condition\Condition;
+use LumengPHP\Db\Condition\ConditionInterface;
 use LumengPHP\Db\Condition\AndCondition;
 use LumengPHP\Db\Condition\OrCondition;
 use LumengPHP\Db\Condition\BetweenCondition;
@@ -26,7 +26,7 @@ use LumengPHP\Db\Condition\ExistsCondition;
  *       'username' => 'hanmeimei',
  *   ));
  * @param array $conditions 各子条件
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlAnd(array $conditions) {
     return new AndCondition($conditions);
@@ -35,7 +35,7 @@ function sqlAnd(array $conditions) {
 /**
  * 
  * @param array $conditions 各子条件
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlOr(array $conditions) {
     return new OrCondition($conditions);
@@ -45,7 +45,7 @@ function sqlOr(array $conditions) {
  * 
  * @param mixed $start
  * @param mixed $end
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlBetween($start, $end) {
     return new BetweenCondition($start, $end);
@@ -55,7 +55,7 @@ function sqlBetween($start, $end) {
  * 
  * @param mixed $start
  * @param mixed $end
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlNotBetween($start, $end) {
     return new BetweenCondition($start, $end, true);
@@ -64,7 +64,7 @@ function sqlNotBetween($start, $end) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlEQ($value) {
     return new EqualCondition($value);
@@ -73,7 +73,7 @@ function sqlEQ($value) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlNEQ($value) {
     return new NotEqualCondition($value);
@@ -82,7 +82,7 @@ function sqlNEQ($value) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlGT($value) {
     return new GreaterThanCondition($value);
@@ -91,7 +91,7 @@ function sqlGT($value) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlEGT($value) {
     return new GreaterThanCondition($value, true);
@@ -100,7 +100,7 @@ function sqlEGT($value) {
 /**
  * 
  * @param array $candidates
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlIn(array $candidates) {
     return new InCondition($candidates);
@@ -109,7 +109,7 @@ function sqlIn(array $candidates) {
 /**
  * 
  * @param array $candidates
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlNotIn(array $candidates) {
     return new InCondition($candidates, true);
@@ -118,7 +118,7 @@ function sqlNotIn(array $candidates) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlLT($value) {
     return new LessThanCondition($value);
@@ -127,7 +127,7 @@ function sqlLT($value) {
 /**
  * 
  * @param mixed $value
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlELT($value) {
     return new LessThanCondition($value, true);
@@ -136,7 +136,7 @@ function sqlELT($value) {
 /**
  * 
  * @param string $pattern
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlLike($pattern) {
     return new LikeCondition($pattern);
@@ -145,7 +145,7 @@ function sqlLike($pattern) {
 /**
  * 
  * @param string $pattern
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlNotLike($pattern) {
     return new LikeCondition($pattern, true);
@@ -154,7 +154,7 @@ function sqlNotLike($pattern) {
 /**
  * 
  * @param string $subSql
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlExists($subSql) {
     return new ExistsCondition($subSql);
@@ -163,7 +163,7 @@ function sqlExists($subSql) {
 /**
  * 
  * @param string $subSql
- * @return Condition
+ * @return ConditionInterface
  */
 function sqlNotExists($subSql) {
     return new ExistsCondition($subSql, true);

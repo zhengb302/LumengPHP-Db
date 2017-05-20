@@ -8,7 +8,7 @@ use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
 /**
  * UPDATE 语句
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class UpdateStatement extends AbstractStatement {
 

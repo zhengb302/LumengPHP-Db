@@ -5,11 +5,11 @@ namespace LumengPHP\Db\Condition;
 use LumengPHP\Db\StatementContext;
 
 /**
- * SQL条件
+ * SQL语句条件接口
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
-interface Condition {
+interface ConditionInterface {
 
     public function setStatementContext(StatementContext $statementContext);
 

@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Condition;
 /**
  * 相等条件，如：name = 'zhangsan'
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class EqualCondition extends SimpleCondition {
 

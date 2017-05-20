@@ -7,9 +7,9 @@ use LumengPHP\Db\Exceptions\InvalidSQLConditionException;
 /**
  * 复合条件（相对于简单条件，即SimpleCondition）
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
-abstract class CompositeCondition extends BaseCondition {
+abstract class CompositeCondition extends AbstractCondition {
 
     /**
      * @var array 子条件数组，是一个混杂着关联数组和下标数组的奇葩数组
@@ -41,13 +41,13 @@ abstract class CompositeCondition extends BaseCondition {
     /**
      * 解析子条件
      * @param int|string $field 可能是字段名称，也有可能是索引下标
-     * @param Condition|mixed $value 可能是字段值，也有可能是Condition对象
-     * @return Condition 条件对象
+     * @param ConditionInterface|mixed $value 可能是字段值，也有可能是Condition对象
+     * @return ConditionInterface 条件对象
      * @throws InvalidSQLConditionException
      */
     private function resolveCondition($field, $value) {
         if (is_int($field)) {
-            if (!$value instanceof Condition) {
+            if (!$value instanceof ConditionInterface) {
                 $errMsg = 'the value of a CompositeCondition element must be a '
                         . 'Condition instance if its index is a integer.';
                 throw new InvalidSQLConditionException($errMsg);
@@ -69,7 +69,7 @@ abstract class CompositeCondition extends BaseCondition {
     /**
      * 
      * @param mixed $value
-     * @return Condition
+     * @return ConditionInterface
      */
     private function buildCondition($value) {
         switch (gettype($value)) {

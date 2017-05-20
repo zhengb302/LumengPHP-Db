@@ -7,7 +7,7 @@ use LumengPHP\Db\Statement\SelectStatement;
 use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
-use LumengPHP\Db\Condition\Condition;
+use LumengPHP\Db\Condition\ConditionInterface;
 use LumengPHP\Db\Condition\AndCondition;
 use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
@@ -15,7 +15,7 @@ use LumengPHP\Db\Misc\TableNameHelper;
 /**
  * An abstract database access layer.
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class DataAccessor {
 
@@ -35,7 +35,7 @@ class DataAccessor {
     private $tableName;
 
     /**
-     * @var Condition 条件
+     * @var ConditionInterface 条件
      */
     private $condition;
 
@@ -65,13 +65,13 @@ class DataAccessor {
 
     /**
      * 设置查询条件
-     * @param array|Condition $condition
+     * @param array|ConditionInterface $condition
      * @return Model
      */
     public function where($condition) {
         if (is_array($condition)) {
             $this->condition = new AndCondition($condition);
-        } elseif ($condition instanceof Condition) {
+        } elseif ($condition instanceof ConditionInterface) {
             $this->condition = $condition;
         } else {
             trigger_error('where: invalid argument type.', E_USER_ERROR);

@@ -8,7 +8,7 @@ use LumengPHP\Db\Misc\FieldHelper;
 /**
  * SQL语句抽象基类
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 abstract class AbstractStatement implements StatementInterface {
 

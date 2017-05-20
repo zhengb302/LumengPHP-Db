@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Misc;
 /**
  * 参数计数器
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class ParameterCounter {
 

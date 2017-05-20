@@ -5,11 +5,11 @@ namespace LumengPHP\Db\Condition;
 use LumengPHP\Db\StatementContext;
 
 /**
- * 条件基类
+ * SQL语句条件抽象基类
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
-abstract class BaseCondition implements Condition {
+abstract class AbstractCondition implements ConditionInterface {
 
     /**
      * @var StatementContext 

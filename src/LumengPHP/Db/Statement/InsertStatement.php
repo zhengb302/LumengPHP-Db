@@ -7,7 +7,7 @@ use LumengPHP\Db\Misc\FieldHelper;
 /**
  * INSERT 语句
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class InsertStatement extends AbstractStatement {
 

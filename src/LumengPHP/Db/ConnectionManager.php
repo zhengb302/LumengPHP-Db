@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 /**
  * 连接管理器
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class ConnectionManager {
 

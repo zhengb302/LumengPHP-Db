@@ -7,9 +7,9 @@ use LumengPHP\Db\Misc\FieldHelper;
 /**
  * 简单条件（相对于复合条件，即CompositeCondition）
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
-abstract class SimpleCondition extends BaseCondition {
+abstract class SimpleCondition extends AbstractCondition {
 
     /**
      * @var string 原始字段值

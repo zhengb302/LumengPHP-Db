@@ -7,7 +7,7 @@ use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
 /**
  * DELETE 语句
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class DeleteStatement extends AbstractStatement {
 

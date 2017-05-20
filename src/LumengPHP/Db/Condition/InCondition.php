@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Condition;
 /**
  * （NOT）IN 条件
  *
- * @author zhengluming <luming.zheng@baozun.cn>
+ * @author zhengluming <908235332@qq.com>
  */
 class InCondition extends SimpleCondition {
 
