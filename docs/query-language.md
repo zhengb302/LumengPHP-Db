@@ -1,5 +1,8 @@
 ## 查询语言
 
+1. [简单查询](#简单查询)
+2. [复合查询](#复合查询)
+
 ### 简单查询
 
 注意：所有的查询操作符都是小写格式
@@ -136,5 +139,50 @@ $conditions = [
 $userData = $userModel->alias('u')->where($conditions)->find();
 ```
 
-### 复杂查询
+### 复合查询
 
+#### 普通AND查询
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE age > 18 AND sex = 1
+$conditions = [
+    'age' => ['gt', 18],
+    'sex' => 1,
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+#### OR查询
+
+如果不提供逻辑连接词，则默认是AND查询。
+若要进行OR查询，则需要使用**_logic**操作修改逻辑连接词为**or**。
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE age > 18 OR sex = 1
+$conditions = [
+    'age' => ['gt', 18],
+    'sex' => 1,
+    ‘_logic’ => 'or',
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+#### 同一个字段出现多次
+
+可以使用**#number**这样的形式为字段编号，这样同一个字段就可以出现多次。
+按约定，**number**从0开始。
+
+```php
+$userModel = new Model('User');
+
+//SQL：SELECT * FROM user WHERE age >= 18 AND age <= 25
+$conditions = [
+    'age#0' => ['gte', 18],
+    'age#1' => ['lte', 25],
+];
+$userData = $userModel->where($conditions)->find();
+```
