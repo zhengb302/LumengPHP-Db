@@ -1,9 +1,10 @@
-# CRUD操作
+## CRUD操作
 
-## 插入数据
+### 插入数据
 
 代码示例：
 ```php
+<?php
 $data = [
     'username' => 'zhangsan',
     'nickname' => '张三',
@@ -11,6 +12,9 @@ $data = [
     'sex' => 0,
     'add_time' => time(),
 ];
+
 $userModel = new Model('User');
-$newUserId = userModel->add($data);
+$newUserId = $userModel->add($data);
 ```
+### 查询
+
