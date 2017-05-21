@@ -141,7 +141,7 @@ $userData = $userModel->alias('u')->where($conditions)->find();
 
 ### 复合查询
 
-操作符
+操作符：
 * _logic    设置逻辑连接词。逻辑连接词有：and、or
 * _sub      添加子条件
 * _string   添加原生SQL条件
