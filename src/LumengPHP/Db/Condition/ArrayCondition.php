@@ -148,10 +148,14 @@ class ArrayCondition extends CompositeCondition {
                 $condition = new InCondition($value, true);
                 break;
             case 'between':
-                $condition = new BetweenCondition($value[0], $value[1]);
+                $start = $value;
+                $end = $arrayVal[2];
+                $condition = new BetweenCondition($start, $end);
                 break;
             case 'not between':
-                $condition = new BetweenCondition($value[0], $value[1], true);
+                $start = $value;
+                $end = $arrayVal[2];
+                $condition = new BetweenCondition($start, $end, true);
                 break;
             case 'like':
                 $condition = new LikeCondition($value);

@@ -92,13 +92,13 @@ $userModel = new Model('User');
 
 //SQL：SELECT * FROM user WHERE age BETWEEN 18 AND 25
 $conditions = [
-    'age' => ['between', [18, 25]],
+    'age' => ['between', 18, 25],
 ];
 $userData = $userModel->where($conditions)->find();
 
 //SQL：SELECT * FROM user WHERE age NOT BETWEEN 18 AND 25
 $conditions = [
-    'age' => ['not between', [18, 25]],
+    'age' => ['not between', 18, 25],
 ];
 $userData = $userModel->where($conditions)->find();
 ```
