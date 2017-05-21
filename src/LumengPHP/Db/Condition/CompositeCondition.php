@@ -12,7 +12,7 @@ use LumengPHP\Db\Exceptions\InvalidSQLConditionException;
 abstract class CompositeCondition extends AbstractCondition {
 
     /**
-     * @var array 子条件数组，是一个混杂着关联数组和下标数组的奇葩数组
+     * @var array 子条件数组，是一个关联数组
      */
     protected $conditions;
 
@@ -40,25 +40,21 @@ abstract class CompositeCondition extends AbstractCondition {
 
     /**
      * 解析子条件
-     * @param int|string $field 可能是字段名称，也有可能是索引下标
-     * @param ConditionInterface|mixed $value 可能是字段值，也有可能是Condition对象
+     * @param string $field 字段名称/操作符
+     * @param mixed $value 字段值
      * @return ConditionInterface 条件对象
      * @throws InvalidSQLConditionException
      */
     private function resolveCondition($field, $value) {
-        if (is_int($field)) {
-            if (!$value instanceof ConditionInterface) {
-                $errMsg = 'the value of a CompositeCondition element must be a '
-                        . 'Condition instance if its index is a integer.';
-                throw new InvalidSQLConditionException($errMsg);
-            }
-
-            $condition = $value;
-        } else {
-            $condition = $this->buildCondition($value);
-            //这里的$condition必然是SimpleCondition
-            $condition->setField($field);
+        //字段名称是操作符
+        if($field[0]=='_'){
+            
         }
+        
+        $condition = $this->buildCondition($value);
+
+        //这里的$condition必然是SimpleCondition
+        $condition->setField($field);
 
         //复合条件的子条件在“外面”八成是没有被注入过StatementContext对象的
         $condition->setStatementContext($this->statementContext);
