@@ -40,7 +40,7 @@ class JoinTest extends BaseDatabaseTestCase {
         $fields = 'u.uid,u.nickname,p.title,p.content';
         $posts = $userModel->alias('u')->field($fields)
                 ->leftJoin('Post', 'p', 'p.uid = u.uid')
-                ->where(array('u.uid' => sqlIn(array(3, 1, 4))))
+                ->where(array('u.uid' => ['in', [3, 1, 4]]))
                 ->orderBy('p.add_time ASC')
                 ->select();
 

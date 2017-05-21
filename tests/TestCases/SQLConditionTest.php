@@ -23,7 +23,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $userModel = new UserModel();
 
         $conditions = array(
-            'uid' => sqlBetween(2, 5),
+            'uid' => ['between', 2, 5],
         );
         $users = $userModel->where($conditions)->select();
 
@@ -34,7 +34,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $userModel = new UserModel();
 
         $conditions = array(
-            'uid' => sqlNotBetween(2, 5),
+            'uid' => ['not between', 2, 5],
         );
         $users = $userModel->where($conditions)->select();
 
@@ -46,7 +46,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
 
         //找出除了李雷之外，其他人发的所有帖子
         $conditions = array(
-            'uid' => sqlNEQ(2),
+            'uid' => ['neq', 2],
         );
         $posts = $postModel->where($conditions)->select();
 
@@ -58,7 +58,9 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $userModel = new UserModel();
 
         //找出发过帖子的所有用户
-        $condition = sqlExists('SELECT * FROM bbs_post p WHERE p.uid = u.uid');
+        $condition = [
+            '_string' => 'EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
+        ];
         $users = $userModel->alias('u')->field('u.uid,u.nickname')
                 ->where($condition)
                 ->select();
@@ -77,7 +79,9 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $userModel = new UserModel();
 
         //找出尚未发过帖子的所有用户
-        $condition = sqlNotExists('SELECT * FROM bbs_post p WHERE p.uid = u.uid');
+        $condition = [
+            '_string' => 'NOT EXISTS(SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
+        ];
         $taciturnUsers = $userModel->alias('u')->field('u.uid,u.nickname')
                 ->where($condition)
                 ->select();
@@ -91,7 +95,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
 
         //找出uid大于2的所有用户
         $conditions = array(
-            'uid' => sqlGT(2),
+            'uid' => ['gt', 2],
         );
         $users = $userModel->where($conditions)->select();
 
@@ -104,7 +108,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
 
         //找出uid小于或等于2的所有用户
         $conditions = array(
-            'uid' => sqlELT(2),
+            'uid' => ['lte', 2],
         );
         $users = $userModel->where($conditions)->select();
 
@@ -117,7 +121,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
 
         //找出李雷和韩梅梅发的所有帖子
         $conditions = array(
-            'uid' => sqlIn(array(2, 3)),
+            'uid' => ['in', [2, 3]],
         );
         $posts = $postModel->where($conditions)->select();
 
@@ -130,7 +134,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
 
         //找出标题里包含"韩梅梅"的所有帖子
         $conditions = array(
-            'title' => sqlLike('%韩梅梅%'),
+            'title' => ['like', '%韩梅梅%'],
         );
         $posts = $postModel->where($conditions)->select();
 
