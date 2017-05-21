@@ -8,7 +8,7 @@ use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\ConditionInterface;
-use LumengPHP\Db\Condition\AndCondition;
+use LumengPHP\Db\Condition\ArrayCondition;
 use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
 
@@ -70,7 +70,7 @@ class DataAccessor {
      */
     public function where($condition) {
         if (is_array($condition)) {
-            $this->condition = new AndCondition($condition);
+            $this->condition = new ArrayCondition($condition);
         } elseif ($condition instanceof ConditionInterface) {
             $this->condition = $condition;
         } else {

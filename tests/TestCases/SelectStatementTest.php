@@ -3,7 +3,7 @@
 namespace tests\TestCases;
 
 use LumengPHP\Db\StatementContext;
-use LumengPHP\Db\Condition\AndCondition;
+use LumengPHP\Db\Condition\ArrayCondition;
 use LumengPHP\Db\Statement\SelectStatement;
 
 /**
@@ -18,10 +18,10 @@ class SelectStatementTest extends \PHPUnit_Framework_TestCase {
         $statementContext->setFields('id,user_id,add_time');
         $statementContext->setTableName('user');
 
-        $condition = new AndCondition(array(
+        $condition = new ArrayCondition(array(
             'id' => 197,
-            'user_id' => sqlIn(array(2, 8, 7)),
-            'add_time' => sqlBetween(strtotime('yesterday'), time()),
+            'user_id' => ['in', [2, 8, 7]],
+            'add_time' => ['between', [strtotime('yesterday'), time()]],
         ));
         $condition->setStatementContext($statementContext);
 
@@ -44,7 +44,7 @@ class SelectStatementTest extends \PHPUnit_Framework_TestCase {
         $statementContext->setFields($fields);
         $statementContext->setTableName('user');
 
-        $condition = new AndCondition(array(
+        $condition = new ArrayCondition(array(
             'id' => 197,
         ));
         $condition->setStatementContext($statementContext);
