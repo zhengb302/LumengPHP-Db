@@ -142,21 +142,23 @@ $userData = $userModel->alias('u')->where($conditions)->find();
 ### 复合查询
 
 操作符：
-* _logic    设置逻辑连接词。逻辑连接词有：and、or。如果不提供逻辑操作符，则默认的连接词是**and**
+* _logic    设置逻辑连接词。逻辑连接词有：and、or。如果不提供逻辑操作符，则默认的连接词是**and**。逻辑连接词必须为小写。
 * _sub      添加子条件
 * _string   添加原生SQL条件
 
 #### 普通AND查询
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE age > 18 AND sex = 1
 $conditions = [
     'age' => ['gt', 18],
     'sex' => 1,
 ];
 $userData = $userModel->where($conditions)->find();
+```
+
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE age > 18 AND sex = 1
 ```
 
 #### OR查询
@@ -165,9 +167,6 @@ $userData = $userModel->where($conditions)->find();
 若要进行OR查询，则需要使用_**logic**操作来修改逻辑连接词为**or**。
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE age > 18 OR sex = 1
 $conditions = [
     'age' => ['gt', 18],
     'sex' => 1,
@@ -176,57 +175,74 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-#### 同一个字段出现多次
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE age > 18 OR sex = 1
+```
 
-可以使用#**number**这样的形式为字段编号，这样同一个字段就可以出现多次。
-按约定，**number**从0开始。
+#### 同一个字段存在多个条件
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE age >= 18 AND age <= 25
 $conditions = [
-    'age#0' => ['gte', 18],
-    'age#1' => ['lte', 25],
+    'age' => [
+        'gte' => 18,
+        'lte' => 25,
+    ],
 ];
 $userData = $userModel->where($conditions)->find();
+```
+
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE age >= 18 AND age <= 25
+```
+
+使用OR连接：
+```php
+$conditions = [
+    'age' => [
+        'gte' => 18,
+        'lte' => 25,
+        '_logic' => 'or',
+    ],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE age >= 18 OR age <= 25
 ```
 
 #### 子条件
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
 $conditions = [
-    'sex' => 1,
+    'is_deleted' => 0,
     '_sub' => [
-        'age#0' => ['lt', 18],
-        'age#1' => ['gt', 25],
+        'age' => ['gt', 18],
+        'sex' => 1,
         '_logic' => 'or',
     ],
 ];
 $userData = $userModel->where($conditions)->find();
 ```
 
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
+```
+
 #### 多个子条件
 
 ```php
-$userModel = new Model('User');
-
 //SQL：SELECT * FROM user WHERE sex = 1 
 //        AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
 $conditions = [
     'sex' => 1,
-    '_sub#0' => [
-        'age#0' => ['lt', 18],
-        'age#1' => ['gt', 25],
-        '_logic' => 'or',
-    ],
-    '_sub#1' => [
-        'nickname#0' => ['like', '张%'],
-        'nickname#1' => ['like', '李%'],
-        '_logic' => 'or',
+    '_subs' => [
+        [],
+        [],
     ],
 ];
 $userData = $userModel->where($conditions)->find();
@@ -237,9 +253,6 @@ $userData = $userModel->where($conditions)->find();
 exists、not exists就是通过_**string**实现的。
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
 $conditions = [
     'sex' => 1,
     '_string' => 'age < 18 OR age > 25',
@@ -247,17 +260,22 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
+```
+
 #### 多个_string
 
 ```php
-$userModel = new Model('User');
-
-//SQL：SELECT * FROM user WHERE sex = 1 
-//        AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
 $conditions = [
     'sex' => 1,
-    '_string#0' => 'age < 18 OR age > 25',
-    '_string#1' => "nickname LIKE '张%' OR nickname LIKE '李%'",
+    '_string' => ['age < 18 OR age > 25', "nickname LIKE '张%' OR nickname LIKE '李%'"],
 ];
 $userData = $userModel->where($conditions)->find();
+```
+
+对应的SQL语句：
+```sql
+SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
 ```
