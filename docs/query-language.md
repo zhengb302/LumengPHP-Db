@@ -289,7 +289,18 @@ SQL：
 SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
 ```
 
-#### _or操作符
+#### _or 操作符
+
+格式：
+```
+[ 
+    '_or' => [
+        <sub condition 1>,
+        <sub condition 2>,
+        ...
+    ]
+]
+```
 
 ```php
 $conditions = [
@@ -315,6 +326,17 @@ SELECT * FROM user WHERE is_deleted = 0
 ```
 
 #### _and操作符
+
+格式：
+```
+[ 
+    '_and' => [
+        <sub condition 1>,
+        <sub condition 2>,
+        ...
+    ]
+]
+```
 
 ```php
 $conditions = [
@@ -345,6 +367,18 @@ SELECT * FROM user WHERE is_deleted = 0
 
 exists、not exists就是通过_**string**实现的。
 
+格式：
+```
+[ 
+    '_string' => <原生SQL条件语句>,
+]
+
+//或者
+[ 
+    '_string' => [<原生SQL条件语句1>, <原生SQL条件语句2>, ...],
+]
+```
+
 ```php
 $conditions = [
     'sex' => 1,
@@ -358,7 +392,7 @@ SQL：
 SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
 ```
 
-#### 多个_string
+多个_string
 
 ```php
 $conditions = [
