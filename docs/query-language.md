@@ -156,7 +156,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE age > 18 AND sex = 1
 ```
@@ -175,7 +175,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE age > 18 OR sex = 1
 ```
@@ -192,7 +192,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE age >= 18 AND age <= 25
 ```
@@ -209,7 +209,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE age >= 18 OR age <= 25
 ```
@@ -228,7 +228,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
 ```
@@ -260,7 +260,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
 ```
@@ -275,7 +275,7 @@ $conditions = [
 $userData = $userModel->where($conditions)->find();
 ```
 
-对应的SQL语句：
+SQL：
 ```sql
 SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
 ```
