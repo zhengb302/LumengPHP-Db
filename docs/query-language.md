@@ -141,14 +141,23 @@ $userData = $userModel->alias('u')->where($conditions)->find();
 
 ### 复合查询
 
-操作符：
+复合查询操作符：
 * _logic    设置逻辑连接词。逻辑连接词有：and、or。如果不提供逻辑操作符，则默认的连接词是**and**。逻辑连接词必须为小写。
 * _sub      添加子条件
 * _or       用**or**逻辑连接词连接多个子条件
 * _and      用**and**逻辑连接词连接多个子条件
 * _string   添加原生SQL条件
 
-#### 普通AND查询
+#### 普通复合查询
+
+格式：
+```
+[ 
+    <field1> => <value1>,
+    <field2> => <value2>,
+    ...
+]
+```
 
 ```php
 $conditions = [
@@ -163,10 +172,20 @@ SQL：
 SELECT * FROM user WHERE age > 18 AND sex = 1
 ```
 
-#### OR查询
+#### _logic操作符
 
 如果不提供逻辑连接词，则默认是AND查询。
 若要进行OR查询，则需要使用_**logic**操作来修改逻辑连接词为**or**。
+
+格式：
+```
+[ 
+    <field1> => <value1>,
+    <field2> => <value2>,
+    ...
+    '_logic' => 'or',
+]
+```
 
 ```php
 $conditions = [
@@ -184,6 +203,17 @@ SELECT * FROM user WHERE age > 18 OR sex = 1
 
 #### 同一个字段存在多个条件
 
+格式：
+```
+[ 
+    <field> => [
+        <operator1> => <value1>,
+        <operator2> => <value2>,
+        ...
+    ]
+]
+```
+
 ```php
 $conditions = [
     'age' => [
@@ -200,6 +230,18 @@ SELECT * FROM user WHERE age >= 18 AND age <= 25
 ```
 
 使用OR连接：
+格式：
+```
+[ 
+    <field> => [
+        <operator1> => <value1>,
+        <operator2> => <value2>,
+        ...
+        '_logic' => 'or',
+    ]
+]
+```
+
 ```php
 $conditions = [
     'age' => [
@@ -216,7 +258,19 @@ SQL：
 SELECT * FROM user WHERE age >= 18 OR age <= 25
 ```
 
-#### 子条件
+#### _sub操作符，子条件
+
+格式：
+```
+[ 
+    '_sub' => [
+        <field1> => <value1>,
+        <field2> => <value2>,
+        ...
+        '_logic' => 'or',
+    ]
+]
+```
 
 ```php
 $conditions = [
