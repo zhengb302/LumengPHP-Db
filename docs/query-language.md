@@ -379,6 +379,7 @@ exists、not exists就是通过_**string**实现的。
 ]
 ```
 
+示例1：
 ```php
 $conditions = [
     'sex' => 1,
@@ -392,8 +393,7 @@ SQL：
 SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
 ```
 
-多个_string
-
+示例2：
 ```php
 $conditions = [
     'sex' => 1,
