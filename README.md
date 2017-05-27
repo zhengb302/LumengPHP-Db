@@ -14,7 +14,7 @@ LumengPHP-Db是一个快速简洁、可测试的PHP数据库操作库。
 * 支持主从分离
 * 支持在程序中同时使用多个不同的数据库连接配置
 
-文档
+文档手册
 ----
 
 1. [CRUD操作](docs/crud-operations.md)
