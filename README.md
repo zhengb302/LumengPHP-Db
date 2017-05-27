@@ -18,4 +18,4 @@ LumengPHP-Db是一个快速简洁、可测试的PHP数据库操作库。
 ----
 
 1. [CRUD操作](docs/crud-operations.md)
-2. [查询语言](docs/query-language.md)
+2. [查询过滤语言](docs/query-language.md)

@@ -1,4 +1,4 @@
-## 查询语言
+## 查询过滤语言
 
 1. [简单查询](#简单查询)
 2. [复合查询](#复合查询)
@@ -144,6 +144,8 @@ $userData = $userModel->alias('u')->where($conditions)->find();
 操作符：
 * _logic    设置逻辑连接词。逻辑连接词有：and、or。如果不提供逻辑操作符，则默认的连接词是**and**。逻辑连接词必须为小写。
 * _sub      添加子条件
+* _or       用**or**逻辑连接词连接多个子条件
+* _and      用**and**逻辑连接词连接多个子条件
 * _string   添加原生SQL条件
 
 #### 普通AND查询
@@ -233,19 +235,54 @@ SQL：
 SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
 ```
 
-#### 多个子条件
+#### _or操作符
 
 ```php
-//SQL：SELECT * FROM user WHERE sex = 1 
-//        AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
 $conditions = [
-    'sex' => 1,
-    '_subs' => [
-        [],
-        [],
+    'is_deleted' => 0,
+    '_or' => [
+        [
+            'nickname' => ['like', '张%'],
+            'sex' => 0,
+        ],
+        [
+            'nickname' => ['like', '李%'],
+            'sex' => 1,
+        ],
     ],
 ];
 $userData = $userModel->where($conditions)->find();
+```
+
+SQL：
+```sql
+SELECT * FROM user WHERE is_deleted = 0 AND ( (nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1) )
+```
+
+#### _and操作符
+
+```php
+$conditions = [
+    'is_deleted' => 0,
+    '_and' => [
+        [
+            'nickname' => ['like' ,'张%'],
+            'sex' => 0,
+            '_logic' => 'or',
+        ],
+        [
+            'nickname' => ['like' ,'李%'],
+            'sex' => 1,
+            '_logic' => 'or',
+        ],
+    ],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+SQL：
+```sql
+SELECT * FROM user WHERE is_deleted = 0 AND (nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)
 ```
 
 #### 原生SQL条件语句：_string
