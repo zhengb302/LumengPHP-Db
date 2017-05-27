@@ -256,7 +256,8 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE is_deleted = 0 AND ( (nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1) )
+SELECT * FROM user WHERE is_deleted = 0 
+    AND ( (nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1) )
 ```
 
 #### _and操作符
@@ -282,7 +283,8 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE is_deleted = 0 AND (nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)
+SELECT * FROM user WHERE is_deleted = 0
+    AND (nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)
 ```
 
 #### 原生SQL条件语句：_string
