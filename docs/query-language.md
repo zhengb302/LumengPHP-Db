@@ -170,7 +170,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE age > 18 AND sex = 1
+SELECT * FROM user WHERE (age > 18 AND sex = 1)
 ```
 
 #### _logic操作符
@@ -200,7 +200,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE age > 18 OR sex = 1
+SELECT * FROM user WHERE (age > 18 OR sex = 1)
 ```
 
 #### _sub操作符，子条件
@@ -230,11 +230,11 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
--- 注意圆括号
-SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 AND sex = 1)
+-- 注意里边的圆括号
+SELECT * FROM user WHERE (is_deleted = 0 AND (age > 18 AND sex = 1))
 ```
 
-以上示例不需要_**sub**操作符也可以轻易实现，\_**sub**操作符一般与\_**logic**一起使用，嵌入一个OR子句：
+以上示例不需要_**sub**操作符也可以轻易实现，所以\_**sub**操作符一般与\_**logic**一起使用，嵌入一个OR子句：
 ```php
 $conditions = [
     'is_deleted' => 0,
@@ -249,7 +249,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
+SELECT * FROM user WHERE (is_deleted = 0 AND (age > 18 OR sex = 1))
 ```
 
 #### _or 操作符
@@ -285,8 +285,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE is_deleted = 0 
-    AND ( (nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1) )
+SELECT * FROM user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1)))
 ```
 
 #### _and操作符
@@ -324,8 +323,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE is_deleted = 0
-    AND (nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)
+SELECT * FROM user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)))
 ```
 
 #### 原生SQL条件语句：_string
@@ -355,7 +353,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25)
+SELECT * FROM user WHERE (sex = 1 AND (age < 18 OR age > 25))
 ```
 
 示例2：
@@ -369,5 +367,5 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE sex = 1 AND (age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')
+SELECT * FROM user WHERE (sex = 1 AND ((age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')))
 ```
