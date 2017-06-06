@@ -31,11 +31,7 @@ class ArrayCondition extends CompositeCondition {
         foreach ($arrayCondition as $field => $value) {
             //如果不是操作符，是普通的条件
             if ($field[0] != '_') {
-                if (is_array($value) && !isset($value[0])) {
-                    
-                } else {
-                    $parsedConditions[] = $this->parseSimpleCondition($field, $value);
-                }
+                $parsedConditions[] = $this->parseSimpleCondition($field, $value);
                 continue;
             }
 
@@ -57,40 +53,6 @@ class ArrayCondition extends CompositeCondition {
         }
 
         return '(' . implode(" {$logic} ", $parsedConditions) . ')';
-    }
-
-    private function verifyOp($op, $operand) {
-        switch ($op) {
-            case '_logic':
-                if (!in_array($operand, ['and', 'or'])) {
-                    $errMsg = '逻辑连接词必须是and或or';
-                    throw new InvalidSQLConditionException($errMsg);
-                }
-                break;
-            case '_sub':
-                if (!is_array($operand)) {
-                    $errMsg = '子条件的值必须是数组';
-                    throw new InvalidSQLConditionException($errMsg);
-                }
-                break;
-            case '_string':
-                if (!is_string($operand)) {
-                    $errMsg = '原生SQL条件必须是字符串';
-                    throw new InvalidSQLConditionException($errMsg);
-                }
-                break;
-            default:
-                $errMsg = "不支持的操作符：{$op}";
-                throw new InvalidSQLConditionException($errMsg);
-        }
-    }
-
-    private function parseOp($op, $operand) {
-        if ($op == '_sub') {
-            return $this->parseArrayCondition($operand);
-        } elseif ($op == '_string') {
-            return '(' . $operand . ')';
-        }
     }
 
     /**
@@ -168,6 +130,65 @@ class ArrayCondition extends CompositeCondition {
         }
 
         return $condition;
+    }
+
+    private function verifyOp($op, $operand) {
+        switch ($op) {
+            case '_logic':
+                if (!in_array($operand, ['and', 'or'])) {
+                    $errMsg = '逻辑连接词必须是and或or';
+                    throw new InvalidSQLConditionException($errMsg);
+                }
+                break;
+            case '_sub':
+                if (!is_array($operand)) {
+                    $errMsg = '子条件的值必须是数组';
+                    throw new InvalidSQLConditionException($errMsg);
+                }
+                break;
+            case '_or':
+                if (!is_array($operand)) {
+                    $errMsg = '_or操作符的值必须是数组';
+                    throw new InvalidSQLConditionException($errMsg);
+                }
+                break;
+            case '_and':
+                if (!is_array($operand)) {
+                    $errMsg = '_and操作符的值必须是数组';
+                    throw new InvalidSQLConditionException($errMsg);
+                }
+                break;
+            case '_string':
+                if (!is_string($operand) && !is_array($operand)) {
+                    $errMsg = '_string操作符的值必须是字符串或数组';
+                    throw new InvalidSQLConditionException($errMsg);
+                }
+                break;
+            default:
+                $errMsg = "不支持的操作符：{$op}";
+                throw new InvalidSQLConditionException($errMsg);
+        }
+    }
+
+    private function parseOp($op, $operand) {
+        switch ($op) {
+            case '_sub':
+                //递归调用parseArrayCondition方法
+                return $this->parseArrayCondition($operand);
+            case '_string':
+                return $this->parseStringOp($operand);
+        }
+    }
+
+    private function parseStringOp($operand) {
+        if (is_string($operand)) {
+            return '(' . $operand . ')';
+        }
+
+        foreach ($operand as $i => $value) {
+            $operand[$i] = '(' . $value . ')';
+        }
+        return '(' . implode(' AND ', $operand) . ')';
     }
 
 }
