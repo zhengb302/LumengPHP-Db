@@ -271,12 +271,28 @@ SELECT * FROM user WHERE age >= 18 OR age <= 25
         <field1> => <value1>,
         <field2> => <value2>,
         ...
-        '_logic' => 'or',
     ]
 ]
 ```
 
 示例：
+```php
+$conditions = [
+    'is_deleted' => 0,
+    '_sub' => [
+        'age' => ['gt', 18],
+        'sex' => 1,
+    ],
+];
+$userData = $userModel->where($conditions)->find();
+```
+
+SQL：
+```sql
+SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 AND sex = 1)
+```
+
+像上面这样的情况，其实是不需要_*sub*操作符的。_*sub*操作符的使用场景是与_*logic*一起使用，嵌入一个OR子句：
 ```php
 $conditions = [
     'is_deleted' => 0,
