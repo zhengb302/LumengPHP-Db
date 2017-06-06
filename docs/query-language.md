@@ -293,7 +293,7 @@ SQL：
 SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 AND sex = 1)
 ```
 
-像上面这样的情况，其实是不需要_**sub**操作符的。_**sub**操作符的使用场景是与_**logic**一起使用，嵌入一个OR子句：
+像上面这样的情况，其实是不需要_**sub**操作符的。_**sub**操作符一般与_**logic**一起使用，嵌入一个OR子句：
 ```php
 $conditions = [
     'is_deleted' => 0,
