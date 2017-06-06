@@ -29,14 +29,13 @@ class ArrayCondition extends CompositeCondition {
 
         $logic = 'AND';
         foreach ($arrayCondition as $field => $value) {
-            //同一级条件下同一个字段出现多次
-            if (strpos($field, '#')) {
-                list($field, ) = explode('#', $field);
-            }
-
             //如果不是操作符，是普通的条件
             if ($field[0] != '_') {
-                $parsedConditions[] = $this->parseSimpleCondition($field, $value);
+                if (is_array($value) && !isset($value[0])) {
+                    
+                } else {
+                    $parsedConditions[] = $this->parseSimpleCondition($field, $value);
+                }
                 continue;
             }
 
