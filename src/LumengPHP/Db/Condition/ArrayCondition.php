@@ -175,9 +175,29 @@ class ArrayCondition extends CompositeCondition {
             case '_sub':
                 //递归调用parseArrayCondition方法
                 return $this->parseArrayCondition($operand);
+            case '_or':
+                return $this->parseOrOp($operand);
+            case '_and':
+                return $this->parseAndOp($operand);
             case '_string':
                 return $this->parseStringOp($operand);
         }
+    }
+
+    private function parseOrOp($operand) {
+        $subParsedConditions = [];
+        foreach ($operand as $subArrayCondition) {
+            $subParsedConditions[] = $this->parseArrayCondition($subArrayCondition);
+        }
+        return '(' . implode(' OR ', $subParsedConditions) . ')';
+    }
+
+    private function parseAndOp($operand) {
+        $subParsedConditions = [];
+        foreach ($operand as $subArrayCondition) {
+            $subParsedConditions[] = $this->parseArrayCondition($subArrayCondition);
+        }
+        return '(' . implode(' AND ', $subParsedConditions) . ')';
     }
 
     private function parseStringOp($operand) {
