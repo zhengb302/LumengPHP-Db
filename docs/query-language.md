@@ -159,6 +159,7 @@ $userData = $userModel->alias('u')->where($conditions)->find();
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'age' => ['gt', 18],
@@ -187,6 +188,7 @@ SELECT * FROM user WHERE age > 18 AND sex = 1
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'age' => ['gt', 18],
@@ -214,6 +216,7 @@ SELECT * FROM user WHERE age > 18 OR sex = 1
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'age' => [
@@ -242,6 +245,7 @@ SELECT * FROM user WHERE age >= 18 AND age <= 25
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'age' => [
@@ -272,6 +276,7 @@ SELECT * FROM user WHERE age >= 18 OR age <= 25
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'is_deleted' => 0,
@@ -302,6 +307,7 @@ SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 OR sex = 1)
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'is_deleted' => 0,
@@ -338,6 +344,7 @@ SELECT * FROM user WHERE is_deleted = 0
 ]
 ```
 
+示例：
 ```php
 $conditions = [
     'is_deleted' => 0,
