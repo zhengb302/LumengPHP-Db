@@ -203,65 +203,6 @@ SQL：
 SELECT * FROM user WHERE age > 18 OR sex = 1
 ```
 
-#### 同一个字段存在多个条件
-
-格式：
-```
-[ 
-    <field> => [
-        <operator1> => <value1>,
-        <operator2> => <value2>,
-        ...
-    ]
-]
-```
-
-示例：
-```php
-$conditions = [
-    'age' => [
-        'gte' => 18,
-        'lte' => 25,
-    ],
-];
-$userData = $userModel->where($conditions)->find();
-```
-
-SQL：
-```sql
-SELECT * FROM user WHERE age >= 18 AND age <= 25
-```
-
-使用OR连接：
-格式：
-```
-[ 
-    <field> => [
-        <operator1> => <value1>,
-        <operator2> => <value2>,
-        ...
-        '_logic' => 'or',
-    ]
-]
-```
-
-示例：
-```php
-$conditions = [
-    'age' => [
-        'gte' => 18,
-        'lte' => 25,
-        '_logic' => 'or',
-    ],
-];
-$userData = $userModel->where($conditions)->find();
-```
-
-SQL：
-```sql
-SELECT * FROM user WHERE age >= 18 OR age <= 25
-```
-
 #### _sub操作符，子条件
 
 格式：
