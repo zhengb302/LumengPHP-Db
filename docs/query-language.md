@@ -289,7 +289,7 @@ $userData = $userModel->where($conditions)->find();
 
 SQL：
 ```sql
-//注意圆括号
+-- 注意圆括号
 SELECT * FROM user WHERE is_deleted = 0 AND (age > 18 AND sex = 1)
 ```
 
