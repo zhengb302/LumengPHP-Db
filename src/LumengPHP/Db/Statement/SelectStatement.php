@@ -30,7 +30,8 @@ class SelectStatement extends AbstractStatement {
 
         $orderBy = $this->statementContext->getOrderBy();
         if (!is_null($orderBy)) {
-            $sql = "{$sql} ORDER BY {$orderBy}";
+            $orderByClause = $this->parseOrderByClause($orderBy);
+            $sql = "{$sql} ORDER BY {$orderByClause}";
         }
 
         $limit = $this->statementContext->getLimit();
@@ -39,6 +40,18 @@ class SelectStatement extends AbstractStatement {
         }
 
         return $sql;
+    }
+
+    private function parseOrderByClause($orderByClause) {
+        if (is_string($orderByClause)) {
+            return $orderByClause;
+        }
+
+        $tmpArr = [];
+        foreach ($orderByClause as $field => $sort) {
+            $tmpArr[] = "{$field} {$sort}";
+        }
+        return implode(', ', $tmpArr);
     }
 
 }

@@ -163,7 +163,7 @@ class Repository {
 
     /**
      * 设置"ORDER BY"子句
-     * @param string $orderByClause
+     * @param string|array $orderByClause
      * @return Repository
      */
     public function orderBy($orderByClause) {

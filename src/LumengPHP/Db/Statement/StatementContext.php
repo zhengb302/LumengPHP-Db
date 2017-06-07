@@ -43,7 +43,7 @@ class StatementContext {
     private $having;
 
     /**
-     * @var string order by子句
+     * @var string|array order by子句
      */
     private $orderBy;
 
