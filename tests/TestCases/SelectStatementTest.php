@@ -2,7 +2,7 @@
 
 namespace tests\TestCases;
 
-use LumengPHP\Db\StatementContext;
+use LumengPHP\Db\Statement\StatementContext;
 use LumengPHP\Db\Condition\ArrayCondition;
 use LumengPHP\Db\Statement\SelectStatement;
 

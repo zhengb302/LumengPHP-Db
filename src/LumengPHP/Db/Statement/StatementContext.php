@@ -1,6 +1,6 @@
 <?php
 
-namespace LumengPHP\Db;
+namespace LumengPHP\Db\Statement;
 
 use LumengPHP\Db\Join\JoinClause;
 use LumengPHP\Db\Misc\ParameterCounter;

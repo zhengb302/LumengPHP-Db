@@ -2,6 +2,8 @@
 
 namespace tests\TestCases;
 
+use LumengPHP\Db\Statement\StatementContext;
+
 /**
  * 
  *
@@ -10,7 +12,7 @@ namespace tests\TestCases;
 class InsertStatementTest extends \PHPUnit_Framework_TestCase {
 
     public function testNormal() {
-        $statementContext = new \LumengPHP\Db\StatementContext();
+        $statementContext = new StatementContext();
         $statementContext->setTableName('user');
 
         $data = array(

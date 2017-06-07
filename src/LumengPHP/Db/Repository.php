@@ -3,6 +3,7 @@
 namespace LumengPHP\Db;
 
 use LumengPHP\Db\Connection\ConnectionInterface;
+use LumengPHP\Db\Statement\StatementContext;
 use LumengPHP\Db\Statement\SelectStatement;
 use LumengPHP\Db\Statement\InsertStatement;
 use LumengPHP\Db\Statement\UpdateStatement;

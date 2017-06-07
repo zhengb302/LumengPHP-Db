@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db\Statement;
 
-use LumengPHP\Db\StatementContext;
+use LumengPHP\Db\Statement\StatementContext;
 use LumengPHP\Db\Misc\FieldHelper;
 
 /**

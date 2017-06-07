@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db\Condition;
 
-use LumengPHP\Db\StatementContext;
+use LumengPHP\Db\Statement\StatementContext;
 
 /**
  * SQL语句条件抽象基类
