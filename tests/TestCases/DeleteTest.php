@@ -48,7 +48,7 @@ class DeleteTest extends BaseDatabaseTestCase {
     /**
      * 测试不带条件的数据删除<br />
      * 不带条件的数据删除，会导致抛出异常
-     * @expectedException \LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException
+     * @expectedException \LumengPHP\Db\Exception\ForbiddenOperationException
      */
     public function testDeleteWithoutAnyConditions() {
         $userModel = new UserModel();

@@ -40,7 +40,7 @@ class UpdateTest extends BaseDatabaseTestCase {
 
     /**
      * 测试不带条件的数据更新
-     * @expectedException \LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException
+     * @expectedException \LumengPHP\Db\Exception\ForbiddenOperationException
      */
     public function testUpdateWithoutAnyConditions() {
         $userModel = new UserModel();

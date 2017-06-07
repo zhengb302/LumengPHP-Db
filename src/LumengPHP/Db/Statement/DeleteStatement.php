@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db\Statement;
 
-use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
+use LumengPHP\Db\Exception\ForbiddenOperationException;
 
 /**
  * DELETE 语句
@@ -15,7 +15,7 @@ class DeleteStatement extends AbstractStatement {
         $where = $this->buildWhere();
         if (empty($where)) {
             $errMsg = 'delete without any conditions is forbidden.';
-            throw new ForbiddenDatabaseOperationException($errMsg);
+            throw new ForbiddenOperationException($errMsg);
         }
 
         return 'DELETE FROM ' . $this->statementContext->getTableName() .

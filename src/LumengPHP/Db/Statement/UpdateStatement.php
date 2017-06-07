@@ -3,7 +3,7 @@
 namespace LumengPHP\Db\Statement;
 
 use LumengPHP\Db\Misc\FieldHelper;
-use LumengPHP\Db\Exceptions\ForbiddenDatabaseOperationException;
+use LumengPHP\Db\Exception\ForbiddenOperationException;
 
 /**
  * UPDATE 语句
@@ -34,7 +34,7 @@ class UpdateStatement extends AbstractStatement {
         $where = $this->buildWhere();
         if (empty($where)) {
             $errMsg = 'update without any conditions is forbidden.';
-            throw new ForbiddenDatabaseOperationException($errMsg);
+            throw new ForbiddenOperationException($errMsg);
         }
 
         return 'UPDATE ' . $this->statementContext->getTableName() .

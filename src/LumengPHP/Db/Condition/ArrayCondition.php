@@ -2,7 +2,7 @@
 
 namespace LumengPHP\Db\Condition;
 
-use LumengPHP\Db\Exceptions\InvalidSQLConditionException;
+use LumengPHP\Db\Exception\InvalidSQLConditionException;
 
 /**
  * 接受一个关联数组
