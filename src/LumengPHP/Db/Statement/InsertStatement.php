@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Statement;
 use LumengPHP\Db\Misc\FieldHelper;
 
 /**
- * INSERT 语句
+ * INSERT语句，单条插入
  *
  * @author zhengluming <908235332@qq.com>
  */
@@ -16,7 +16,7 @@ class InsertStatement extends AbstractStatement {
      */
     private $data;
 
-    public function __construct($data) {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 

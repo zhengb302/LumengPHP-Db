@@ -1,11 +1,11 @@
 # todo list
 
-* Repository增加addAll方法，以支持数据的批量插入
 * 增加对GROUP BY、HAVING子句的支持
 
 #### 2017-06-07
 
 * ~~设计并实现新的查询过滤语言~~
+* ~~Repository增加insertAll方法，以支持数据的批量插入~~
 
 #### 2016-03-27
 

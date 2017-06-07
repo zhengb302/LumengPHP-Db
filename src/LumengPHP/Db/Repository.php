@@ -6,6 +6,7 @@ use LumengPHP\Db\Connection\ConnectionInterface;
 use LumengPHP\Db\Statement\StatementContext;
 use LumengPHP\Db\Statement\SelectStatement;
 use LumengPHP\Db\Statement\InsertStatement;
+use LumengPHP\Db\Statement\InsertAllStatement;
 use LumengPHP\Db\Statement\UpdateStatement;
 use LumengPHP\Db\Statement\DeleteStatement;
 use LumengPHP\Db\Condition\ConditionInterface;
@@ -314,7 +315,7 @@ class Repository {
     }
 
     /**
-     * 插入一条记录
+     * 插入一条数据
      * @param array $data 要插入的数据
      * @return string|false 插入成功则返回新插入记录的id，SQL执行发生错误返回false
      */
@@ -332,6 +333,23 @@ class Repository {
         }
 
         return $this->connection->lastInsertId();
+    }
+
+    /**
+     * 批量插入数据
+     * @param array $dataArr 要批量插入的数据
+     * @return string|false 插入成功则返回新插入的记录数，SQL执行发生错误返回false
+     */
+    public function insertAll($dataArr) {
+        $statement = new InsertAllStatement($dataArr);
+        $statement->setStatementContext($this->statementContext);
+        $sql = $statement->parse();
+
+        $rowCount = $this->connection->execute($sql, $this->statementContext->getParameters());
+
+        $this->clear();
+
+        return $rowCount;
     }
 
     /**
