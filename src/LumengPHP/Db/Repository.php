@@ -13,11 +13,15 @@ use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
 
 /**
- * An abstract database access layer.
+ * An <b>Repository</b> serves as a repository for entities with generic as well as
+ * business specific methods for retrieving entities.
+ *
+ * This class is designed for inheritance and users can subclass this class to
+ * write their own repositories with business-specific methods to locate entities.
  *
  * @author zhengluming <908235332@qq.com>
  */
-class DataAccessor {
+class Repository {
 
     /**
      * @var ConnectionInterface 所属的数据库连接
@@ -40,14 +44,13 @@ class DataAccessor {
     private $condition;
 
     /**
-     * 
+     * 创建一个<b>Repository</b>实例
      * @param ConnectionInterface $connection 数据库连接
-     * @param string $tableName 抽象表名，即驼峰风格的表名，如"UserProfile"
+     * @param string $entityName 实体名称，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct(ConnectionInterface $connection, $tableName) {
+    public function __construct(ConnectionInterface $connection, $entityName) {
         $this->connection = $connection;
-        $this->tableName = $this->connection->getTablePrefix() .
-                TableNameHelper::camel2id($tableName, '_');
+        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($entityName, '_');
 
         $this->statementContext = new StatementContext();
         $this->statementContext->setTableName($this->tableName);
@@ -56,7 +59,7 @@ class DataAccessor {
     /**
      * 设置查询字段
      * @param string $fields
-     * @return DataAccessor
+     * @return Repository
      */
     public function field($fields) {
         $this->statementContext->setFields($fields);
@@ -66,7 +69,7 @@ class DataAccessor {
     /**
      * 设置查询条件
      * @param array|ConditionInterface $condition
-     * @return DataAccessor
+     * @return Repository
      */
     public function where($condition) {
         if (is_array($condition)) {
@@ -85,7 +88,7 @@ class DataAccessor {
     /**
      * 设置别名
      * @param string $alias
-     * @return DataAccessor
+     * @return Repository
      */
     public function alias($alias) {
         $this->statementContext->setAlias($alias);
@@ -97,7 +100,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return DataAccessor
+     * @return Repository
      */
     public function join($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -114,7 +117,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return DataAccessor
+     * @return Repository
      */
     public function leftJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -132,7 +135,7 @@ class DataAccessor {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return DataAccessor
+     * @return Repository
      */
     public function rightJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -148,7 +151,7 @@ class DataAccessor {
     /**
      * 设置"order by"子句
      * @param string $orderByClause
-     * @return DataAccessor
+     * @return Repository
      */
     public function orderBy($orderByClause) {
         $this->statementContext->setOrderBy($orderByClause);
@@ -160,7 +163,7 @@ class DataAccessor {
      * 注意：设置分页和设置limit子句会导致互相覆盖
      * @param int $pageNum 页号(从1开始)
      * @param int $pageSize 页大小
-     * @return DataAccessor
+     * @return Repository
      */
     public function paging($pageNum, $pageSize) {
         $offset = ($pageNum - 1) * $pageSize;
@@ -177,7 +180,7 @@ class DataAccessor {
      * $model->limit(5);
      * //结果SQL：... LIMIT 40,10 ...
      * $model->limit('40,10');
-     * @return DataAccessor
+     * @return Repository
      */
     public function limit($limit) {
         $this->statementContext->setLimit($limit);

@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
  *
  * @author zhengluming <908235332@qq.com>
  */
-class ConnectionManager {
+final class ConnectionManager {
 
     /**
      * @var array 数据库配置，格式：connectionName => connectionConfig
