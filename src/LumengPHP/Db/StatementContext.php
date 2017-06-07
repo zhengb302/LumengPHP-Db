@@ -54,7 +54,7 @@ class StatementContext {
 
     public function __construct() {
         $this->joinClause = new JoinClause();
-        $this->parameters = array();
+        $this->parameters = [];
         $this->parameterCounter = new ParameterCounter();
     }
 
@@ -133,7 +133,7 @@ class StatementContext {
         $this->orderBy = null;
         $this->limit = null;
 
-        $this->parameters = array();
+        $this->parameters = [];
         $this->parameterCounter->restart();
     }
 

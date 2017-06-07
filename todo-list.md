@@ -1,9 +1,12 @@
 # todo list
 
-* DataAccessor增加addAll方法，以支持数据的批量插入
 * 重构StatementContext类和各Statement类为QueryBuilder类
+* DataAccessor增加addAll方法，以支持数据的批量插入
 * 增加对GROUP BY、HAVING子句的支持
-* 完善注释及文档
+
+#### 2017-06-07
+
+* ~~设计并实现新的查询过滤语言~~
 
 #### 2016-03-27
 
