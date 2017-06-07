@@ -33,6 +33,16 @@ class StatementContext {
     private $joinClause;
 
     /**
+     * @var string group by子句
+     */
+    private $groupBy;
+
+    /**
+     * @var string having子句
+     */
+    private $having;
+
+    /**
      * @var string order by子句
      */
     private $orderBy;
@@ -92,6 +102,22 @@ class StatementContext {
      */
     public function getJoinClause() {
         return $this->joinClause;
+    }
+
+    public function getGroupBy() {
+        return $this->groupBy;
+    }
+
+    public function setGroupBy($groupBy) {
+        $this->groupBy = $groupBy;
+    }
+
+    public function getHaving() {
+        return $this->having;
+    }
+
+    public function setHaving($having) {
+        $this->having = $having;
     }
 
     public function getOrderBy() {

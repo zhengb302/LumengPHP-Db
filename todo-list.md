@@ -1,11 +1,12 @@
 # todo list
 
-* 增加对GROUP BY、HAVING子句的支持
+* orderBy支持以关联数组的方式设置排序子句
 
 #### 2017-06-07
 
 * ~~设计并实现新的查询过滤语言~~
 * ~~Repository增加insertAll方法，以支持数据的批量插入~~
+* ~~增加对GROUP BY、HAVING子句的支持~~
 
 #### 2016-03-27
 

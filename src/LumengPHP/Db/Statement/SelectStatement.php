@@ -18,6 +18,16 @@ class SelectStatement extends AbstractStatement {
                 $this->statementContext->getJoinClause()->parse() .
                 $this->buildWhere();
 
+        $groupBy = $this->statementContext->getGroupBy();
+        if (!is_null($groupBy)) {
+            $sql = "{$sql} GROUP BY {$groupBy}";
+        }
+
+        $having = $this->statementContext->getHaving();
+        if (!is_null($having)) {
+            $sql = "{$sql} HAVING {$having}";
+        }
+
         $orderBy = $this->statementContext->getOrderBy();
         if (!is_null($orderBy)) {
             $sql = "{$sql} ORDER BY {$orderBy}";

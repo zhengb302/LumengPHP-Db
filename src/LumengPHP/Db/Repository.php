@@ -142,7 +142,27 @@ class Repository {
     }
 
     /**
-     * 设置"order by"子句
+     * 设置"GROUP BY"子句
+     * @param string $groupByClause
+     * @return Repository
+     */
+    public function groupBy($groupByClause) {
+        $this->statementContext->setGroupBy($groupByClause);
+        return $this;
+    }
+
+    /**
+     * 设置"HAVING"子句
+     * @param string $havingClause
+     * @return Repository
+     */
+    public function having($havingClause) {
+        $this->statementContext->setHaving($havingClause);
+        return $this;
+    }
+
+    /**
+     * 设置"ORDER BY"子句
      * @param string $orderByClause
      * @return Repository
      */
@@ -170,10 +190,10 @@ class Repository {
      * @param int|string $limit limit子句。注意，不包括LIMIT关键字<br />
      * 示例：<br />
      * //结果SQL：... LIMIT 5 ...
-     * $model->limit(5);
+     * $repos->limit(5);
      * 
      * //结果SQL：... LIMIT 40,10 ...
-     * $model->limit('40,10');
+     * $repos->limit('40,10');
      * 
      * @return Repository
      */
