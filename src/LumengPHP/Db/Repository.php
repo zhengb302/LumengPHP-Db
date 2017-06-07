@@ -58,16 +58,6 @@ class Repository {
     }
 
     /**
-     * 设置查询字段
-     * @param string $fields
-     * @return Repository
-     */
-    public function field($fields) {
-        $this->statementContext->setFields($fields);
-        return $this;
-    }
-
-    /**
      * 设置查询条件
      * @param array|ConditionInterface $condition
      * @return Repository
@@ -175,12 +165,14 @@ class Repository {
     /**
      * 设置limit子句<br />
      * 注意：设置分页和设置limit子句会导致互相覆盖
-     * @param mixed $limit limit子句，注意，不包括LIMIT关键字<br />
+     * @param int|string $limit limit子句。注意，不包括LIMIT关键字<br />
      * 示例：<br />
      * //结果SQL：... LIMIT 5 ...
      * $model->limit(5);
+     * 
      * //结果SQL：... LIMIT 40,10 ...
      * $model->limit('40,10');
+     * 
      * @return Repository
      */
     public function limit($limit) {
@@ -190,10 +182,12 @@ class Repository {
 
     /**
      * 查询一条记录
+     * @param string $fields 设置要返回的字段
      * @return array|null|false 成功则返回一个关联数组；未找到数据返回null，
      * SQL执行发生错误则返回false
      */
-    public function find() {
+    public function findOne($fields = '*') {
+        $this->statementContext->setFields($fields);
         $this->statementContext->setLimit(1);
 
         $statement = new SelectStatement();
@@ -210,10 +204,13 @@ class Repository {
 
     /**
      * 查询多条记录
+     * @param string $fields 设置要返回的字段
      * @return array|null|false 成功则返回一个结果数组；未找到数据返回null，
      * SQL执行发生错误则返回false
      */
-    public function select() {
+    public function findAll($fields = '*') {
+        $this->statementContext->setFields($fields);
+
         $statement = new SelectStatement();
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
@@ -320,7 +317,7 @@ class Repository {
      * @param array $data 要插入的数据
      * @return string|false 插入成功则返回新插入记录的id，SQL执行发生错误返回false
      */
-    public function add($data) {
+    public function insert($data) {
         $statement = new InsertStatement($data);
         $statement->setStatementContext($this->statementContext);
         $sql = $statement->parse();
