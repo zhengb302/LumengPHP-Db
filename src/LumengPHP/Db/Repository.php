@@ -59,7 +59,7 @@ class Repository {
     }
 
     /**
-     * 设置查询条件
+     * 设置查询条件。此方法只应用于查询类的操作，更新和删除操作直接在对应的方法中指定条件。
      * @param array|ConditionInterface $condition
      * @return Repository
      */
