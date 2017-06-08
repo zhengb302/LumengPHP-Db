@@ -1,6 +1,6 @@
 # todo list
 
-* Repository增加inc、dec方法
+* Model类增加inc、dec方法
 
 #### 2017-06-08
 
