@@ -4,6 +4,7 @@ namespace LumengPHP\Db\Statement;
 
 use LumengPHP\Db\Misc\FieldHelper;
 use LumengPHP\Db\Exception\ForbiddenOperationException;
+use LumengPHP\Db\Exception\SqlException;
 
 /**
  * UPDATE 语句
@@ -22,13 +23,9 @@ class UpdateStatement extends AbstractStatement {
     }
 
     public function parse() {
-        $setParameters = array();
+        $setParameters = [];
         foreach ($this->data as $field => $value) {
-            $placeholder = $this->makePlaceholder($field);
-            $this->statementContext->addParameter($placeholder, $value);
-
-            $quotedField = FieldHelper::quoteField($field);
-            $setParameters[] = "{$quotedField} = {$placeholder}";
+            $setParameters[] = $this->buildSetParameter($field, $value);
         }
 
         $where = $this->buildWhere();
@@ -40,6 +37,30 @@ class UpdateStatement extends AbstractStatement {
         return 'UPDATE ' . $this->statementContext->getTableName() .
                 ' SET ' . implode(', ', $setParameters) .
                 $where;
+    }
+
+    private function buildSetParameter($field, $value) {
+        //如果字段值是表达式
+        if (is_array($value)) {
+            list($op, $operand) = $value;
+            $this->verifyOp($op);
+
+            $quotedField = FieldHelper::quoteField($field);
+            return "{$quotedField} = {$operand}";
+        }
+
+        $placeholder = $this->makePlaceholder($field);
+        $this->statementContext->addParameter($placeholder, $value);
+
+        $quotedField = FieldHelper::quoteField($field);
+        return "{$quotedField} = {$placeholder}";
+    }
+
+    private function verifyOp($op) {
+        //目前只支持exp操作
+        if ($op != 'exp') {
+            throw new SqlException("UPDATE语句不支持此操作：{$op}");
+        }
     }
 
 }

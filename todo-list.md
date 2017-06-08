@@ -1,7 +1,5 @@
 # todo list
 
-* Model类增加inc、dec方法
-
 #### 2017-06-08
 
 * ~~Repository增加findValue和findColumn方法~~
@@ -9,6 +7,7 @@
 * ~~Repository改名为Model~~
 * ~~Model类增加getConnection方法~~
 * ~~Model类创建方式改写~~
+* ~~Model类增加inc、dec方法；更新数据支持exp操作~~
 
 #### 2017-06-07
 

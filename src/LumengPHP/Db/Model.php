@@ -14,6 +14,7 @@ use LumengPHP\Db\Condition\ArrayCondition;
 use LumengPHP\Db\Join\Join;
 use LumengPHP\Db\Misc\TableNameHelper;
 use LumengPHP\Db\Exception\InvalidSQLConditionException;
+use LumengPHP\Db\Exception\SqlException;
 
 /**
  * Model类，子类必须继承才能使用
@@ -422,7 +423,7 @@ abstract class Model {
     /**
      * 更新数据
      * @param array $data 要更新的数据，关联数组
-     * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
+     * @return int|false 成功则返回受影响的行数；如果SQL执行发生错误，返回false。
      * 注意返回<b>0</b>和返回<b>false</b>的区别。
      */
     public function update(array $data) {
@@ -436,6 +437,45 @@ abstract class Model {
         $this->clear();
 
         return $rowCount;
+    }
+
+    /**
+     * 给一个字段增加指定的值
+     * @param string $field 字段名称
+     * @param int|float $amount 指定的值
+     * @return int|false 成功则返回受影响的行数；如果SQL执行发生错误，返回false。
+     * 注意返回<b>0</b>和返回<b>false</b>的区别。
+     */
+    public function inc($field, $amount = 1) {
+        $this->checkIncOrDecAmount($amount);
+
+        $data = [$field => ['exp', "{$field} + {$amount}"]];
+        return $this->update($data);
+    }
+
+    /**
+     * 把一个字段减去指定的值
+     * @param string $field 字段名称
+     * @param int|float $amount 指定的值
+     * @return int|false 成功则返回受影响的行数；如果SQL执行发生错误，返回false。
+     * 注意返回<b>0</b>和返回<b>false</b>的区别。
+     */
+    public function dec($field, $amount = 1) {
+        $this->checkIncOrDecAmount($amount);
+
+        $data = [$field => ['exp', "{$field} - {$amount}"]];
+        return $this->update($data);
+    }
+
+    /**
+     * 校验inc或dec方法的$amount参数
+     * @param mixed $amount
+     * @throws SqlException
+     */
+    private function checkIncOrDecAmount($amount) {
+        if (!is_int($amount) && !is_float($amount)) {
+            throw new SqlException('inc或dec方法的$amount参数值必须是整数或浮点数');
+        }
     }
 
     /**
