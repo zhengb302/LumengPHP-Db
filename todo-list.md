@@ -1,11 +1,11 @@
 # todo list
 
-* Repository查询增加distinct支持
 * Repository增加inc、dec方法
 
 #### 2017-06-08
 
 * ~~Repository增加findValue和findColumn方法~~
+* ~~Repository查询增加distinct支持~~
 
 #### 2017-06-07
 

@@ -70,6 +70,15 @@ class Repository {
     }
 
     /**
+     * 设置不返回重复的记录
+     * @return Repository
+     */
+    public function distinct() {
+        $this->statementContext->distinct();
+        return $this;
+    }
+
+    /**
      * 内连接一个表
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空

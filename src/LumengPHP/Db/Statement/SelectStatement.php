@@ -12,8 +12,8 @@ use LumengPHP\Db\Misc\FieldHelper;
 class SelectStatement extends AbstractStatement {
 
     public function parse() {
-        $fields = $this->statementContext->getFields();
-        $sql = 'SELECT ' . FieldHelper::quoteFields($fields) .
+        $fields = $this->buildFields();
+        $sql = 'SELECT ' . $fields .
                 ' FROM ' . $this->statementContext->getTableName() .
                 $this->statementContext->getJoinClause()->parse() .
                 $this->buildWhere();
@@ -40,6 +40,12 @@ class SelectStatement extends AbstractStatement {
         }
 
         return $sql;
+    }
+
+    private function buildFields() {
+        $distinct = $this->statementContext->isDistinct() ? 'DISTINCT ' : '';
+        $fields = $this->statementContext->getFields();
+        return $distinct . FieldHelper::quoteFields($fields);
     }
 
     private function parseOrderByClause($orderByClause) {

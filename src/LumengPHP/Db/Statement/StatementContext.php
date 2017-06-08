@@ -13,6 +13,11 @@ use LumengPHP\Db\Misc\ParameterCounter;
 class StatementContext {
 
     /**
+     * @var bool 是否不返回重复的记录
+     */
+    private $isDistinct = false;
+
+    /**
      * @var string 以英文逗号分隔的字段列表
      */
     private $fields;
@@ -66,6 +71,21 @@ class StatementContext {
         $this->joinClause = new JoinClause();
         $this->parameters = [];
         $this->parameterCounter = new ParameterCounter();
+    }
+
+    /**
+     * 是否不返回重复的记录
+     * @return bool
+     */
+    public function isDistinct() {
+        return $this->isDistinct;
+    }
+
+    /**
+     * 设置不返回重复的记录
+     */
+    public function distinct() {
+        $this->isDistinct = true;
     }
 
     public function getFields() {
@@ -153,9 +173,12 @@ class StatementContext {
     }
 
     public function clear() {
+        $this->isDistinct = false;
         $this->fields = null;
         $this->alias = null;
         $this->joinClause->clear();
+        $this->groupBy = null;
+        $this->having = null;
         $this->orderBy = null;
         $this->limit = null;
 
