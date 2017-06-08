@@ -123,7 +123,7 @@ class Repository {
     }
 
     /**
-     * 设置查询条件。此方法只应用于查询类的操作，更新和删除操作直接在对应的方法中指定条件。
+     * 设置查询条件
      * @param array|ConditionInterface $condition
      * @return Repository
      */
@@ -408,14 +408,11 @@ class Repository {
 
     /**
      * 更新数据
-     * @param array|ConditionInterface $condition 过滤条件
      * @param array $data 要更新的数据，关联数组
      * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
      * 注意返回<b>0</b>和返回<b>false</b>的区别。
      */
-    public function update($condition, $data) {
-        $this->where($condition);
-
+    public function update($data) {
         $statement = new UpdateStatement($data);
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
@@ -430,13 +427,10 @@ class Repository {
 
     /**
      * 删除数据
-     * @param array|ConditionInterface $condition 过滤条件
      * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
      * 注意返回<b>0</b>和返回<b>false</b>的区别。
      */
-    public function delete($condition) {
-        $this->where($condition);
-
+    public function delete() {
         $statement = new DeleteStatement();
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
