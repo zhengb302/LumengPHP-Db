@@ -60,25 +60,6 @@ class Repository {
     }
 
     /**
-     * 设置查询条件。此方法只应用于查询类的操作，更新和删除操作直接在对应的方法中指定条件。
-     * @param array|ConditionInterface $condition
-     * @return Repository
-     */
-    public function where($condition) {
-        if (is_array($condition)) {
-            $this->condition = new ArrayCondition($condition);
-        } elseif ($condition instanceof ConditionInterface) {
-            $this->condition = $condition;
-        } else {
-            throw new InvalidSQLConditionException('无效的SQL条件');
-        }
-
-        $this->condition->setStatementContext($this->statementContext);
-
-        return $this;
-    }
-
-    /**
      * 设置别名
      * @param string $alias
      * @return Repository
@@ -138,6 +119,25 @@ class Repository {
         $join->setType(Join::RIGHT_JOIN);
 
         $this->statementContext->getJoinClause()->addJoin($join);
+        return $this;
+    }
+
+    /**
+     * 设置查询条件。此方法只应用于查询类的操作，更新和删除操作直接在对应的方法中指定条件。
+     * @param array|ConditionInterface $condition
+     * @return Repository
+     */
+    public function where($condition) {
+        if (is_array($condition)) {
+            $this->condition = new ArrayCondition($condition);
+        } elseif ($condition instanceof ConditionInterface) {
+            $this->condition = $condition;
+        } else {
+            throw new InvalidSQLConditionException('无效的SQL条件');
+        }
+
+        $this->condition->setStatementContext($this->statementContext);
+
         return $this;
     }
 
