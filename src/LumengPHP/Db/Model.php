@@ -16,15 +16,11 @@ use LumengPHP\Db\Misc\TableNameHelper;
 use LumengPHP\Db\Exception\InvalidSQLConditionException;
 
 /**
- * An <b>Repository</b> serves as a repository for entities with generic as well as
- * business specific methods for retrieving entities.
- *
- * This class is designed for inheritance and users can subclass this class to
- * write their own repositories with business-specific methods to locate entities.
+ * 
  *
  * @author zhengluming <908235332@qq.com>
  */
-class Repository {
+class Model {
 
     /**
      * @var ConnectionInterface 所属的数据库连接
@@ -47,13 +43,13 @@ class Repository {
     private $condition;
 
     /**
-     * 创建一个<b>Repository</b>实例
+     * 创建一个<b>Model</b>实例
      * @param ConnectionInterface $connection 数据库连接
-     * @param string $entityName 实体名称，即驼峰风格的表名，如"UserProfile"
+     * @param string $tableName 抽象表名，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct(ConnectionInterface $connection, $entityName) {
+    public function __construct(ConnectionInterface $connection, $tableName) {
         $this->connection = $connection;
-        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($entityName, '_');
+        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($tableName, '_');
 
         $this->statementContext = new StatementContext();
         $this->statementContext->setTableName($this->tableName);
@@ -62,7 +58,7 @@ class Repository {
     /**
      * 设置别名
      * @param string $alias
-     * @return Repository
+     * @return Model
      */
     public function alias($alias) {
         $this->statementContext->setAlias($alias);
@@ -71,7 +67,7 @@ class Repository {
 
     /**
      * 设置不返回重复的记录
-     * @return Repository
+     * @return Model
      */
     public function distinct() {
         $this->statementContext->distinct();
@@ -83,7 +79,7 @@ class Repository {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Repository
+     * @return Model
      */
     public function join($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -100,7 +96,7 @@ class Repository {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Repository
+     * @return Model
      */
     public function leftJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -118,7 +114,7 @@ class Repository {
      * @param string $table 要连接的表的抽象表名，如"UserProfile"
      * @param string $alias 要连接的表的别名，如"u"。可以为空
      * @param string $on 连接条件，注意不要带上"ON"关键字
-     * @return Repository
+     * @return Model
      */
     public function rightJoin($table, $alias, $on) {
         $trueTableName = $this->connection->getTablePrefix()
@@ -134,7 +130,7 @@ class Repository {
     /**
      * 设置查询条件
      * @param array|ConditionInterface $condition
-     * @return Repository
+     * @return Model
      */
     public function where($condition) {
         if (is_array($condition)) {
@@ -153,7 +149,7 @@ class Repository {
     /**
      * 设置"GROUP BY"子句
      * @param string $groupByClause
-     * @return Repository
+     * @return Model
      */
     public function groupBy($groupByClause) {
         $this->statementContext->setGroupBy($groupByClause);
@@ -163,7 +159,7 @@ class Repository {
     /**
      * 设置"HAVING"子句
      * @param string $havingClause
-     * @return Repository
+     * @return Model
      */
     public function having($havingClause) {
         $this->statementContext->setHaving($havingClause);
@@ -173,7 +169,7 @@ class Repository {
     /**
      * 设置"ORDER BY"子句
      * @param string|array $orderByClause
-     * @return Repository
+     * @return Model
      */
     public function orderBy($orderByClause) {
         $this->statementContext->setOrderBy($orderByClause);
@@ -185,7 +181,7 @@ class Repository {
      * 注意：设置分页和设置limit子句会导致互相覆盖
      * @param int $pageNum 页号(从1开始)
      * @param int $pageSize 页大小
-     * @return Repository
+     * @return Model
      */
     public function paging($pageNum, $pageSize) {
         $offset = ($pageNum - 1) * $pageSize;
@@ -204,7 +200,7 @@ class Repository {
      * //结果SQL：... LIMIT 40,10 ...
      * $repos->limit('40,10');
      * 
-     * @return Repository
+     * @return Model
      */
     public function limit($limit) {
         $this->statementContext->setLimit($limit);
