@@ -205,8 +205,7 @@ class Repository {
     /**
      * 查询一条记录
      * @param string $fields 设置要返回的字段
-     * @return array|null|false 成功则返回一个关联数组；未找到数据返回null，
-     * SQL执行发生错误则返回false
+     * @return array|null|false 成功则返回一个关联数组；未找到数据返回null，SQL执行发生错误则返回false
      */
     public function findOne($fields = '*') {
         $this->statementContext->setFields($fields);
@@ -227,8 +226,7 @@ class Repository {
     /**
      * 查询多条记录
      * @param string $fields 设置要返回的字段
-     * @return array|null|false 成功则返回一个结果数组；未找到数据返回null，
-     * SQL执行发生错误则返回false
+     * @return array|null|false 成功则返回一个结果数组；未找到数据返回null，SQL执行发生错误则返回false
      */
     public function findAll($fields = '*') {
         $this->statementContext->setFields($fields);
@@ -243,6 +241,42 @@ class Repository {
         $this->clear();
 
         return $rows;
+    }
+
+    /**
+     * 查找单个值(某条记录的某个字段的值)
+     * @param string $field 单个字段名称，注意不要使用字段别名
+     * @return mixed|null|false 成功则返回相应的值；未找到数据返回null，SQL执行发生错误则返回false
+     */
+    public function findValue($field) {
+        $row = $this->findOne($field);
+
+        //false or null
+        if (!$row) {
+            return $row;
+        }
+
+        return $row[$field];
+    }
+
+    /**
+     * 查找一个列的值
+     * @param string $field 单个字段名称，注意不要使用字段别名
+     * @return array|null|false 成功则返回此列的值的数组；未找到数据返回null，SQL执行发生错误则返回false
+     */
+    public function findColumn($field) {
+        $rows = $this->findAll($field);
+
+        //false or null
+        if (!$rows) {
+            return $rows;
+        }
+
+        $columnValues = [];
+        foreach ($rows as $row) {
+            $columnValues[] = $row[$field];
+        }
+        return $columnValues;
     }
 
     /**

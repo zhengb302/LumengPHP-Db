@@ -1,5 +1,9 @@
 # todo list
 
+#### 2017-06-08
+
+* ~~Repository增加findValue和findColumn方法~~
+
 #### 2017-06-07
 
 * ~~设计并实现新的查询过滤语言~~
