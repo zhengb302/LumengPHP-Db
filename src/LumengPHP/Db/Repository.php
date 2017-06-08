@@ -370,10 +370,10 @@ class Repository {
 
     /**
      * 插入一条数据
-     * @param array $data 要插入的数据
+     * @param array $data 要插入的数据，关联数组
      * @return string|false 插入成功则返回新插入记录的id，SQL执行发生错误返回false
      */
-    public function insert($data) {
+    public function insert(array $data) {
         $statement = new InsertStatement($data);
         $statement->setStatementContext($this->statementContext);
         $sql = $statement->parse();
@@ -391,10 +391,10 @@ class Repository {
 
     /**
      * 批量插入数据
-     * @param array $dataArr 要批量插入的数据
+     * @param array $dataArr 要批量插入的数据，下标数组
      * @return string|false 插入成功则返回新插入的记录数，SQL执行发生错误返回false
      */
-    public function insertAll($dataArr) {
+    public function insertAll(array $dataArr) {
         $statement = new InsertAllStatement($dataArr);
         $statement->setStatementContext($this->statementContext);
         $sql = $statement->parse();
@@ -412,7 +412,7 @@ class Repository {
      * @return int|false 如果成功，则返回受影响的行数；如果SQL执行发生错误，返回false。
      * 注意返回<b>0</b>和返回<b>false</b>的区别。
      */
-    public function update($data) {
+    public function update(array $data) {
         $statement = new UpdateStatement($data);
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
