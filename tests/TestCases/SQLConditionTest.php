@@ -25,7 +25,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['between', 2, 5],
         );
-        $users = $userModel->where($conditions)->select();
+        $users = $userModel->where($conditions)->findAll();
 
         $this->assertCount(3, $users);
     }
@@ -36,7 +36,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['not between', 2, 5],
         );
-        $users = $userModel->where($conditions)->select();
+        $users = $userModel->where($conditions)->findAll();
 
         $this->assertCount(1, $users);
     }
@@ -48,7 +48,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['neq', 2],
         );
-        $posts = $postModel->where($conditions)->select();
+        $posts = $postModel->where($conditions)->findAll();
 
         $this->assertCount(3, $posts);
         $this->assertEquals('呵呵', $posts[0]['content']);
@@ -61,9 +61,9 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $condition = [
             '_string' => 'EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
         ];
-        $users = $userModel->alias('u')->field('u.uid,u.nickname')
+        $users = $userModel->alias('u')->select('u.uid,u.nickname')
                 ->where($condition)
-                ->select();
+                ->findAll();
 
         //沉默寡言的张三
         $taciturnUser = array(
@@ -82,9 +82,9 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $condition = [
             '_string' => 'NOT EXISTS(SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
         ];
-        $taciturnUsers = $userModel->alias('u')->field('u.uid,u.nickname')
+        $taciturnUsers = $userModel->alias('u')->select('u.uid,u.nickname')
                 ->where($condition)
-                ->select();
+                ->findAll();
 
         $this->assertCount(1, $taciturnUsers);
         $this->assertEquals('张三', $taciturnUsers[0]['nickname']);
@@ -97,7 +97,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['gt', 2],
         );
-        $users = $userModel->where($conditions)->select();
+        $users = $userModel->where($conditions)->findAll();
 
         $this->assertCount(2, $users);
         $this->assertEquals('韩梅梅', $users[0]['nickname']);
@@ -110,7 +110,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['lte', 2],
         );
-        $users = $userModel->where($conditions)->select();
+        $users = $userModel->where($conditions)->findAll();
 
         $this->assertCount(2, $users);
         $this->assertEquals('李雷', $users[1]['nickname']);
@@ -123,7 +123,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'uid' => ['in', [2, 3]],
         );
-        $posts = $postModel->where($conditions)->select();
+        $posts = $postModel->where($conditions)->findAll();
 
         $this->assertCount(5, $posts);
         $this->assertEquals('睡了', $posts[4]['content']);
@@ -136,7 +136,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
         $conditions = array(
             'title' => ['like', '%韩梅梅%'],
         );
-        $posts = $postModel->where($conditions)->select();
+        $posts = $postModel->where($conditions)->findAll();
 
         $this->assertCount(3, $posts);
         $this->assertEquals('“呵呵”是啥意思？', $posts[2]['content']);

@@ -66,11 +66,11 @@ class TransactionTest extends BaseDatabaseTestCase {
         //因为回滚了事务，现在还是四个用户
         $this->assertEquals(4, $userModel->count());
         //因为回滚了事务，再查找李雷，李雷的用户数据并没有被删除
-        $lilei = $userModel->where(array('username' => 'lilei'))->find();
+        $lilei = $userModel->where(array('username' => 'lilei'))->findOne();
         $this->assertNotNull($lilei);
         $this->assertEquals('李雷', $lilei['nickname']);
         //因为回滚了事务，查找李雷的发帖，都还在
-        $postsOfLilei = $postModel->where(array('uid' => 2))->select();
+        $postsOfLilei = $postModel->where(array('uid' => 2))->findAll();
         $this->assertNotNull($postsOfLilei);
         $this->assertCount(3, $postsOfLilei);
     }

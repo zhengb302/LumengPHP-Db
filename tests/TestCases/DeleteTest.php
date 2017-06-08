@@ -25,11 +25,9 @@ class DeleteTest extends BaseDatabaseTestCase {
         $conditions = array('uid' => 2);
 
         $rowCountAffected = $userModel->where($conditions)->delete();
-
         $this->assertEquals(1, $rowCountAffected);
 
-        $user = $userModel->where($conditions)->find();
-
+        $user = $userModel->where($conditions)->findOne();
         $this->assertNull($user);
     }
 
@@ -38,7 +36,6 @@ class DeleteTest extends BaseDatabaseTestCase {
 
         //删除一个不存在的用户
         $conditions = array('uid' => 250);
-
         $rowCountAffected = $userModel->where($conditions)->delete();
 
         //没有数据被删除，受影响的行数为0

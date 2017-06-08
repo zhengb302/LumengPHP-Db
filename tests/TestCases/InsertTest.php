@@ -30,11 +30,9 @@ class InsertTest extends BaseDatabaseTestCase {
         );
 
         $newUid = $userModel->add($data);
-
         $this->assertEquals(4, $newUid);
 
-        $newUser = $userModel->where(array('uid' => $newUid))->find();
-
+        $newUser = $userModel->where(array('uid' => $newUid))->findOne();
         $this->assertEquals('张三', $newUser['nickname']);
     }
 

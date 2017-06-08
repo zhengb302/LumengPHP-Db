@@ -29,11 +29,11 @@ class UpdateTest extends BaseDatabaseTestCase {
 
         $conditions = array('uid' => 3);
 
-        $rowCountAffected = $userModel->where($conditions)->save($newData);
+        $rowCountAffected = $userModel->where($conditions)->update($newData);
 
         $this->assertEquals(1, $rowCountAffected);
 
-        $user = $userModel->where($conditions)->find();
+        $user = $userModel->where($conditions)->findOne();
 
         $this->assertEquals(md5('mypassword'), $user['password']);
     }
@@ -51,7 +51,7 @@ class UpdateTest extends BaseDatabaseTestCase {
             'email' => 'hanmeimei@gmail.com',
         );
 
-        $userModel->save($newData);
+        $userModel->update($newData);
     }
 
 }

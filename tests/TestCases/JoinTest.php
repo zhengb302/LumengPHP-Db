@@ -24,10 +24,10 @@ class JoinTest extends BaseDatabaseTestCase {
 
         //找出李雷的所有发帖
         $fields = 'p.title,p.content,u.nickname';
-        $posts = $postModel->alias('p')->field($fields)
+        $posts = $postModel->alias('p')->select($fields)
                 ->join('User', 'u', 'u.uid = p.uid')
                 ->where(array('p.uid' => 2))
-                ->select();
+                ->findAll();
 
         $this->assertCount(3, $posts);
         $this->assertEquals('李雷', $posts[0]['nickname']);
@@ -38,11 +38,11 @@ class JoinTest extends BaseDatabaseTestCase {
 
         //找出韩梅梅、小明和张三的发帖
         $fields = 'u.uid,u.nickname,p.title,p.content';
-        $posts = $userModel->alias('u')->field($fields)
+        $posts = $userModel->alias('u')->select($fields)
                 ->leftJoin('Post', 'p', 'p.uid = u.uid')
                 ->where(array('u.uid' => ['in', [3, 1, 4]]))
                 ->orderBy('p.add_time ASC')
-                ->select();
+                ->findAll();
 
         $expectedResult = array(
             //张三未发帖子，左连接查到的记录为空，post表对应的所有字段皆为null，

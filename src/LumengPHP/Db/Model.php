@@ -75,6 +75,16 @@ abstract class Model {
     }
 
     /**
+     * 设置查询字段
+     * @param string $fields
+     * @return Model
+     */
+    public function select($fields) {
+        $this->statementContext->setFields($fields);
+        return $this;
+    }
+
+    /**
      * 设置不返回重复的记录
      * @return Model
      */
@@ -218,11 +228,9 @@ abstract class Model {
 
     /**
      * 查询一条记录
-     * @param string $fields 设置要返回的字段
      * @return array|null|false 成功则返回一个关联数组；未找到数据返回null，SQL执行发生错误则返回false
      */
-    public function findOne($fields = '*') {
-        $this->statementContext->setFields($fields);
+    public function findOne() {
         $this->statementContext->setLimit(1);
 
         $statement = new SelectStatement();
@@ -239,12 +247,9 @@ abstract class Model {
 
     /**
      * 查询多条记录
-     * @param string $fields 设置要返回的字段
      * @return array|null|false 成功则返回一个结果数组；未找到数据返回null，SQL执行发生错误则返回false
      */
-    public function findAll($fields = '*') {
-        $this->statementContext->setFields($fields);
-
+    public function findAll() {
         $statement = new SelectStatement();
         $statement->setStatementContext($this->statementContext);
         $statement->setCondition($this->condition);
@@ -263,7 +268,7 @@ abstract class Model {
      * @return mixed|null|false 成功则返回相应的值；未找到数据返回null，SQL执行发生错误则返回false
      */
     public function findValue($field) {
-        $row = $this->findOne($field);
+        $row = $this->select($field)->findOne();
 
         //false or null
         if (!$row) {
@@ -279,7 +284,7 @@ abstract class Model {
      * @return array|null|false 成功则返回此列的值的数组；未找到数据返回null，SQL执行发生错误则返回false
      */
     public function findColumn($field) {
-        $rows = $this->findAll($field);
+        $rows = $this->select($field)->findAll();
 
         //false or null
         if (!$rows) {
@@ -300,7 +305,7 @@ abstract class Model {
      */
     public function count($field = '*') {
         $this->statementContext->setFields("COUNT({$field}) AS COUNT");
-        $row = $this->find();
+        $row = $this->findOne();
 
         //SQL执行发生错误
         if ($row === false) {
@@ -318,7 +323,7 @@ abstract class Model {
      */
     public function max($field) {
         $this->statementContext->setFields("MAX({$field}) AS MAX");
-        $row = $this->find();
+        $row = $this->findOne();
 
         //SQL执行发生错误
         if ($row === false) {
@@ -336,7 +341,7 @@ abstract class Model {
      */
     public function min($field) {
         $this->statementContext->setFields("MIN({$field}) AS MIN");
-        $row = $this->find();
+        $row = $this->findOne();
 
         //SQL执行发生错误
         if ($row === false) {
@@ -354,7 +359,7 @@ abstract class Model {
      */
     public function avg($field) {
         $this->statementContext->setFields("AVG({$field}) AS AVG");
-        $row = $this->find();
+        $row = $this->findOne();
 
         //SQL执行发生错误
         if ($row === false) {
@@ -372,7 +377,7 @@ abstract class Model {
      */
     public function sum($field) {
         $this->statementContext->setFields("SUM({$field}) AS SUM");
-        $row = $this->find();
+        $row = $this->findOne();
 
         //SQL执行发生错误
         if ($row === false) {
