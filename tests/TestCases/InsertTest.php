@@ -2,7 +2,7 @@
 
 namespace tests\TestCases;
 
-use tests\Model\UserModel;
+use tests\Model\User;
 
 /**
  * 数据插入测试
@@ -19,7 +19,7 @@ class InsertTest extends BaseDatabaseTestCase {
     }
 
     public function testInsert() {
-        $userModel = new UserModel();
+        $userModel = new User();
 
         $data = array(
             'username' => 'zhangsan',

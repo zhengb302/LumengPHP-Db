@@ -2,8 +2,8 @@
 
 namespace tests\TestCases;
 
-use tests\Model\UserModel;
-use tests\Model\PostModel;
+use tests\Model\User;
+use tests\Model\Post;
 
 /**
  * 事务测试
@@ -20,8 +20,8 @@ class TransactionTest extends BaseDatabaseTestCase {
     }
 
     public function testCommit() {
-        $userModel = new UserModel();
-        $postModel = new PostModel();
+        $userModel = new User();
+        $postModel = new Post();
 
         global $connManager;
         $conn = $connManager->getConnection();
@@ -47,8 +47,8 @@ class TransactionTest extends BaseDatabaseTestCase {
     }
 
     public function testRollback() {
-        $userModel = new UserModel();
-        $postModel = new PostModel();
+        $userModel = new User();
+        $postModel = new Post();
 
         global $connManager;
         $conn = $connManager->getConnection();

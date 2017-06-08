@@ -23,6 +23,11 @@ use LumengPHP\Db\Exception\InvalidSQLConditionException;
 class Model {
 
     /**
+     * @var string 所属的数据库连接名称，可被子类覆盖，用于实例化model的时候选择数据库连接
+     */
+    protected $connectionName;
+
+    /**
      * @var ConnectionInterface 所属的数据库连接
      */
     private $connection;
@@ -44,12 +49,16 @@ class Model {
 
     /**
      * 创建一个<b>Model</b>实例
-     * @param ConnectionInterface $connection 数据库连接
-     * @param string $tableName 抽象表名，即驼峰风格的表名，如"UserProfile"
+     * @param string $modelName Model名称，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct(ConnectionInterface $connection, $tableName) {
-        $this->connection = $connection;
-        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($tableName, '_');
+    public function __construct($modelName = '') {
+        $this->connection = ConnectionManager::getInstance()->getConnection($this->connectionName);
+
+        //Model类名称转化为表名称，如“UserProfile”转化为“user_profile”
+        if (!$modelName) {
+            $modelName = get_called_class();
+        }
+        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($modelName, '_');
 
         $this->statementContext = new StatementContext();
         $this->statementContext->setTableName($this->tableName);
@@ -451,6 +460,14 @@ class Model {
     private function clear() {
         $this->statementContext->clear();
         $this->condition = null;
+    }
+
+    /**
+     * 返回所属的数据库连接
+     * @return ConnectionInterface
+     */
+    public function getConnection() {
+        return $this->connection;
     }
 
 }

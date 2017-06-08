@@ -7,6 +7,8 @@
 * ~~Repository增加findValue和findColumn方法~~
 * ~~Repository查询增加distinct支持~~
 * ~~Repository改名为Model~~
+* ~~Model类增加getConnection方法~~
+* ~~Model类创建方式改写~~
 
 #### 2017-06-07
 

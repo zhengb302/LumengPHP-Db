@@ -2,8 +2,9 @@
 
 namespace LumengPHP\Db;
 
-use LumengPHP\Db\Connection\ConnectionInterface;
 use Psr\Log\LoggerInterface;
+use LumengPHP\Db\Connection\ConnectionInterface;
+use LumengPHP\Db\Exception\SqlException;
 
 /**
  * 连接管理器
@@ -32,7 +33,7 @@ final class ConnectionManager {
      */
     private $logger;
 
-    public function __construct($connectionConfigs, LoggerInterface $logger = null) {
+    private function __construct($connectionConfigs, LoggerInterface $logger = null) {
         $this->connectionConfigs = $connectionConfigs;
 
         //选取第一个连接名称作为默认连接名称
@@ -75,6 +76,35 @@ final class ConnectionManager {
         $this->connectionMap[$name] = $conn;
 
         return $conn;
+    }
+
+    /**
+     * @var ConnectionManager 
+     */
+    private static $instance;
+
+    /**
+     * 创建并返回<b>ConnectionManager</b>实例
+     * @param array $connectionConfigs 数据库配置
+     * @param LoggerInterface $logger 日志组件
+     * @return ConnectionManager
+     * @throws SqlException
+     */
+    public static function create($connectionConfigs, LoggerInterface $logger = null) {
+        if (!is_null(self::$instance)) {
+            throw new SqlException('ConnectionManager实例已创建，不能重复创建~');
+        }
+
+        self::$instance = new ConnectionManager($connectionConfigs, $logger);
+        return self::$instance;
+    }
+
+    /**
+     * 返回<b>ConnectionManager</b>实例
+     * @return ConnectionManager
+     */
+    public static function getInstance() {
+        return self::$instance;
     }
 
 }

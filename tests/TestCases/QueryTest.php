@@ -2,7 +2,7 @@
 
 namespace tests\TestCases;
 
-use tests\Model\UserModel;
+use tests\Model\User;
 
 /**
  * 查询测试
@@ -23,7 +23,7 @@ class QueryTest extends BaseDatabaseTestCase {
             'username' => 'xiaoming',
         );
 
-        $userModel = new UserModel();
+        $userModel = new User();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
         $this->assertEquals('xiaoming', $user['username']);
@@ -34,7 +34,7 @@ class QueryTest extends BaseDatabaseTestCase {
             'username' => 'xiaoming',
         );
 
-        $userModel = new UserModel();
+        $userModel = new User();
         $user = $userModel->field('*')->where($conditions)->find();
         $this->assertNotNull($user);
         $this->assertEquals('xiaoming', $user['username']);
@@ -52,7 +52,7 @@ class QueryTest extends BaseDatabaseTestCase {
             'username' => 'xiaoming',
         );
 
-        $userModel = new UserModel();
+        $userModel = new User();
 
         //without setting fields
         $user = $userModel->where($conditions)->find();
@@ -64,57 +64,57 @@ class QueryTest extends BaseDatabaseTestCase {
     }
 
     public function testCount() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->count();
         $this->assertEquals(5, $result);
     }
 
     public function testMax() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->max('uid');
         $this->assertEquals(5, $result);
     }
 
     public function testMin() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->min('uid');
         $this->assertEquals(1, $result);
     }
 
     public function testAvg() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->avg('uid');
         $this->assertEquals(3, $result);
     }
 
     public function testSum() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->sum('uid');
         $this->assertEquals(15, $result);
     }
 
     public function testAlias() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->field('u.uid,u.nickname')->alias('u')
                         ->where(array('uid' => 2))->find();
         $this->assertEquals('李雷', $result['nickname']);
     }
 
     public function testSort() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $result = $userModel->orderBy('add_time DESC')->find();
         $this->assertEquals('李四', $result['nickname']);
     }
 
     public function testLimit() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $rows = $userModel->limit(3)->select();
         $this->assertEquals(3, count($rows));
         $this->assertEquals('韩梅梅', $rows[2]['nickname']);
     }
 
     public function testPaging() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $rows = $userModel->paging(2, 2)->select();
         $this->assertEquals(2, count($rows));
         $this->assertEquals('张三', $rows[1]['nickname']);
@@ -124,7 +124,7 @@ class QueryTest extends BaseDatabaseTestCase {
      * 测试SQL语句执行出错的情况
      */
     public function testQueryWithWrongSql() {
-        $userModel = new UserModel();
+        $userModel = new User();
 
         //找出韩梅梅，然而并没有"qq_number"这个字段，会导致SQL执行出错
         $hanmeimei = $userModel->field('uid,username,qq_number')
@@ -139,7 +139,7 @@ class QueryTest extends BaseDatabaseTestCase {
      * 测试没有找到数据的情况(注意：这种情况下SQL执行并没有出错)
      */
     public function testQueryWithNoResult() {
-        $userModel = new UserModel();
+        $userModel = new User();
 
         //找出username为"linda"的这个用户，然而并没有这个用户
         $linda = $userModel->where(array('username' => 'linda'))->find();

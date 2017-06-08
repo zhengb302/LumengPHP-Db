@@ -2,11 +2,13 @@
 
 namespace tests\Model;
 
+use LumengPHP\Db\Model;
+
 /**
- * 帖子表model
+ * 用户表model
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class PostModel extends BaseModel {
+class User extends Model {
     
 }

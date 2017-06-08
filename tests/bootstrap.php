@@ -9,4 +9,4 @@ use LumengPHP\Db\ConnectionManager;
 
 $configs = require(__DIR__ . '/config.php');
 $connectionConfigs = $configs['connections'];
-$connManager = new ConnectionManager($connectionConfigs);
+ConnectionManager::create($connectionConfigs);

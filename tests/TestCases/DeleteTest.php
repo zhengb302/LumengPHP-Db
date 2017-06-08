@@ -2,7 +2,7 @@
 
 namespace tests\TestCases;
 
-use tests\Model\UserModel;
+use tests\Model\User;
 
 /**
  * 删除数据测试
@@ -19,7 +19,7 @@ class DeleteTest extends BaseDatabaseTestCase {
     }
 
     public function testDelete() {
-        $userModel = new UserModel();
+        $userModel = new User();
 
         //把李雷删掉
         $conditions = array('uid' => 2);
@@ -34,7 +34,7 @@ class DeleteTest extends BaseDatabaseTestCase {
     }
 
     public function testDeleteNothing() {
-        $userModel = new UserModel();
+        $userModel = new User();
 
         //删除一个不存在的用户
         $conditions = array('uid' => 250);
@@ -51,7 +51,7 @@ class DeleteTest extends BaseDatabaseTestCase {
      * @expectedException \LumengPHP\Db\Exception\ForbiddenOperationException
      */
     public function testDeleteWithoutAnyConditions() {
-        $userModel = new UserModel();
+        $userModel = new User();
         $userModel->delete();
     }
 
