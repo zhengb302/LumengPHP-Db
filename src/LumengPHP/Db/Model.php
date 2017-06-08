@@ -16,11 +16,11 @@ use LumengPHP\Db\Misc\TableNameHelper;
 use LumengPHP\Db\Exception\InvalidSQLConditionException;
 
 /**
- * 
+ * Model类，子类必须继承才能使用
  *
  * @author zhengluming <908235332@qq.com>
  */
-class Model {
+abstract class Model {
 
     /**
      * @var string 所属的数据库连接名称，可被子类覆盖，用于实例化model的时候选择数据库连接
@@ -38,9 +38,9 @@ class Model {
     private $statementContext;
 
     /**
-     * @var string 真实表名（包含表前缀）
+     * @var string 真实表名(包含表前缀)，可被子类覆盖，用于自定义表名称
      */
-    private $tableName;
+    protected $tableName;
 
     /**
      * @var ConditionInterface 条件
@@ -49,16 +49,15 @@ class Model {
 
     /**
      * 创建一个<b>Model</b>实例
-     * @param string $modelName Model名称，即驼峰风格的表名，如"UserProfile"
      */
-    public function __construct($modelName = '') {
+    public function __construct() {
         $this->connection = ConnectionManager::getInstance()->getConnection($this->connectionName);
 
-        //Model类名称转化为表名称，如“UserProfile”转化为“user_profile”
-        if (!$modelName) {
+        if (!$this->tableName) {
+            //Model类名称转化为表名称，如“UserProfile”转化为“user_profile”
             $modelName = get_called_class();
+            $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($modelName, '_');
         }
-        $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($modelName, '_');
 
         $this->statementContext = new StatementContext();
         $this->statementContext->setTableName($this->tableName);
