@@ -3,6 +3,7 @@
 namespace LumengPHP\Db\Connection;
 
 use PDO;
+use LumengPHP\Db\Exception\SqlException;
 
 /**
  * 主从数据库连接，支持数据库读写分离
@@ -101,7 +102,7 @@ class MasterSlaveConnection extends AbstractConnection {
         //第一个为master服务器
         $config = $this->config['servers'][0];
 
-        $dsn = $config['dsn'];
+        $dsn = $this->makeDsn($config['host'], $config['port'], $config['dbName']);
         $username = $config['username'];
         $password = $config['password'];
         $this->masterPdo = $this->makePdo($dsn, $username, $password);
@@ -114,11 +115,23 @@ class MasterSlaveConnection extends AbstractConnection {
             return $this->slavePdo;
         }
 
-        //随机选取"从服务器"
-        $slaveIndex = mt_rand(1, count($this->config['servers']) - 1);
-        $config = $this->config['servers'][$slaveIndex];
+        $serverNum = count($this->config['servers']);
 
-        $dsn = $config['dsn'];
+        if ($serverNum == 0) {
+            throw new SqlException("MasterSlaveConnection：服务器列表不能为空");
+        }
+
+        //只有一台服务器
+        if ($serverNum == 1) {
+            $config = $this->config['servers'][0];
+        }
+        //有多余一台服务器，随机选取"从服务器"
+        else {
+            $slaveIndex = mt_rand(1, $serverNum - 1);
+            $config = $this->config['servers'][$slaveIndex];
+        }
+
+        $dsn = $this->makeDsn($config['host'], $config['port'], $config['dbName']);
         $username = $config['username'];
         $password = $config['password'];
         $this->slavePdo = $this->makePdo($dsn, $username, $password);

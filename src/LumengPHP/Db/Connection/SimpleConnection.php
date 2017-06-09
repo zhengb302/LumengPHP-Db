@@ -74,7 +74,7 @@ class SimpleConnection extends AbstractConnection {
             return $this->pdo;
         }
 
-        $dsn = $this->config['dsn'];
+        $dsn = $this->makeDsn($this->config['host'], $this->config['port'], $this->config['dbName']);
         $username = $this->config['username'];
         $password = $this->config['password'];
         $this->pdo = $this->makePdo($dsn, $username, $password);

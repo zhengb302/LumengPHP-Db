@@ -5,6 +5,7 @@ namespace LumengPHP\Db\Connection;
 use PDO;
 use PDOStatement;
 use Exception;
+use LumengPHP\Db\Exception\SqlException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -41,6 +42,26 @@ abstract class AbstractConnection implements ConnectionInterface {
 
     public function getTablePrefix() {
         return $this->config['tablePrefix'];
+    }
+
+    protected function makeDsn($host, $port, $dbName) {
+        $type = $this->config['type'];
+
+        $dsn = '';
+        switch ($type) {
+            case 'mysql':
+                $dsn = "mysql:host={$host};port={$port};dbname={$dbName}";
+                break;
+            case 'pgsql':
+                $dsn = "pgsql:host={$host};port={$port};dbname={$dbName}";
+                break;
+            case 'sqlsrv':
+                $dsn = "sqlsrv:Server={$host},{$port};Database={$dbName}";
+                break;
+            default:
+                throw new SqlException("不支持的数据库类型：{$type}");
+        }
+        return $dsn;
     }
 
     /**
