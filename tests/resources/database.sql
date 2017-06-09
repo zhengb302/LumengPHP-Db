@@ -5,6 +5,8 @@
 -- 数据库密码：bbs
 -- 表前缀：bbs_
 
+-- 创建数据库
+CREATE DATABASE IF NOT EXISTS bbsdb DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
 -- 创建用户及授权
 CREATE USER 'bbs'@'%' IDENTIFIED BY  'bbs';
@@ -12,6 +14,9 @@ GRANT USAGE ON * . * TO  'bbs'@'%' IDENTIFIED BY  'bbs' WITH MAX_QUERIES_PER_HOU
 GRANT ALL PRIVILEGES ON  `bbsdb` . * TO  'bbs'@'%';
 
 
+-- 表结构
+
+-- 用户表
 CREATE TABLE `bbs_user` (
  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(15) NOT NULL COMMENT '用户名，3到15位。全系统唯一',
@@ -24,6 +29,7 @@ CREATE TABLE `bbs_user` (
  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
+-- (用户)发帖表
 CREATE TABLE `bbs_post` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `uid` int(10) unsigned NOT NULL COMMENT '所属用户id',
