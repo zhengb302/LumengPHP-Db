@@ -20,14 +20,19 @@ abstract class BaseDatabaseTestCase extends DatabaseTestCase {
         if (self::$pdo === null) {
             global $connectionConfigs;
 
+            $config = $connectionConfigs['db1'];
+            $host = $config['host'];
+            $port = $config['port'];
+            $dbName = $config['dbName'];
+
             //create a PDO instance for test
-            $dsn = $connectionConfigs['db1']['dsn'];
-            $username = $connectionConfigs['db1']['username'];
-            $password = $connectionConfigs['db1']['password'];
+            $dsn = "mysql:host={$host};port={$port};dbname={$dbName}";
+            $username = $config['username'];
+            $password = $config['password'];
             self::$pdo = new \PDO($dsn, $username, $password);
 
             //set charset for test database
-            $dbCharset = $connectionConfigs['db1']['charset'];
+            $dbCharset = $config['charset'];
             self::$pdo->query("SET NAMES {$dbCharset}");
         }
 

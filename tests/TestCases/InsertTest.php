@@ -29,7 +29,7 @@ class InsertTest extends BaseDatabaseTestCase {
             'add_time' => '1409305283',
         );
 
-        $newUid = $userModel->add($data);
+        $newUid = $userModel->insert($data);
         $this->assertEquals(4, $newUid);
 
         $newUser = $userModel->where(array('uid' => $newUid))->findOne();
