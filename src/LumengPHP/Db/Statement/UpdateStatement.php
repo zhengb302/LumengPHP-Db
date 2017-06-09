@@ -30,8 +30,7 @@ class UpdateStatement extends AbstractStatement {
 
         $where = $this->buildWhere();
         if (empty($where)) {
-            $errMsg = 'update without any conditions is forbidden.';
-            throw new ForbiddenOperationException($errMsg);
+            throw new ForbiddenOperationException('"禁止在不带任何过滤条件的情况下更新数据"');
         }
 
         return 'UPDATE ' . $this->statementContext->getTableName() .

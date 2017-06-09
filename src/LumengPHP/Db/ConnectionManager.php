@@ -65,7 +65,7 @@ final class ConnectionManager {
         }
 
         if (!isset($this->connectionConfigs[$name])) {
-            trigger_error("undefined database connection \"{$name}\".", E_USER_ERROR);
+            throw new SqlException("未定义的数据库连接，连接名称：{$name}");
         }
 
         $connConfig = $this->connectionConfigs[$name];

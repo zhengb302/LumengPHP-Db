@@ -14,12 +14,10 @@ class DeleteStatement extends AbstractStatement {
     public function parse() {
         $where = $this->buildWhere();
         if (empty($where)) {
-            $errMsg = 'delete without any conditions is forbidden.';
-            throw new ForbiddenOperationException($errMsg);
+            throw new ForbiddenOperationException("禁止在不带任何过滤条件的情况下删除数据");
         }
 
-        return 'DELETE FROM ' . $this->statementContext->getTableName() .
-                $where;
+        return 'DELETE FROM ' . $this->statementContext->getTableName() . $where;
     }
 
 }

@@ -18,7 +18,7 @@ class NotEqualCondition extends SimpleCondition {
     public function parse() {
         $placeholder = $this->makePlaceholder();
         $this->statementContext->addParameter($placeholder, $this->value);
-        return "{$this->field} <> {$placeholder}";
+        return "{$this->field} != {$placeholder}";
     }
 
 }
