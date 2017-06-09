@@ -2,11 +2,31 @@
 
 namespace LumengPHP\Db\Connection;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * 数据库连接接口
  * @author Lumeng <zhengb302@163.com>
  */
 interface ConnectionInterface {
+
+    /**
+     * 设置数据库连接名称
+     * @param string $name
+     */
+    public function setName($name);
+
+    /**
+     * 设置数据库连接配置
+     * @param array $config
+     */
+    public function setConfig($config);
+
+    /**
+     * 设置日志组件
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger);
 
     /**
      * 返回连接名称

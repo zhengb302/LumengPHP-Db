@@ -30,9 +30,15 @@ abstract class AbstractConnection implements ConnectionInterface {
      */
     protected $logger;
 
-    public function __construct($name, $config, LoggerInterface $logger = null) {
+    public function setName($name) {
         $this->name = $name;
+    }
+
+    public function setConfig($config) {
         $this->config = $config;
+    }
+
+    public function setLogger(LoggerInterface $logger) {
         $this->logger = $logger;
     }
 

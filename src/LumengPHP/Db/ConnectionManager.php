@@ -72,7 +72,11 @@ final class ConnectionManager {
         $class = $connConfig['class'];
         unset($connConfig['class']);
 
-        $conn = new $class($name, $connConfig, $this->logger);
+        $conn = new $class();
+        $conn->setName($name);
+        $conn->setConfig($connConfig);
+        $conn->setLogger($this->logger);
+
         $this->connectionMap[$name] = $conn;
 
         return $conn;
