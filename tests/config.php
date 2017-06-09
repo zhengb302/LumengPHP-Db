@@ -1,13 +1,13 @@
 <?php
 
-$configs = array(
+$configs = [
     //数据库连接配置
     //第一个数据库连接为默认连接
-    'connections' => array(
+    'connections' => [
         //connectionName => connectionConfig
-        //first connection
-        'db1' => array(
-            'class' => 'LumengPHP\Db\Connection\SimpleConnection',
+        //第一个连接
+        'db1' => [
+            'class' => LumengPHP\Db\Connection\SimpleConnection::class,
             //数据库类型：mysql、pgsql、sqlsrv等
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -20,10 +20,10 @@ $configs = array(
             'dbName' => 'bbs',
             'username' => 'bbs',
             'password' => 'bbs',
-        ),
-        //second connection
-        'db2' => array(
-            'class' => 'LumengPHP\Db\Connection\MasterSlaveConnection',
+        ],
+        //第二个连接
+        'db2' => [
+            'class' => LumengPHP\Db\Connection\MasterSlaveConnection::class,
             //数据库类型：mysql、pgsql、sqlsrv等
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -31,27 +31,27 @@ $configs = array(
             //数据库字符集
             'charset' => 'utf8',
             //数据库服务器列表，第一个为master服务器，剩下的为从服务器
-            'servers' => array(
-                array(
+            'servers' => [
+                [
                     'host' => 'dbhost1',
                     'port' => 3306,
                     'dbName' => 'bbs',
                     'username' => '',
                     'password' => '',
-                ),
-                array(
+                ],
+                [
                     'host' => 'dbhost2',
                     'port' => 3306,
                     'dbName' => 'bbs',
                     'username' => '',
                     'password' => '',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];
 
 $localConfigs = file_exists(__DIR__ . '/local.config.php') ?
-        require(__DIR__ . '/local.config.php') : array();
+        require(__DIR__ . '/local.config.php') : [];
 
 return array_merge($configs, $localConfigs);
