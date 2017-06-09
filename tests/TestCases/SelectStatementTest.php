@@ -21,7 +21,7 @@ class SelectStatementTest extends \PHPUnit_Framework_TestCase {
         $condition = new ArrayCondition(array(
             'id' => 197,
             'user_id' => ['in', [2, 8, 7]],
-            'add_time' => ['between', [strtotime('yesterday'), time()]],
+            'add_time' => ['between', strtotime('yesterday'), time()],
         ));
         $condition->setStatementContext($statementContext);
 

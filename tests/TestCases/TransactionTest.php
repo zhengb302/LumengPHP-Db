@@ -40,10 +40,10 @@ class TransactionTest extends BaseDatabaseTestCase {
         //现在只剩下三个用户
         $this->assertEquals(3, $userModel->count());
         //李雷已被删除，再查找这个用户，会返回null
-        $lilei = $userModel->where(array('username' => 'lilei'))->find();
+        $lilei = $userModel->where(array('username' => 'lilei'))->findOne();
         $this->assertNull($lilei);
         //查找李雷的发帖，也返回null
-        $postsOfLilei = $postModel->where(array('uid' => 2))->select();
+        $postsOfLilei = $postModel->where(array('uid' => 2))->findAll();
         $this->assertNull($postsOfLilei);
     }
 
