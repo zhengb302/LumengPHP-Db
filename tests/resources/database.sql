@@ -20,9 +20,12 @@ GRANT ALL PRIVILEGES ON  `bbsdb` . * TO  'bbs'@'%';
 CREATE TABLE `bbs_user` (
  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(15) NOT NULL COMMENT '用户名，3到15位。全系统唯一',
- `password` char(32) NOT NULL COMMENT 'md5 hash过的用户密码',
+ `password` char(32) NOT NULL COMMENT '用户原始密码，为了方便测试，未作任何处理',
  `email` varchar(50) NOT NULL COMMENT '注册邮箱，一个邮箱只能注册一次',
  `nickname` varchar(50) NOT NULL COMMENT '用户昵称',
+ `age` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '用户年龄',
+ `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别：0，男；1，女',
+ `is_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否已删除：0，未删除；1，已删除',
  `add_time` int(10) unsigned NOT NULL COMMENT '注册时间',
  PRIMARY KEY (`uid`),
  UNIQUE KEY `username` (`username`),

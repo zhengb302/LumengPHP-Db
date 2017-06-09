@@ -12,7 +12,7 @@
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE username = 'zhangsan'
+//SQL：SELECT * FROM bbs_user WHERE username = 'zhangsan'
 $conditions = [
     'username' => 'zhangsan',
 ];
@@ -24,7 +24,7 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE is_deleted != 1
+//SQL：SELECT * FROM bbs_user WHERE is_deleted != 1
 $conditions = [
     'is_deleted' => ['neq', 1],
 ];
@@ -36,13 +36,13 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE age > 18
+//SQL：SELECT * FROM bbs_user WHERE age > 18
 $conditions = [
     'age' => ['gt', 18],
 ];
 $userData = $userModel->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user WHERE age >= 18
+//SQL：SELECT * FROM bbs_user WHERE age >= 18
 $conditions = [
     'age' => ['gte', 18],
 ];
@@ -54,13 +54,13 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE age < 18
+//SQL：SELECT * FROM bbs_user WHERE age < 18
 $conditions = [
     'age' => ['lt', 18],
 ];
 $userData = $userModel->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user WHERE age <= 18
+//SQL：SELECT * FROM bbs_user WHERE age <= 18
 $conditions = [
     'age' => ['lte', 18],
 ];
@@ -72,15 +72,15 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE user_id IN (2, 3, 8)
+//SQL：SELECT * FROM bbs_user WHERE uid IN (2, 3, 8)
 $conditions = [
-    'user_id' => ['in', [2, 3, 8]],
+    'uid' => ['in', [2, 3, 8]],
 ];
 $userData = $userModel->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user WHERE user_id NOT IN (2, 3, 8)
+//SQL：SELECT * FROM bbs_user WHERE uid NOT IN (2, 3, 8)
 $conditions = [
-    'user_id' => ['not in', [2, 3, 8]],
+    'uid' => ['not in', [2, 3, 8]],
 ];
 $userData = $userModel->where($conditions)->findOne();
 ```
@@ -90,13 +90,13 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE age BETWEEN 18 AND 25
+//SQL：SELECT * FROM bbs_user WHERE age BETWEEN 18 AND 25
 $conditions = [
     'age' => ['between', 18, 25],
 ];
 $userData = $userModel->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user WHERE age NOT BETWEEN 18 AND 25
+//SQL：SELECT * FROM bbs_user WHERE age NOT BETWEEN 18 AND 25
 $conditions = [
     'age' => ['not between', 18, 25],
 ];
@@ -108,13 +108,13 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user WHERE nickname LIKE '%耐克%'
+//SQL：SELECT * FROM bbs_user WHERE nickname LIKE '%耐克%'
 $conditions = [
     'nickname' => ['like', '%耐克%'],
 ];
 $userData = $userModel->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user WHERE nickname NOT LIKE '%耐克%'
+//SQL：SELECT * FROM bbs_user WHERE nickname NOT LIKE '%耐克%'
 $conditions = [
     'nickname' => ['not like', '%耐克%'],
 ];
@@ -126,15 +126,15 @@ $userData = $userModel->where($conditions)->findOne();
 ```php
 $userModel = new User();
 
-//SQL：SELECT * FROM user u WHERE EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)
+//SQL：SELECT * FROM bbs_user u WHERE EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)
 $conditions = [
-    '_string' => 'EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)',
+    '_string' => 'EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
 ];
 $userData = $userModel->alias('u')->where($conditions)->findOne();
 
-//SQL：SELECT * FROM user u WHERE NOT EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)
+//SQL：SELECT * FROM bbs_user u WHERE NOT EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)
 $conditions = [
-    '_string' => 'NOT EXISTS (SELECT * FROM comment c WHERE c.user_id = u.user_id)',
+    '_string' => 'NOT EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)',
 ];
 $userData = $userModel->alias('u')->where($conditions)->findOne();
 ```
@@ -170,7 +170,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (age > 18 AND sex = 1)
+SELECT * FROM bbs_user WHERE (age > 18 AND sex = 1)
 ```
 
 #### _logic操作符
@@ -200,7 +200,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (age > 18 OR sex = 1)
+SELECT * FROM bbs_user WHERE (age > 18 OR sex = 1)
 ```
 
 #### _sub操作符，子条件
@@ -231,7 +231,7 @@ $userData = $userModel->where($conditions)->findOne();
 SQL：
 ```sql
 -- 注意里边的圆括号
-SELECT * FROM user WHERE (is_deleted = 0 AND (age > 18 AND sex = 1))
+SELECT * FROM bbs_user WHERE (is_deleted = 0 AND (age > 18 AND sex = 1))
 ```
 
 以上示例不需要_**sub**操作符也可以轻易实现，所以\_**sub**操作符一般与\_**logic**一起使用，嵌入一个OR子句：
@@ -249,7 +249,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (is_deleted = 0 AND (age > 18 OR sex = 1))
+SELECT * FROM bbs_user WHERE (is_deleted = 0 AND (age > 18 OR sex = 1))
 ```
 
 #### _or 操作符
@@ -285,7 +285,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1)))
+SELECT * FROM bbs_user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' AND sex = 0) OR (nickname LIKE '李%' AND sex = 1)))
 ```
 
 #### _and操作符
@@ -323,7 +323,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)))
+SELECT * FROM bbs_user WHERE (is_deleted = 0 AND ((nickname LIKE '张%' OR sex = 0) AND (nickname LIKE '李%' OR sex = 1)))
 ```
 
 #### 原生SQL条件语句：_string
@@ -353,7 +353,7 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (sex = 1 AND (age < 18 OR age > 25))
+SELECT * FROM bbs_user WHERE (sex = 1 AND (age < 18 OR age > 25))
 ```
 
 示例2：
@@ -367,5 +367,5 @@ $userData = $userModel->where($conditions)->findOne();
 
 SQL：
 ```sql
-SELECT * FROM user WHERE (sex = 1 AND ((age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')))
+SELECT * FROM bbs_user WHERE (sex = 1 AND ((age < 18 OR age > 25) AND (nickname LIKE '张%' OR nickname LIKE '李%')))
 ```

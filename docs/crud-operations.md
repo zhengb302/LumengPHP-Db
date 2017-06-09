@@ -14,6 +14,8 @@
 ```php
 $data = [
     'username' => 'zhangsan',
+    'password' => '123456',
+    'email' => 'zhangsan@foo.com',
     'nickname' => '张三',
     'age' => 28,
     'sex' => 0,
@@ -24,6 +26,7 @@ $data = [
 $userModel = new User();
 $newUserId = $userModel->insert($data);
 ```
+
 ### 查询
 
 查询返回的每一条记录都是关联数组。
