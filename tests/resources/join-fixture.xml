@@ -5,7 +5,7 @@
             <row>
                 <field name="uid">1</field>
                 <field name="username">xiaoming</field>
-                <field name="password">e10adc3949ba59abbe56e057f20f883e</field>
+                <field name="password">123456</field>
                 <field name="email">xiaoming@163.com</field>
                 <field name="nickname">小明</field>
                 <field name="add_time">1409305028</field>
@@ -13,7 +13,7 @@
             <row>
                 <field name="uid">2</field>
                 <field name="username">lilei</field>
-                <field name="password">e10adc3949ba59abbe56e057f20f883e</field>
+                <field name="password">123456</field>
                 <field name="email">lilei@qq.com</field>
                 <field name="nickname">李雷</field>
                 <field name="add_time">1409305088</field>
@@ -21,7 +21,7 @@
             <row>
                 <field name="uid">3</field>
                 <field name="username">hanmeimei</field>
-                <field name="password">e10adc3949ba59abbe56e057f20f883e</field>
+                <field name="password">123456</field>
                 <field name="email">hanmeimei@qq.com</field>
                 <field name="nickname">韩梅梅</field>
                 <field name="add_time">1409305088</field>
@@ -29,7 +29,7 @@
             <row>
                 <field name="uid">4</field>
                 <field name="username">zhangsan</field>
-                <field name="password">e10adc3949ba59abbe56e057f20f883e</field>
+                <field name="password">123456</field>
                 <field name="email">zhangsan@126.com</field>
                 <field name="nickname">张三</field>
                 <field name="add_time">1409305283</field>
