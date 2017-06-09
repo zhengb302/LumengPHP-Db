@@ -11,19 +11,19 @@ use Psr\Log\LoggerInterface;
 interface ConnectionInterface {
 
     /**
-     * 设置数据库连接名称
+     * 设置数据库连接名称，用以注入数据库连接名称
      * @param string $name
      */
     public function setName($name);
 
     /**
-     * 设置数据库连接配置
+     * 设置数据库连接配置，用以注入数据库连接配置
      * @param array $config
      */
     public function setConfig($config);
 
     /**
-     * 设置日志组件
+     * 设置日志组件，用以注入日志组件
      * @param LoggerInterface $logger
      */
     public function setLogger(LoggerInterface $logger);
@@ -107,4 +107,10 @@ interface ConnectionInterface {
      * 注意：这只对配置了主从模式的架构起作用
      */
     public function enableSlaves();
+
+    /**
+     * 返回最后一条执行的SQL(用于错误排查及调试)
+     * @return string 
+     */
+    public function getLastSql();
 }

@@ -30,6 +30,21 @@ abstract class AbstractConnection implements ConnectionInterface {
      */
     protected $logger;
 
+    /**
+     * @var PDO 最后一次执行SQL所使用的PDO实例
+     */
+    private $lastPdo;
+
+    /**
+     * @var string 最后一条执行的SQL
+     */
+    private $lastSql;
+
+    /**
+     * @var array 最后一次执行SQL所使用的预编译参数
+     */
+    private $lastParameters;
+
     public function setName($name) {
         $this->name = $name;
     }
@@ -48,6 +63,17 @@ abstract class AbstractConnection implements ConnectionInterface {
 
     public function getTablePrefix() {
         return $this->config['tablePrefix'];
+    }
+
+    public function getLastSql() {
+        $search = array_keys($this->lastParameters);
+
+        $replace = array_values($this->lastParameters);
+        foreach ($replace as $i => $value) {
+            $replace[$i] = $this->lastPdo->quote($value);
+        }
+
+        return str_replace($search, $replace, $this->lastSql);
     }
 
     protected function makeDsn($host, $port, $dbName) {
@@ -137,6 +163,10 @@ abstract class AbstractConnection implements ConnectionInterface {
      * 并不意味着找到了数据或更新了数据。
      */
     private function executeSql(PDO $pdo, $sql, array $parameters = null) {
+        $this->lastPdo = $pdo;
+        $this->lastSql = $sql;
+        $this->lastParameters = $parameters;
+
         try {
             $pdoStmt = $pdo->prepare($sql);
             $pdoStmt->execute($parameters);

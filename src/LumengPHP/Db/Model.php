@@ -56,7 +56,7 @@ abstract class Model {
 
         if (!$this->tableName) {
             //Model类名称转化为表名称，如“UserProfile”转化为“user_profile”
-            $modelName = get_called_class();
+            $modelName = TableNameHelper::basename(get_called_class());
             $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($modelName, '_');
         }
 
