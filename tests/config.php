@@ -1,11 +1,10 @@
 <?php
 
 $configs = [
-    //数据库连接配置
-    //第一个数据库连接为默认连接
-    'connections' => [
+    //数据库配置
+    'database' => [
         //connectionName => connectionConfig
-        //第一个连接
+        //第一个连接，第一个数据库连接为默认连接
         'db1' => [
             'class' => LumengPHP\Db\Connection\SimpleConnection::class,
             //数据库类型：mysql、pgsql、sqlsrv等

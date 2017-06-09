@@ -8,5 +8,5 @@ $loader->add('tests\\', dirname(__DIR__));
 use LumengPHP\Db\ConnectionManager;
 
 $configs = require(__DIR__ . '/config.php');
-$connectionConfigs = $configs['connections'];
+$connectionConfigs = $configs['database'];
 ConnectionManager::create($connectionConfigs);
