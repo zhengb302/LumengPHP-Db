@@ -2,6 +2,7 @@
 
 namespace tests\TestCases;
 
+use LumengPHP\Db\ConnectionManager;
 use tests\Model\User;
 use tests\Model\Post;
 
@@ -23,7 +24,7 @@ class TransactionTest extends BaseDatabaseTestCase {
         $userModel = new User();
         $postModel = new Post();
 
-        global $connManager;
+        $connManager = ConnectionManager::getInstance();
         $conn = $connManager->getConnection();
 
         $conn->beginTransaction();
@@ -50,7 +51,7 @@ class TransactionTest extends BaseDatabaseTestCase {
         $userModel = new User();
         $postModel = new Post();
 
-        global $connManager;
+        $connManager = ConnectionManager::getInstance();
         $conn = $connManager->getConnection();
 
         $conn->beginTransaction();

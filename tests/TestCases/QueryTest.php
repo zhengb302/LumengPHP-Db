@@ -96,7 +96,7 @@ class QueryTest extends BaseDatabaseTestCase {
     public function testAlias() {
         $userModel = new User();
         $result = $userModel->select('u.uid,u.nickname')->alias('u')
-                        ->where(array('uid' => 2))->find();
+                        ->where(array('uid' => 2))->findOne();
         $this->assertEquals('李雷', $result['nickname']);
     }
 
