@@ -78,7 +78,6 @@ final class ConnectionManager {
         $conn->setLogger($this->logger);
 
         $this->connectionMap[$name] = $conn;
-
         return $conn;
     }
 
