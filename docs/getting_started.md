@@ -3,7 +3,7 @@
 ### 前情提要
 
 假设正在开发一个简单的bbs系统。数据库名称“bbsdb”，目前有“用户表”(bbs_user)和“帖子表”(bbs_post)两个数据库表。
-点击查看[数据库表结构](tests/resources/database.sql)。
+点击查看[数据库表结构](/tests/resources/database.sql)。
 
 ### 安装
 
