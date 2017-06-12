@@ -5,10 +5,10 @@ namespace tests\Model;
 use LumengPHP\Db\Model;
 
 /**
- * 用户表model
+ * 帖子表model
  *
  * @author Lumeng <zhengb302@163.com>
  */
-class User extends Model {
+class PostModel extends Model {
     
 }

@@ -23,7 +23,7 @@ $data = [
     'add_time' => time(),
 ];
 
-$userModel = new User();
+$userModel = new UserModel();
 $newUserId = $userModel->insert($data);
 ```
 
@@ -35,7 +35,7 @@ $newUserId = $userModel->insert($data);
 
 查找用户名为*zhangsan*的用户：
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 $userData = $userModel->where(['username' => 'zhangsan'])->findOne();
 ```
 
@@ -43,7 +43,7 @@ $userData = $userModel->where(['username' => 'zhangsan'])->findOne();
 
 查找所有女生(sex等于1)：
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 $girls = $userModel->where(['sex' => 1])->findAll();
 ```
 
@@ -51,7 +51,7 @@ $girls = $userModel->where(['sex' => 1])->findAll();
 
 上面的例子未限制要返回的字段，会返回所有字段，现在只想要获得用户名、昵称和年龄三个字段：
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //字段列表，跟平时直接写SQL时一样
 $fields = 'username,nickname,age';

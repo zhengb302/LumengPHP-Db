@@ -2,7 +2,7 @@
 
 namespace tests\TestCases;
 
-use tests\Model\User;
+use tests\Model\UserModel;
 
 /**
  * 更新数据测试
@@ -19,7 +19,7 @@ class UpdateTest extends BaseDatabaseTestCase {
     }
 
     public function testUpdate() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //更新密码和邮箱
         $newData = array(
@@ -43,7 +43,7 @@ class UpdateTest extends BaseDatabaseTestCase {
      * @expectedException \LumengPHP\Db\Exception\ForbiddenOperationException
      */
     public function testUpdateWithoutAnyConditions() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //更新密码和邮箱
         $newData = array(

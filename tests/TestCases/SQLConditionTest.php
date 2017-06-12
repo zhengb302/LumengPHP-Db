@@ -2,8 +2,8 @@
 
 namespace tests\TestCases;
 
-use tests\Model\User;
-use tests\Model\Post;
+use tests\Model\UserModel;
+use tests\Model\PostModel;
 
 /**
  * SQL查询条件测试
@@ -20,7 +20,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testBetween() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         $conditions = array(
             'uid' => ['between', 2, 5],
@@ -31,7 +31,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testNotBetween() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         $conditions = array(
             'uid' => ['not between', 2, 5],
@@ -42,7 +42,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testNotEqual() {
-        $postModel = new Post();
+        $postModel = new PostModel();
 
         //找出除了李雷之外，其他人发的所有帖子
         $conditions = array(
@@ -55,7 +55,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testExists() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //找出发过帖子的所有用户
         $condition = [
@@ -76,7 +76,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testNotExists() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //找出尚未发过帖子的所有用户
         $condition = [
@@ -91,7 +91,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testGreaterThan() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //找出uid大于2的所有用户
         $conditions = array(
@@ -104,7 +104,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testLessEqualThan() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //找出uid小于或等于2的所有用户
         $conditions = array(
@@ -117,7 +117,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testIn() {
-        $postModel = new Post();
+        $postModel = new PostModel();
 
         //找出李雷和韩梅梅发的所有帖子
         $conditions = array(
@@ -130,7 +130,7 @@ class SQLConditionTest extends BaseDatabaseTestCase {
     }
 
     public function testLike() {
-        $postModel = new Post();
+        $postModel = new PostModel();
 
         //找出标题里包含"韩梅梅"的所有帖子
         $conditions = array(

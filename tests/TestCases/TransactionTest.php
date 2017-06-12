@@ -3,8 +3,8 @@
 namespace tests\TestCases;
 
 use LumengPHP\Db\ConnectionManager;
-use tests\Model\User;
-use tests\Model\Post;
+use tests\Model\UserModel;
+use tests\Model\PostModel;
 
 /**
  * 事务测试
@@ -21,8 +21,8 @@ class TransactionTest extends BaseDatabaseTestCase {
     }
 
     public function testCommit() {
-        $userModel = new User();
-        $postModel = new Post();
+        $userModel = new UserModel();
+        $postModel = new PostModel();
 
         $connManager = ConnectionManager::getInstance();
         $conn = $connManager->getConnection();
@@ -48,8 +48,8 @@ class TransactionTest extends BaseDatabaseTestCase {
     }
 
     public function testRollback() {
-        $userModel = new User();
-        $postModel = new Post();
+        $userModel = new UserModel();
+        $postModel = new PostModel();
 
         $connManager = ConnectionManager::getInstance();
         $conn = $connManager->getConnection();

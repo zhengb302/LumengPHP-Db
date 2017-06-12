@@ -2,8 +2,8 @@
 
 namespace tests\TestCases;
 
-use tests\Model\User;
-use tests\Model\Post;
+use tests\Model\UserModel;
+use tests\Model\PostModel;
 
 /**
  * SQL查询连接测试
@@ -20,7 +20,7 @@ class JoinTest extends BaseDatabaseTestCase {
     }
 
     public function testInnerJoin() {
-        $postModel = new Post();
+        $postModel = new PostModel();
 
         //找出李雷的所有发帖
         $fields = 'p.title,p.content,u.nickname';
@@ -34,7 +34,7 @@ class JoinTest extends BaseDatabaseTestCase {
     }
 
     public function testLeftJoin() {
-        $userModel = new User();
+        $userModel = new UserModel();
 
         //找出韩梅梅、小明和张三的发帖
         $fields = 'u.uid,u.nickname,p.title,p.content';

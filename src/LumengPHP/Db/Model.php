@@ -55,9 +55,10 @@ abstract class Model {
         $this->connection = ConnectionManager::getInstance()->getConnection($this->connectionName);
 
         if (!$this->tableName) {
-            //Model类名称转化为表名称，如“UserProfile”转化为“user_profile”
+            //Model类名称转化为表名称，如“UserProfileModel”转化为“bbs_user_profile”
             $modelName = TableNameHelper::basename(get_called_class());
-            $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($modelName, '_');
+            $abstractTableName = substr($modelName, 0, strlen($modelName) - 5);
+            $this->tableName = $this->connection->getTablePrefix() . TableNameHelper::camel2id($abstractTableName, '_');
         }
 
         $this->statementContext = new StatementContext();

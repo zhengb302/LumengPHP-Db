@@ -10,7 +10,7 @@
 #### 等于
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE username = 'zhangsan'
 $conditions = [
@@ -22,7 +22,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### 不等于：neq
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE is_deleted != 1
 $conditions = [
@@ -34,7 +34,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### 大于：gt，大于或等于：gte
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE age > 18
 $conditions = [
@@ -52,7 +52,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### 小于：lt，小于或等于：lte
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE age < 18
 $conditions = [
@@ -70,7 +70,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### in、not in
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE uid IN (2, 3, 8)
 $conditions = [
@@ -88,7 +88,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### between、not between
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE age BETWEEN 18 AND 25
 $conditions = [
@@ -106,7 +106,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### like、not like
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user WHERE nickname LIKE '%耐克%'
 $conditions = [
@@ -124,7 +124,7 @@ $userData = $userModel->where($conditions)->findOne();
 #### exists、not exists
 
 ```php
-$userModel = new User();
+$userModel = new UserModel();
 
 //SQL：SELECT * FROM bbs_user u WHERE EXISTS (SELECT * FROM bbs_post p WHERE p.uid = u.uid)
 $conditions = [
