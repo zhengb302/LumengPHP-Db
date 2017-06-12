@@ -23,7 +23,7 @@ $configs = [
         //第二个连接
         'db2' => [
             'class' => LumengPHP\Db\Connection\MasterSlaveConnection::class,
-            //数据库类型：mysql、pgsql、sqlsrv等
+            //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
             'tablePrefix' => 'bbs_',

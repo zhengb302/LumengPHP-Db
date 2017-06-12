@@ -27,7 +27,8 @@ composer require lumeng/lumeng-php-db
 ```
 即可完成LumengPHP-Db的安装。
 
-3，LumengPHP-Db通常作为一个独立的库集成进第三方框架，以使其具备方便快捷的操作数据库的能力。在项目中集成LumengPHP-Db：
+3，LumengPHP-Db通常作为一个独立的库集成进第三方框架，以使其具备方便快捷的操作数据库的能力。
+在项目中集成LumengPHP-Db：
 ```php
 <?php
 //composer autoloader
@@ -41,3 +42,4 @@ ConnectionManager::create($connectionConfigs);
 ```
 
 ### 配置
+
