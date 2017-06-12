@@ -24,7 +24,7 @@ use LumengPHP\Db\Exception\SqlException;
 abstract class Model {
 
     /**
-     * @var string 所属的数据库连接名称，可被子类覆盖，用于实例化model的时候选择数据库连接
+     * @var string 所属的数据库连接名称，可被子类覆盖，用于实例化model时选择数据库连接
      */
     protected $connectionName;
 
@@ -39,7 +39,7 @@ abstract class Model {
     private $statementContext;
 
     /**
-     * @var string 真实表名(包含表前缀)，可被子类覆盖，用于自定义表名称
+     * @var string 真实表名(包含表前缀，如果有)，可被子类覆盖，用于自定义表名称
      */
     protected $tableName;
 
@@ -54,6 +54,7 @@ abstract class Model {
     public function __construct() {
         $this->connection = ConnectionManager::getInstance()->getConnection($this->connectionName);
 
+        //如果子类提供了真实表名，则使用子类提供的表名；如果未提供，则解析Model类名。
         if (!$this->tableName) {
             //Model类名称转化为表名称，如“UserProfileModel”转化为“bbs_user_profile”
             $modelName = TableNameHelper::basename(get_called_class());
