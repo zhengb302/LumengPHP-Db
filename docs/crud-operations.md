@@ -51,11 +51,11 @@ $girls = $userModel->where(['sex' => 1])->findAll();
 
 上面的例子未限制要返回的字段，会返回所有字段，现在只想要获得用户名、昵称和年龄三个字段：
 ```php
-$userModel = new UserModel();
-
 //字段列表，跟平时直接写SQL时一样
 $fields = 'username,nickname,age';
 
+//使用select方法限制字段
+$userModel = new UserModel();
 $userData = $userModel->select($fields)->where(['username' => 'zhangsan'])->findOne();
 ```
 
@@ -71,7 +71,51 @@ $fields = '*';
 
 ### 更新
 
-(待补充)
+示例：
+```php
+$newData = [
+    'nickname' => '尼古拉斯*张三',
+    'age' => 19,
+];
+$userModel = new UserModel();
+$rowCount = $userModel->where(['username' => 'zhangsan'])->update($newData);
+```
+
+对要更新的字段值应用表达式：
+```php
+$newData = [
+    'age' => ['exp', 'age + 1'],
+];
+$userModel = new UserModel();
+$rowCount = $userModel->where(['username' => 'zhangsan'])->update($newData);
+```php
+
+对应的SQL语句：
+```sql
+UPDATE user SET age = age + 1 WHERE username = 'zhangsan'
+```
+
+增加一个字段的值：
+```php
+$userModel = new UserModel();
+
+//默认增加的值为1
+$rowCount = $userModel->where(['username' => 'zhangsan'])->inc('age');
+
+//自定义增加的值
+$rowCount = $userModel->where(['username' => 'zhangsan'])->inc('age', 5);
+```
+
+减少一个字段的值：
+```php
+$userModel = new UserModel();
+
+//默认减少的值为1
+$rowCount = $userModel->where(['username' => 'zhangsan'])->dec('age');
+
+//自定义减少的值
+$rowCount = $userModel->where(['username' => 'zhangsan'])->dec('age', 5);
+```php
 
 ### 删除
 
