@@ -88,7 +88,7 @@ $newData = [
 ];
 $userModel = new UserModel();
 $rowCount = $userModel->where(['username' => 'zhangsan'])->update($newData);
-```php
+```
 
 对应的SQL语句：
 ```sql
@@ -115,7 +115,7 @@ $rowCount = $userModel->where(['username' => 'zhangsan'])->dec('age');
 
 //自定义减少的值
 $rowCount = $userModel->where(['username' => 'zhangsan'])->dec('age', 5);
-```php
+```
 
 ### 删除
 
