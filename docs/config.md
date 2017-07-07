@@ -119,7 +119,7 @@ return [
 ];
 ```
 
-默认情况下是使用第一个连接，如果要使用其他连接，则需要覆盖Model类的**\$connectionName**属性，以提供欲使用的连接名称：
+默认情况下是使用第一个连接，如果要使用其他连接，则需要覆盖Model类的\$**connectionName**属性，以提供欲使用的连接名称：
 ```php
 class UserModel extends Model {
     //...
