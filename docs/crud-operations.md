@@ -4,9 +4,9 @@
     1. [单个插入(insert)](#单个插入insert)
     2. [批量插入(insertAll)](#批量插入insertall)
 2. [查询](#查询)
-    1. [查找一条记录](#查找一条记录)
-    2. [查找多条记录](#查找多条记录)
-    3. [字段限制](#字段限制)
+    1. [查找一条记录(findOne)](#查找一条记录findone)
+    2. [查找多条记录(findAll)](#查找多条记录findall)
+    3. [选择字段(select)](#选择字段select)
 3. [更新](#更新)
 4. [删除](#删除)
 
@@ -82,14 +82,14 @@ $userModel = new UserModel();
 $girls = $userModel->where(['sex' => 1])->findAll();
 ```
 
-#### 字段限制(select)
+#### 选择字段(select)
 
-上面的例子未限制要返回的字段，会返回所有字段，现在只想要获得用户名、昵称和年龄三个字段：
+上面的例子未选择要返回的字段(会返回所有字段)，现在只想要获得用户名、昵称和年龄三个字段：
 ```php
 //字段列表，跟平时直接写SQL时一样
 $fields = 'username,nickname,age';
 
-//使用select方法限制字段
+//使用select方法选择字段
 $userModel = new UserModel();
 $userData = $userModel->select($fields)->where(['username' => 'zhangsan'])->findOne();
 ```
