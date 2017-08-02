@@ -124,4 +124,8 @@ $rowCount = $userModel->where(['username' => 'zhangsan'])->dec('age', 5);
 
 ### 删除
 
-(待补充)
+示例：
+```php
+$userModel = new UserModel();
+$rowCount = $userModel->where(['username' => 'zhangsan'])->delete();
+```
