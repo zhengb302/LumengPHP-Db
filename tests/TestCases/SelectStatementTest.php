@@ -60,4 +60,26 @@ class SelectStatementTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedSql, $sql);
     }
 
+    public function testArrayFields() {
+        $statementContext = new StatementContext();
+        $fields = ['id AS uid', 'user_name', 'add_time'];
+        $statementContext->setFields($fields);
+        $statementContext->setTableName('user');
+
+        $condition = new ArrayCondition(array(
+            'id' => 197,
+        ));
+        $condition->setStatementContext($statementContext);
+
+        $statement = new SelectStatement();
+        $statement->setStatementContext($statementContext);
+        $statement->setCondition($condition);
+
+        $expectedSql = 'SELECT id AS uid, `user_name`, `add_time` FROM'
+                . ' `user`'
+                . ' WHERE (`id` = :id_0)';
+        $sql = $statement->parse();
+        $this->assertEquals($expectedSql, $sql);
+    }
+
 }

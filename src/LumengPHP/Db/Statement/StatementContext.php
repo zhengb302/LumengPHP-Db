@@ -18,7 +18,7 @@ class StatementContext {
     private $isDistinct = false;
 
     /**
-     * @var string 以英文逗号分隔的字段列表
+     * @var string|array 以英文逗号分隔的字段列表或字段数组
      */
     private $fields;
 

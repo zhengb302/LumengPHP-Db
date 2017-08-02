@@ -78,7 +78,7 @@ abstract class Model {
 
     /**
      * 设置查询字段
-     * @param string $fields
+     * @param string|array $fields 以英文逗号分隔的字段列表或字段数组
      * @return Model
      */
     public function select($fields) {

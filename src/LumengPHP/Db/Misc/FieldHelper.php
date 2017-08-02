@@ -31,14 +31,14 @@ class FieldHelper {
 
     /**
      * 给多个字段打引号
-     * @param string $fields 以英文逗号分割的字段列表
+     * @param string|array $fields 以英文逗号分隔的字段列表或字段数组
      * @return string 以英文逗号分割的已打过引号的字段列表
      */
     public static function quoteFields($fields) {
-        $fieldArr = explode(',', $fields);
+        $fieldArr = is_array($fields) ? $fields : explode(',', $fields);
         $resultFieldArr = array();
         foreach ($fieldArr as $field) {
-            $resultFieldArr[] = self::quoteField(trim($field));
+            $resultFieldArr[] = self::quoteField($field);
         }
 
         return implode(', ', $resultFieldArr);
