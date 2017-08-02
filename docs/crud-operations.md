@@ -8,6 +8,9 @@
     2. [查找多条记录(findAll)](#查找多条记录findall)
     3. [选择字段(select)](#选择字段select)
 3. [更新](#更新)
+    1. [应用表达式(exp)](#应用表达式exp)
+    2. [增加一个字段的值(inc)](#增加一个字段的值inc)
+    3. [减少一个字段的值(dec)](#减少一个字段的值dec)
 4. [删除](#删除)
 
 ### 插入
@@ -121,6 +124,8 @@ $userModel = new UserModel();
 $rowCount = $userModel->where(['username' => 'zhangsan'])->update($newData);
 ```
 
+#### 应用表达式(exp)
+
 对要更新的字段值应用表达式：
 ```php
 $newData = [
@@ -135,7 +140,8 @@ $rowCount = $userModel->where(['username' => 'zhangsan'])->update($newData);
 UPDATE user SET age = age + 1 WHERE username = 'zhangsan'
 ```
 
-增加一个字段的值：
+#### 增加一个字段的值(inc)
+
 ```php
 $userModel = new UserModel();
 
@@ -146,7 +152,7 @@ $rowCount = $userModel->where(['username' => 'zhangsan'])->inc('age');
 $rowCount = $userModel->where(['username' => 'zhangsan'])->inc('age', 5);
 ```
 
-减少一个字段的值：
+#### 减少一个字段的值(dec)
 ```php
 $userModel = new UserModel();
 
