@@ -69,6 +69,11 @@ $fields = 'username AS 用户名,nickname 昵称,age';
 $fields = '*';
 ```
 
+select方法也接受数组作为参数：
+```php
+$fields = ['username', 'nickname', 'age', 'sex AS gender'];
+```
+
 ### 更新
 
 示例：
