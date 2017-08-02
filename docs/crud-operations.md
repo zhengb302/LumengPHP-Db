@@ -1,6 +1,8 @@
 ## CRUD操作
 
 1. [插入](#插入)
+    1. [单个插入](#单个插入(insert))
+    2. [批量插入](#批量插入(insertAll))
 2. [查询](#查询)
     1. [查找一条记录](#查找一条记录)
     2. [查找多条记录](#查找多条记录)
@@ -9,6 +11,8 @@
 4. [删除](#删除)
 
 ### 插入
+
+#### 单个插入(insert)
 
 插入一个新用户：
 ```php
@@ -25,6 +29,37 @@ $data = [
 
 $userModel = new UserModel();
 $newUserId = $userModel->insert($data);
+```
+
+#### 批量插入(insertAll)
+
+批量插入用户：
+```php
+$users = [
+    [
+        'username' => 'zhangsan',
+        'password' => '123456',
+        'email' => 'zhangsan@foo.com',
+        'nickname' => '张三',
+        'age' => 28,
+        'sex' => 0,
+        'is_deleted' => 0,
+        'add_time' => time(),
+    ],
+    [
+        'username' => 'lisi',
+        'password' => '123456',
+        'email' => 'lisi@foo.com',
+        'nickname' => '李四',
+        'age' => 29,
+        'sex' => 0,
+        'is_deleted' => 0,
+        'add_time' => time(),
+    ],
+];
+
+$userModel = new UserModel();
+$rowCount = $userModel->insertAll($users);
 ```
 
 ### 查询
