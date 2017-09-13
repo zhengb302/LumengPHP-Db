@@ -38,7 +38,11 @@ use LumengPHP\Db\ConnectionManager;
 
 //$configs = require(somewhere . '/config.php');
 $connectionConfigs = $configs['database'];
-ConnectionManager::create($connectionConfigs);
+
+//日志组件可选
+$logger = new SomeLogger();
+
+ConnectionManager::create($connectionConfigs, $logger);
 ```
 
 ### 配置
