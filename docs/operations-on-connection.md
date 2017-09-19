@@ -34,3 +34,4 @@ $conn = $connManager->getConnection($connName);
 ```php
 $tablePrefix = $conn->getTablePrefix();
 ```
+

@@ -20,4 +20,5 @@ LumengPHP-Db
 2. [CRUD操作](docs/crud-operations.md)
 3. [查询过滤语言](docs/query-language.md)
 4. [连接上的操作](docs/operations-on-connection.md)
-5. [事务管理](docs/transaction.md)
+5. [执行SQL语句](docs/exec-sql.md)
+6. [事务管理](docs/transaction.md)
