@@ -95,14 +95,14 @@ interface ConnectionInterface {
     public function rollback();
 
     /**
-     * 禁用”从服务器“。执行此方法会导致该连接上的所有<b>读</b>操作都在master上进行，
+     * 禁用“从服务器”。执行此方法会导致该连接上的所有<b>读</b>操作都在master上进行，
      * 直到调用了enableSlaves()方法为止。该方法一般和enableSlaves()方法一起使用。<br />
      * 注意：这只对配置了主从模式的架构起作用
      */
     public function disableSlaves();
 
     /**
-     * 启用”从服务器“。执行此方法会恢复之前的读写分离模式，
+     * 启用“从服务器”。执行此方法会恢复之前的读写分离模式，
      * 该方法一般和disableSlaves()方法一起使用。<br />
      * 注意：这只对配置了主从模式的架构起作用
      */
