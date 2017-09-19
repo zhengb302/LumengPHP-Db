@@ -2,7 +2,8 @@
 
 ### 前情提要
 
-假设正在开发一个简单的bbs系统。数据库名称“bbsdb”，目前有“用户表”(bbs_user)和“帖子表”(bbs_post)两个数据库表。
+假设正在开发一个简单的bbs系统，数据库名称“bbsdb”，目前有“用户表”(bbs_user)和“帖子表”(bbs_post)两个数据库表。
+
 点击查看[数据库表结构](/tests/resources/database.sql)。
 
 ### 安装
@@ -21,7 +22,7 @@ mkdir tiny-bbs
 cd tiny-bbs
 ```
 
-2，创建并进入项目根目录之后，使用composer下载并安装LumengPHP-Db。在项目根目录下执行以下命令：
+2，创建并进入项目根目录之后，使用`composer`下载并安装LumengPHP-Db。在项目根目录下执行以下命令：
 ```bash
 composer require lumeng/lumeng-php-db
 ```
@@ -72,4 +73,4 @@ return [
 ];
 ```
 
-更多连接配置，请查看[连接配置](config.md#连接配置)
+更多连接配置，请查看[连接配置](config.md#连接配置)。
