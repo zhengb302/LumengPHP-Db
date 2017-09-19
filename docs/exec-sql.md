@@ -69,7 +69,7 @@ $parameters = [
 $affectedRowCount = $conn->execute($sql, $parameters);
 ```
 
-#### 返回最新插入的记录的ID(lastInsertId)
+#### 返回最新插入的记录自增ID(lastInsertId)
 
 如果使用`execute`方法插入了一条记录，那么可以使用`lastInsertId`方法获取最新插入记录的自增ID。
 
