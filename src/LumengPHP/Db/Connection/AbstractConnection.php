@@ -173,8 +173,8 @@ abstract class AbstractConnection implements ConnectionInterface {
             return $pdoStmt;
         } catch (Exception $ex) {
             if ($this->logger) {
-                $encodedParameters = json_encode($parameters);
-                $this->logger->error($ex->getMessage() . ". SQL: {$sql}, parameters: {$encodedParameters}.");
+                $errMsg = $ex->getMessage() . ', SQL: ' . $this->getLastSql();
+                $this->logger->error($errMsg);
             }
 
             return false;
