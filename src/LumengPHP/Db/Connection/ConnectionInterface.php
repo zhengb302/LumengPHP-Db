@@ -77,7 +77,8 @@ interface ConnectionInterface {
     public function lastInsertId($name = null);
 
     /**
-     * 开始事务
+     * 开始事务<br />
+     * 对于配置了主从模式的架构，执行此方法会导致该连接上的所有<b>读</b>操作都在master上进行，直到提交或回滚事务。
      * @return bool TRUE on success or FALSE on failure.
      */
     public function beginTransaction();
@@ -97,14 +98,14 @@ interface ConnectionInterface {
     /**
      * 禁用“从服务器”。执行此方法会导致该连接上的所有<b>读</b>操作都在master上进行，
      * 直到调用了enableSlaves()方法为止。该方法一般和enableSlaves()方法一起使用。<br />
-     * 注意：这只对配置了主从模式的架构起作用
+     * 注意：这只对配置了主从模式的架构起作用，对于不支持主从模式的架构，则在此方法里什么都不做
      */
     public function disableSlaves();
 
     /**
      * 启用“从服务器”。执行此方法会恢复之前的读写分离模式，
      * 该方法一般和disableSlaves()方法一起使用。<br />
-     * 注意：这只对配置了主从模式的架构起作用
+     * 注意：这只对配置了主从模式的架构起作用，对于不支持主从模式的架构，则在此方法里什么都不做
      */
     public function enableSlaves();
 
