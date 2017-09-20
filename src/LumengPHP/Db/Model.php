@@ -306,7 +306,7 @@ abstract class Model {
      * @return int|false 如果成功则返回相应的值；SQL执行发生错误则返回false
      */
     public function count($field = '*') {
-        $this->statementContext->setFields("COUNT({$field}) AS COUNT");
+        $this->statementContext->setFields("COUNT({$field}) AS __COUNT__");
         $row = $this->findOne();
 
         //SQL执行发生错误
@@ -314,7 +314,7 @@ abstract class Model {
             return false;
         }
 
-        return $row['COUNT'];
+        return $row['__COUNT__'];
     }
 
     /**
@@ -324,7 +324,7 @@ abstract class Model {
      * SQL执行发生错误则返回false
      */
     public function max($field) {
-        $this->statementContext->setFields("MAX({$field}) AS MAX");
+        $this->statementContext->setFields("MAX({$field}) AS __MAX__");
         $row = $this->findOne();
 
         //SQL执行发生错误
@@ -332,7 +332,7 @@ abstract class Model {
             return false;
         }
 
-        return $row['MAX'];
+        return $row['__MAX__'];
     }
 
     /**
@@ -342,7 +342,7 @@ abstract class Model {
      * SQL执行发生错误则返回false
      */
     public function min($field) {
-        $this->statementContext->setFields("MIN({$field}) AS MIN");
+        $this->statementContext->setFields("MIN({$field}) AS __MIN__");
         $row = $this->findOne();
 
         //SQL执行发生错误
@@ -350,7 +350,7 @@ abstract class Model {
             return false;
         }
 
-        return $row['MIN'];
+        return $row['__MIN__'];
     }
 
     /**
@@ -360,7 +360,7 @@ abstract class Model {
      * SQL执行发生错误则返回false
      */
     public function avg($field) {
-        $this->statementContext->setFields("AVG({$field}) AS AVG");
+        $this->statementContext->setFields("AVG({$field}) AS __AVG__");
         $row = $this->findOne();
 
         //SQL执行发生错误
@@ -368,7 +368,7 @@ abstract class Model {
             return false;
         }
 
-        return $row['AVG'];
+        return $row['__AVG__'];
     }
 
     /**
@@ -378,7 +378,7 @@ abstract class Model {
      * SQL执行发生错误则返回false
      */
     public function sum($field) {
-        $this->statementContext->setFields("SUM({$field}) AS SUM");
+        $this->statementContext->setFields("SUM({$field}) AS __SUM__");
         $row = $this->findOne();
 
         //SQL执行发生错误
@@ -386,7 +386,7 @@ abstract class Model {
             return false;
         }
 
-        return $row['SUM'];
+        return $row['__SUM__'];
     }
 
     /**
