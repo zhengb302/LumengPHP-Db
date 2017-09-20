@@ -71,7 +71,7 @@ $rowCount = $userModel->insertAll($users);
 
 #### 查找一条记录(findOne)
 
-查找用户名为*zhangsan*的用户：
+查找用户名为“zhangsan”的用户：
 ```php
 $userModel = new UserModel();
 $userData = $userModel->where(['username' => 'zhangsan'])->findOne();
@@ -111,6 +111,83 @@ select方法也接受数组作为参数：
 ```php
 $fields = ['username', 'nickname', 'age', 'sex AS gender'];
 ```
+
+#### 结果去重(distinct)
+
+调用`distinct`方法会在SQL语句的查询字段前面插入`DISTINCT`关键字，使得返回的结果集不会存在重复的记录。
+
+#### 表别名(alias)
+
+示例：
+```php
+$fields = 'u.username,u.nickname,u.age';
+$userModel = new UserModel();
+$userData = $userModel->alias('u')->select($fields)->where(['u.username' => 'zhangsan'])->findOne();
+```
+
+#### 连接查询
+
+内连接(`join`方法)：
+```php
+//找出李雷的所有发帖
+$postModel = new PostModel();
+$posts = $postModel->alias('p')->select('p.title,p.content,u.nickname')
+                               ->join('User', 'u', 'u.uid = p.uid')
+                               ->where(['u.username' => 'lilei'])
+                               ->findAll();
+```
+
+左外连接(`leftJoin`方法)、右外连接同理(`rightJoin`方法)，调用方式与内连接(`join`方法)一致。
+
+#### groupBy、having
+
+查找出发帖次数超过5次的用户的发帖数：
+```php
+$postModel = new PostModel();
+$posts = $postModel->select('uid, COUNT(id)')
+                   ->groupBy('uid')
+                   ->having('COUNT(id) >= 5')
+                   ->findAll();
+```
+
+#### 排序(orderBy)
+
+找出李雷的所有发帖，越新的排在越前面：
+```php
+$postModel = new PostModel();
+$posts = $postModel->alias('p')->select('p.title,p.content,u.nickname')
+                               ->join('User', 'u', 'u.uid = p.uid')
+                               ->where(['u.username' => 'lilei'])
+                               ->orderBy('p.add_time DESC')
+                               ->findAll();
+```
+
+`orderBy`方法也接受一个关联数组作为参数：
+```php
+//先按用户ID升序排序，再按发帖时间逆序排序
+$orderBy = [
+    'uid' => 'ASC',
+    'add_time' => 'DESC',
+];
+$postModel = new PostModel();
+$posts = $postModel->select('uid,title,content')
+                   ->orderBy($orderBy)
+                   ->findAll();
+```
+
+#### 分页(paging)
+
+返回第50页的帖子，每页20条：
+```php
+$pageNum = 50;
+$pageSize = 20;
+$postModel = new PostModel();
+$posts = $postModel->select('id,title,content')
+                   ->paging($pageNum, $pageSize)
+                   ->findAll();
+```
+
+> 注意：分页号从`1`开始，而不是`0`
 
 ### 更新
 
