@@ -28,3 +28,12 @@ $conn = $connManager->getConnection();
 $connName = 'bbsLog';
 $conn = $connManager->getConnection($connName);
 ```
+
+#### 从`Model`中获取连接
+
+每个`Model`都有一个数据库连接，通过`Model`的`getConnection`方法，可以获取其所属的数据库连接。
+
+示例：
+```php
+$conn = $userModel->getConnection();
+```
