@@ -216,10 +216,10 @@ abstract class Model {
      * @param int|string $limit limit子句。注意，不包括LIMIT关键字<br />
      * 示例：<br />
      * //结果SQL：... LIMIT 5 ...
-     * $repos->limit(5);
+     * $model->limit(5);
      * 
      * //结果SQL：... LIMIT 40,10 ...
-     * $repos->limit('40,10');
+     * $model->limit('40,10');
      * 
      * @return Model
      */

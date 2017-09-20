@@ -112,6 +112,26 @@ select方法也接受数组作为参数：
 $fields = ['username', 'nickname', 'age', 'sex AS gender'];
 ```
 
+#### 查找单个值(findValue)
+
+`findValue`方法用于查找单个值，即：某条记录的某个字段的值。
+
+取得用户“张三”的年龄：
+```php
+$userModel = new UserModel();
+$age = $userModel->where(['username' => 'zhangsan'])->findValue('age');
+```
+
+#### 查找一个列的值(findColumn)
+
+`findColumn`用于查找复合条件的结果集的某个列，并以下标数组的形式返回。配合`distinct`方法，还可以返回不重复的值。
+
+获取所有用户的email，并且去重后返回：
+```php
+$userModel = new UserModel();
+$emails = $userModel->distinct()->findColumn('email');
+```
+
 #### 结果去重(distinct)
 
 调用`distinct`方法会在SQL语句的查询字段前面插入`DISTINCT`关键字，使得返回的结果集不会存在重复的记录。
@@ -177,9 +197,9 @@ $posts = $postModel->select('uid,title,content')
 
 #### 分页(paging)
 
-返回第50页的帖子，每页20条：
+返回第5页的帖子，每页20条：
 ```php
-$pageNum = 50;
+$pageNum = 5;
 $pageSize = 20;
 $postModel = new PostModel();
 $posts = $postModel->select('id,title,content')
@@ -187,7 +207,66 @@ $posts = $postModel->select('id,title,content')
                    ->findAll();
 ```
 
-> 注意：分页号从`1`开始，而不是`0`
+> 注意：分页号从`1`开始，而不是`0`。
+
+#### 限制返回的结果集(limit)
+
+返回最新发布的10条帖子：
+```php
+$postModel = new PostModel();
+$posts = $postModel->select('uid,title,content')
+                   ->orderBy('add_time DESC')
+                   ->limit(10)
+                   ->findAll();
+```
+
+`limit`方法也支持`limit offset, size`的形式：
+```php
+$postModel = new PostModel();
+$posts = $postModel->select('uid,title,content')
+                   ->orderBy('add_time DESC')
+                   ->limit('40, 10')
+                   ->findAll();
+```
+
+> 注意：在同一个查询内同时调用`paging`方法和`limit`方法会导致互相覆盖。
+
+#### 聚簇函数
+
+`count`方法：
+```php
+//返回未删除用户的数量
+$userModel = new UserModel();
+$count = $userModel->where(['is_deleted' => 0])->count();
+```
+
+`max`方法：
+```php
+//返回未删除用户的最大年龄
+$userModel = new UserModel();
+$count = $userModel->where(['is_deleted' => 0])->max('age');
+```
+
+`min`方法：
+```php
+//返回未删除用户的最小年龄
+$userModel = new UserModel();
+$count = $userModel->where(['is_deleted' => 0])->min('age');
+```
+
+`avg`方法：
+```php
+//返回未删除用户的平均年龄
+$userModel = new UserModel();
+$count = $userModel->where(['is_deleted' => 0])->avg('age');
+```
+
+`sum`方法：
+```php
+//返回未删除用户的总年龄，这。。。
+$userModel = new UserModel();
+$count = $userModel->where(['is_deleted' => 0])->sum('age');
+```
 
 ### 更新
 
