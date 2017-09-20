@@ -11,12 +11,12 @@ $connManager = ConnectionManager::getInstance();
 
 #### 获取默认连接
 
-方法一：
+通过`getDefaultConnection`方法获取默认连接：
 ```php
 $conn = $connManager->getDefaultConnection();
 ```
 
-方法二：
+通过不带参数的`getConnection`方法获取默认连接：
 ```php
 $conn = $connManager->getConnection();
 ```
@@ -28,10 +28,3 @@ $conn = $connManager->getConnection();
 $connName = 'bbsLog';
 $conn = $connManager->getConnection($connName);
 ```
-
-### 获取`表前缀`
-
-```php
-$tablePrefix = $conn->getTablePrefix();
-```
-
