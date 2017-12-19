@@ -66,6 +66,10 @@ abstract class AbstractConnection implements ConnectionInterface {
     }
 
     public function getLastSql() {
+        if (!$this->lastParameters) {
+            return $this->lastSql;
+        }
+
         $search = array_keys($this->lastParameters);
 
         $replace = array_values($this->lastParameters);
