@@ -2,9 +2,10 @@
 
 namespace LumengPHP\Db;
 
-use Psr\Log\LoggerInterface;
 use LumengPHP\Db\Connection\ConnectionInterface;
 use LumengPHP\Db\Exception\SqlException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * 连接管理器
@@ -39,7 +40,7 @@ final class ConnectionManager {
         //选取第一个连接名称作为默认连接名称
         $this->defaultConnectionName = array_keys($connectionConfigs)[0];
 
-        $this->logger = $logger;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -72,12 +73,11 @@ final class ConnectionManager {
         $class = $connConfig['class'];
         unset($connConfig['class']);
 
+        /* @var $conn ConnectionInterface */
         $conn = new $class();
         $conn->setName($name);
         $conn->setConfig($connConfig);
-        if (!is_null($this->logger)) {
-            $conn->setLogger($this->logger);
-        }
+        $conn->setLogger($this->logger);
 
         $this->connectionMap[$name] = $conn;
         return $conn;

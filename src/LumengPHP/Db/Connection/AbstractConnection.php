@@ -176,10 +176,8 @@ abstract class AbstractConnection implements ConnectionInterface {
             $pdoStmt->execute($parameters);
             return $pdoStmt;
         } catch (Exception $ex) {
-            if ($this->logger) {
-                $errMsg = $ex->getMessage() . ', SQL: ' . $this->getLastSql();
-                $this->logger->error($errMsg);
-            }
+            $errMsg = '执行SQL语句出错，错误消息：' . $ex->getMessage() . ', SQL：' . $this->getLastSql();
+            $this->logger->error($errMsg);
 
             return false;
         }

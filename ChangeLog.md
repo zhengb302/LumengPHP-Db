@@ -6,6 +6,8 @@
 
 ### Changed
 
+- 当客户端未传递日志组件时，连接管理器会创建一个`NullLogger`实例来代替，避免在使用日志组件时使用if判断
+
 ### Removed
 
 ### Fixed

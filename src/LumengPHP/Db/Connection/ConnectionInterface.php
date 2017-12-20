@@ -12,18 +12,28 @@ interface ConnectionInterface {
 
     /**
      * 设置数据库连接名称，用以注入数据库连接名称
+     * 
+     * 连接管理器在创建完连接对象之后会调用此方法
+     * 
      * @param string $name
      */
     public function setName($name);
 
     /**
      * 设置数据库连接配置，用以注入数据库连接配置
+     * 
+     * 连接管理器在创建完连接对象之后会调用此方法
+     * 
      * @param array $config
      */
     public function setConfig($config);
 
     /**
      * 设置日志组件，用以注入日志组件
+     * 
+     * 连接管理器在创建完连接对象之后会调用此方法注入一个日志组件，所以日志组件必然存在，
+     * 实现类无需使用if语句判断日志组件是否存在
+     * 
      * @param LoggerInterface $logger
      */
     public function setLogger(LoggerInterface $logger);
