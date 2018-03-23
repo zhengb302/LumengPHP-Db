@@ -9,13 +9,13 @@
 
 ### 禁用从服务器(disableSlaves)
 
-在连接上调用`disableSlaves`方法会导致该连接上的所有`读`操作都在主服务器上进行，直到调用了`enableSlaves`方法为止。
+在连接上调用`disableSlaves()`方法会导致该连接上的所有`读`操作都在主服务器上进行，直到调用了`enableSlaves()`方法为止。
 
 ### 启用从服务器(enableSlaves)
 
-执行`enableSlaves`方法会恢复之前的读写分离模式。
+执行`enableSlaves()`方法会恢复之前的读写分离模式。
 
-> `disableSlaves`方法一般和`enableSlaves'方法一起使用。
+> `disableSlaves()`方法一般和`enableSlaves()'方法一起使用。
 
 示例：
 ```php

@@ -55,7 +55,7 @@ return [
     'database' => [
         //连接名称 => 连接配置
         'db1' => [
-            'class' => LumengPHP\Db\Connection\SimpleConnection::class,
+            'pdoFactory' => LumengPHP\Db\Connection\SimplePDOFactory::class,
             //数据库类型：mysql、pgsql、sqlsrv等
             'type' => 'mysql',
             //表前缀，如：bbs_
