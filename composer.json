@@ -3,7 +3,7 @@
     "description": "A database operation library for PHP.",
     "keywords": ["library", "database operation library"],
     "homepage": "https://github.com/zhengb302/LumengPHP-Db",
-    "license": "Apache License 2.0",
+    "license": " Apache-2.0",
     "authors": [
         {
             "name": "Lumeng",
