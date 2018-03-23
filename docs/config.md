@@ -4,14 +4,14 @@
 
 #### 单数据库连接
 
-支持的数据库类型有：mysql、pgsql、sqlsrv等，配置示例：
+支持的数据库类型有：mysql，配置示例：
 ```php
 return [
     'database' => [
         //连接名称 => 连接配置
         'db1' => [
             'class' => LumengPHP\Db\Connection\SimpleConnection::class,
-            //数据库类型：mysql、pgsql、sqlsrv等
+            //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
             'tablePrefix' => '',

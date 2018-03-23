@@ -12,19 +12,19 @@ use PDO;
 interface PDOFactoryInterface {
 
     /**
-     * 类型：主服务器
+     * 服务器类型：主服务器
      */
     const TYPE_MASTER = 0;
 
     /**
-     * 类型：从服务器
+     * 服务器类型：从服务器
      */
     const TYPE_SLAVE = 1;
 
     /**
      * 返回一个<b>PDO</b>实例
      * 
-     * @param int $type
+     * @param int $type 服务器类型
      * @return PDO
      */
     public function getPDO($type = PDOFactoryInterface::TYPE_MASTER);
