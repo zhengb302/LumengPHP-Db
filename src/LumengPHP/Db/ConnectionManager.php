@@ -48,6 +48,7 @@ final class ConnectionManager {
 
     /**
      * 返回默认的数据库连接对象
+     * 
      * @return ConnectionInterface
      */
     public function getDefaultConnection() {
@@ -56,6 +57,7 @@ final class ConnectionManager {
 
     /**
      * 根据数据库连接名称返回数据库连接对象
+     * 
      * @param string|null $name 连接名称，为null则返回默认连接
      * @return ConnectionInterface
      */
@@ -96,12 +98,21 @@ final class ConnectionManager {
             $conn = new Connection($pdoFactory, $this->logger);
             $conn->setTablePrefix($connConfig['tablePrefix']);
         } elseif ($connConfig instanceof Closure) {
-            $conn = $connConfig();
+            $conn = $connConfig($this);
         } else {
             throw new SqlException('连接配置类型错误');
         }
 
         return $conn;
+    }
+
+    /**
+     * 返回日志组件
+     * 
+     * @return LoggerInterface
+     */
+    public function getLogger() {
+        return $this->logger;
     }
 
     /**
@@ -111,6 +122,7 @@ final class ConnectionManager {
 
     /**
      * 创建并返回<b>ConnectionManager</b>实例
+     * 
      * @param array $connectionConfigs 数据库配置
      * @param LoggerInterface $logger 日志组件
      * @return ConnectionManager
@@ -127,6 +139,7 @@ final class ConnectionManager {
 
     /**
      * 返回<b>ConnectionManager</b>实例
+     * 
      * @return ConnectionManager
      */
     public static function getInstance() {
