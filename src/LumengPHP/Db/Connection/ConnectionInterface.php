@@ -2,8 +2,6 @@
 
 namespace LumengPHP\Db\Connection;
 
-use Psr\Log\LoggerInterface;
-
 /**
  * 数据库连接接口
  * @author Lumeng <zhengb302@163.com>
@@ -11,42 +9,9 @@ use Psr\Log\LoggerInterface;
 interface ConnectionInterface {
 
     /**
-     * 设置数据库连接名称，用以注入数据库连接名称
-     * 
-     * 连接管理器在创建完连接对象之后会调用此方法
-     * 
-     * @param string $name
-     */
-    public function setName($name);
-
-    /**
-     * 设置数据库连接配置，用以注入数据库连接配置
-     * 
-     * 连接管理器在创建完连接对象之后会调用此方法
-     * 
-     * @param array $config
-     */
-    public function setConfig($config);
-
-    /**
-     * 设置日志组件，用以注入日志组件
-     * 
-     * 连接管理器在创建完连接对象之后会调用此方法注入一个日志组件，所以日志组件必然存在，
-     * 实现类无需使用if语句判断日志组件是否存在
-     * 
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger);
-
-    /**
-     * 返回连接名称
-     * 
-     * @return string 连接名称
-     */
-    public function getName();
-
-    /**
      * 返回表前缀
+     * 
+     * 如果表前缀不存在，应该返回一个空字符串
      * 
      * @return string
      */
@@ -135,7 +100,7 @@ interface ConnectionInterface {
     public function enableSlaves();
 
     /**
-     * 返回最后一条执行的SQL(用于错误排查及调试)
+     * 返回最后一条执行的SQL语句(用于错误排查及调试)
      * 
      * @return string 
      */
