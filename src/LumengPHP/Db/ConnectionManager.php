@@ -2,7 +2,10 @@
 
 namespace LumengPHP\Db;
 
+use Closure;
+use LumengPHP\Db\Connection\Connection;
 use LumengPHP\Db\Connection\ConnectionInterface;
+use LumengPHP\Db\Connection\PDOFactoryInterface;
 use LumengPHP\Db\Exception\SqlException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -15,7 +18,7 @@ use Psr\Log\NullLogger;
 final class ConnectionManager {
 
     /**
-     * @var array 数据库配置，格式：connectionName => connectionConfig
+     * @var array 数据库配置，格式：connectionName => connectionConfig/Closure
      */
     private $connectionConfigs;
 
@@ -27,7 +30,7 @@ final class ConnectionManager {
     /**
      * @var array 数据库连接map，格式：name => connectionInstance
      */
-    private $connectionMap = array();
+    private $connectionMap = [];
 
     /**
      * @var LoggerInterface 可选的日志组件
@@ -70,16 +73,34 @@ final class ConnectionManager {
         }
 
         $connConfig = $this->connectionConfigs[$name];
-        $class = $connConfig['class'];
-        unset($connConfig['class']);
-
-        /* @var $conn ConnectionInterface */
-        $conn = new $class();
-        $conn->setName($name);
-        $conn->setConfig($connConfig);
-        $conn->setLogger($this->logger);
+        $conn = $this->buildConnection($connConfig);
 
         $this->connectionMap[$name] = $conn;
+        return $conn;
+    }
+
+    /**
+     * 根据连接配置构造连接实例
+     * 
+     * @param array|Closure $connConfig 连接配置/回调函数
+     * @return ConnectionInterface 
+     */
+    private function buildConnection($connConfig) {
+        if (is_array($connConfig)) {
+            $pdoFactoryClass = $connConfig['pdoFactory'];
+            unset($connConfig['pdoFactory']);
+
+            /* @var $conn PDOFactoryInterface */
+            $pdoFactory = new $pdoFactoryClass($connConfig);
+
+            $conn = new Connection($pdoFactory, $this->logger);
+            $conn->setTablePrefix($connConfig['tablePrefix']);
+        } elseif ($connConfig instanceof Closure) {
+            $conn = $connConfig();
+        } else {
+            throw new SqlException('连接配置类型错误');
+        }
+
         return $conn;
     }
 

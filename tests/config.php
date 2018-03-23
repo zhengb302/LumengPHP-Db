@@ -6,8 +6,8 @@ $configs = [
         //connectionName => connectionConfig
         //第一个连接，第一个数据库连接为默认连接
         'db1' => [
-            'class' => LumengPHP\Db\Connection\SimpleConnection::class,
-            //数据库类型：mysql、pgsql、sqlsrv等
+            'pdoFactory' => LumengPHP\Db\Connection\SimplePDOFactory::class,
+            //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
             'tablePrefix' => 'bbs_',
@@ -22,7 +22,7 @@ $configs = [
         ],
         //第二个连接
         'db2' => [
-            'class' => LumengPHP\Db\Connection\MasterSlaveConnection::class,
+            'pdoFactory' => LumengPHP\Db\Connection\MasterSlavePDOFactory::class,
             //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
