@@ -168,7 +168,7 @@ $posts = $postModel->alias('p')->select('p.id,u.nickname,up.avatar,p.title,p.con
                                ->findAll();
 ```
 
-必须提供要连接的表的别名，以及连接条件。注意，连接条件不要带上`ON`关键字，框架会自动加上。
+必须提供要连接的表的别名和连接条件。注意，连接条件不要带上`ON`关键字，框架会自动加上。
 
 左外连接(`leftJoin`方法)、右外连接(`rightJoin`方法)同理，调用方式与内连接(`join`方法)一致。
 
