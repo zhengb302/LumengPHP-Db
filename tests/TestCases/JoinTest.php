@@ -25,7 +25,7 @@ class JoinTest extends BaseDatabaseTestCase {
         //找出李雷的所有发帖
         $fields = 'p.title,p.content,u.nickname';
         $posts = $postModel->alias('p')->select($fields)
-                ->join('User', 'u', 'u.uid = p.uid')
+                ->join('bbs_user', 'u', 'u.uid = p.uid')
                 ->where(array('p.uid' => 2))
                 ->findAll();
 
@@ -39,7 +39,7 @@ class JoinTest extends BaseDatabaseTestCase {
         //找出韩梅梅、小明和张三的发帖
         $fields = 'u.uid,u.nickname,p.title,p.content';
         $posts = $userModel->alias('u')->select($fields)
-                ->leftJoin('Post', 'p', 'p.uid = u.uid')
+                ->leftJoin('bbs_post', 'p', 'p.uid = u.uid')
                 ->where(array('u.uid' => ['in', [3, 1, 4]]))
                 ->orderBy('p.add_time ASC')
                 ->findAll();
