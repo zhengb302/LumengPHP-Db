@@ -12,18 +12,17 @@ use LumengPHP\Db\Misc\FieldHelper;
 abstract class SimpleCondition extends AbstractCondition {
 
     /**
-     * @var string 原始字段值
+     * @var string 原始字段名称
      */
     protected $rawField;
 
     /**
-     * @var string 加工过之后的字段值
+     * @var string 加工过之后的字段名称
      */
     protected $field;
 
     public function setField($field) {
         $this->rawField = $field;
-
         $this->field = FieldHelper::quoteField($field);
     }
 

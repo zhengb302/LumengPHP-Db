@@ -62,7 +62,8 @@ class ArrayCondition extends CompositeCondition {
      * @return string
      */
     private function parseSimpleCondition($field, $value) {
-        switch (gettype($value)) {
+        $valType = gettype($value);
+        switch ($valType) {
             case 'integer':
             case 'double':
             case 'float':
@@ -70,8 +71,10 @@ class ArrayCondition extends CompositeCondition {
                 $condition = new EqualCondition($value);
                 break;
             case 'array':
-                $condition = $this->buildOtherSimpleCondition($value);
+                $condition = $this->parseOtherSimpleCondition($value);
                 break;
+            default:
+                throw new InvalidSQLConditionException("无效的条件值类型，字段名称：{$field}，值类型：{$valType}");
         }
 
         $condition->setField($field);
@@ -80,7 +83,7 @@ class ArrayCondition extends CompositeCondition {
         return $condition->parse();
     }
 
-    private function buildOtherSimpleCondition($arrayVal) {
+    private function parseOtherSimpleCondition($arrayVal) {
         $type = $arrayVal[0];
         $value = $arrayVal[1];
         switch ($type) {
