@@ -161,13 +161,14 @@ $userData = $userModel->alias('u')->select($fields)->where(['u.username' => 'zha
 ```php
 //找出李雷的所有发帖
 $postModel = new PostModel();
-$posts = $postModel->alias('p')->select('p.title,p.content,u.nickname')
-                               ->join('User', 'u', 'u.uid = p.uid')
+$posts = $postModel->alias('p')->select('p.id,u.nickname,up.avatar,p.title,p.content,p.add_time')
+                               ->join('bbs_user', 'u', 'u.uid = p.uid')
+                               ->join('bbs_user_profile', 'up', 'up.uid = p.uid')
                                ->where(['u.username' => 'lilei'])
                                ->findAll();
 ```
 
-左外连接(`leftJoin`方法)、右外连接同理(`rightJoin`方法)，调用方式与内连接(`join`方法)一致。
+左外连接(`leftJoin`方法)、右外连接(`rightJoin`方法)同理，调用方式与内连接(`join`方法)一致。
 
 #### groupBy、having
 

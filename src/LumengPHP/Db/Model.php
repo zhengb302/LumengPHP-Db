@@ -97,15 +97,13 @@ abstract class Model {
 
     /**
      * 内连接一个表
-     * @param string $table 要连接的表的抽象表名，如"UserProfile"
-     * @param string $alias 要连接的表的别名，如"u"。可以为空
+     * 
+     * @param string $trueTableName 要连接的表的真实表名，如"bbs_user"
+     * @param string $alias 要连接的表的别名，如"u"
      * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
-    public function join($table, $alias, $on) {
-        $trueTableName = $this->connection->getTablePrefix()
-                . TableNameHelper::camel2id($table, '_');
-
+    public function join($trueTableName, $alias, $on) {
         $join = new Join($trueTableName, $alias, $on);
 
         $this->statementContext->getJoinClause()->addJoin($join);
@@ -114,15 +112,13 @@ abstract class Model {
 
     /**
      * 左外连接一个表
-     * @param string $table 要连接的表的抽象表名，如"UserProfile"
-     * @param string $alias 要连接的表的别名，如"u"。可以为空
+     * 
+     * @param string $trueTableName 要连接的表的真实表名，如"bbs_user"
+     * @param string $alias 要连接的表的别名，如"u"
      * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
-    public function leftJoin($table, $alias, $on) {
-        $trueTableName = $this->connection->getTablePrefix()
-                . TableNameHelper::camel2id($table, '_');
-
+    public function leftJoin($trueTableName, $alias, $on) {
         $join = new Join($trueTableName, $alias, $on);
         $join->setType(Join::LEFT_JOIN);
 
@@ -132,15 +128,13 @@ abstract class Model {
 
     /**
      * 右外连接一个表
-     * @param string $table 要连接的表的抽象表名，如"UserProfile"
-     * @param string $alias 要连接的表的别名，如"u"。可以为空
+     * 
+     * @param string $trueTableName 要连接的表的真实表名，如"bbs_user"
+     * @param string $alias 要连接的表的别名，如"u"
      * @param string $on 连接条件，注意不要带上"ON"关键字
      * @return Model
      */
-    public function rightJoin($table, $alias, $on) {
-        $trueTableName = $this->connection->getTablePrefix()
-                . TableNameHelper::camel2id($table, '_');
-
+    public function rightJoin($trueTableName, $alias, $on) {
         $join = new Join($trueTableName, $alias, $on);
         $join->setType(Join::RIGHT_JOIN);
 
