@@ -189,7 +189,7 @@ $posts = $postModel->select('uid, COUNT(id)')
 ```php
 $postModel = new PostModel();
 $posts = $postModel->alias('p')->select('p.title,p.content,u.nickname')
-                               ->join('User', 'u', 'u.uid = p.uid')
+                               ->join('bbs_user', 'u', 'u.uid = p.uid')
                                ->where(['u.username' => 'lilei'])
                                ->orderBy('p.add_time DESC')
                                ->findAll();
