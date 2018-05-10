@@ -5,13 +5,17 @@
 ### Added
 
 ### Changed
-- 连接配置，回调函数的参数可选
-- `PDOFactory`重命名为`PDOProvider`
-- 变更`PDOProviderInterface`接口
 
 ### Removed
 
 ### Fixed
+
+## [v1.0.4] - 2018-05-10
+
+### Changed
+- 连接配置，回调函数的参数可选
+- `PDOFactory`重命名为`PDOProvider`
+- 变更`PDOProviderInterface`接口
 
 ## [v1.0.3] - 2018-03-29
 
