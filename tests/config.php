@@ -29,7 +29,8 @@ $configs = [
             'tablePrefix' => 'bbs_',
             //数据库字符集
             'charset' => 'utf8',
-            //数据库服务器列表，第一个为master服务器，剩下的为从服务器
+            //数据库服务器列表，第一个为master服务器，剩下的为从服务器。
+            //必须确保服务器列表有不少于1台的服务器。
             'servers' => [
                 [
                     'host' => 'dbhost1',

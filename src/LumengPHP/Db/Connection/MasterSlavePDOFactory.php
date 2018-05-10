@@ -2,7 +2,6 @@
 
 namespace LumengPHP\Db\Connection;
 
-use LumengPHP\Db\Exception\SqlException;
 use PDO;
 
 /**
@@ -56,10 +55,8 @@ class MasterSlavePDOFactory extends AbstractPDOFactory {
             return $this->slavePdo;
         }
 
+        //使用者需要在配置里确保服务器数量大于等于1
         $serverNum = count($this->config['servers']);
-        if ($serverNum == 0) {
-            throw new SqlException("MasterSlavePDOFactory：服务器列表不能为空");
-        }
 
         //只有一台服务器
         if ($serverNum == 1) {
