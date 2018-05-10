@@ -10,7 +10,7 @@ return [
     'database' => [
         //连接名称 => 连接配置
         'db1' => [
-            'pdoFactory' => LumengPHP\Db\Connection\SimplePDOFactory::class,
+            'pdoProvider' => LumengPHP\Db\Connection\SimplePDOProvider::class,
             //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -36,7 +36,7 @@ return [
     'database' => [
         //连接名称 => 连接配置
         'db1' => [
-            'pdoFactory' => LumengPHP\Db\Connection\MasterSlavePDOFactory::class,
+            'pdoProvider' => LumengPHP\Db\Connection\MasterSlavePDOProvider::class,
             //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -75,7 +75,7 @@ return [
     'database' => [
         //连接名称 => 连接配置
         'bbsMain' => [
-            'pdoFactory' => LumengPHP\Db\Connection\MasterSlavePDOFactory::class,
+            'pdoProvider' => LumengPHP\Db\Connection\MasterSlavePDOProvider::class,
             //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -103,7 +103,7 @@ return [
         ],
         //连接名称 => 连接配置
         'bbsLog' => [
-            'pdoFactory' => LumengPHP\Db\Connection\SimplePDOFactory::class,
+            'pdoProvider' => LumengPHP\Db\Connection\SimplePDOProvider::class,
             //数据库类型：mysql
             'type' => 'mysql',
             //表前缀，如：bbs_
@@ -144,8 +144,8 @@ return [
         //连接名称 => 回调函数
         //回调函数可以接收当前 ConnectionManager 实例作为参数，当然，这个参数是可选的
         'db1' => function($connManager) {
-            $pdoFactory = new SomePDOFactory();
-            $connection = new Connection($pdoFactory, $connManager->getLogger());
+            $pdoProvider = new SomePDOProvider();
+            $connection = new Connection($pdoProvider, $connManager->getLogger());
             return $connection;
         },
     ]

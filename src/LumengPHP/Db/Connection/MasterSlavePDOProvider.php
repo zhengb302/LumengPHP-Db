@@ -5,7 +5,7 @@ namespace LumengPHP\Db\Connection;
 use PDO;
 
 /**
- * 主从模式的PDO工厂类
+ * 主从模式的 PDO Provider
  *
  * @author zhengluming <luming.zheng@shandjj.com>
  */
@@ -32,6 +32,7 @@ class MasterSlavePDOProvider extends AbstractPDOProvider {
 
     /**
      * 获取Master连接
+     * 
      * @return ConnectionInterface
      */
     private function getMasterPdo() {

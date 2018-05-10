@@ -91,13 +91,13 @@ final class ConnectionManager {
     private function buildConnection($connConfig) {
         //基于数组的连接配置
         if (is_array($connConfig)) {
-            $pdoFactoryClass = $connConfig['pdoFactory'];
-            unset($connConfig['pdoFactory']);
+            $pdoProviderClass = $connConfig['pdoProvider'];
+            unset($connConfig['pdoProvider']);
 
             /* @var $conn PDOProviderInterface */
-            $pdoFactory = new $pdoFactoryClass($connConfig);
+            $pdoProvider = new $pdoProviderClass($connConfig);
 
-            $conn = new Connection($pdoFactory, $this->logger);
+            $conn = new Connection($pdoProvider, $this->logger);
             $conn->setTablePrefix($connConfig['tablePrefix']);
         }
         //回调函数
