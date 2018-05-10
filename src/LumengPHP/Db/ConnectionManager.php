@@ -9,6 +9,7 @@ use LumengPHP\Db\Connection\PDOFactoryInterface;
 use LumengPHP\Db\Exception\SqlException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use ReflectionFunction;
 
 /**
  * 连接管理器
@@ -88,6 +89,7 @@ final class ConnectionManager {
      * @return ConnectionInterface 
      */
     private function buildConnection($connConfig) {
+        //基于数组的连接配置
         if (is_array($connConfig)) {
             $pdoFactoryClass = $connConfig['pdoFactory'];
             unset($connConfig['pdoFactory']);
@@ -97,8 +99,13 @@ final class ConnectionManager {
 
             $conn = new Connection($pdoFactory, $this->logger);
             $conn->setTablePrefix($connConfig['tablePrefix']);
-        } elseif ($connConfig instanceof Closure) {
-            $conn = $connConfig($this);
+        }
+        //回调函数
+        //回调函数可以接收当前 ConnectionManager 实例作为参数，当然，这个参数是可选的
+        elseif ($connConfig instanceof Closure) {
+            $callback = $connConfig;
+            $refFunc = new ReflectionFunction($callback);
+            $conn = $refFunc->getNumberOfParameters() == 1 ? $callback($this) : $callback();
         } else {
             throw new SqlException('连接配置类型错误');
         }

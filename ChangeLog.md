@@ -5,6 +5,7 @@
 ### Added
 
 ### Changed
+- 连接配置，回调函数的参数可选
 
 ### Removed
 
