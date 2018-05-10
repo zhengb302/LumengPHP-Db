@@ -54,7 +54,7 @@ class Connection implements ConnectionInterface {
      */
     private $lastParameters;
 
-    public function __construct(PDOFactoryInterface $pdoFactory, LoggerInterface $logger) {
+    public function __construct(PDOProviderInterface $pdoFactory, LoggerInterface $logger) {
         $this->pdoFactory = $pdoFactory;
         $this->logger = $logger;
     }
@@ -72,8 +72,8 @@ class Connection implements ConnectionInterface {
      */
     public function query($sql, $parameters = null) {
         $pdo = $this->inTransaction || $this->onlyUseMaster ?
-                $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER) :
-                $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_SLAVE);
+                $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER) :
+                $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_SLAVE);
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -92,8 +92,8 @@ class Connection implements ConnectionInterface {
      */
     public function queryAll($sql, $parameters = null) {
         $pdo = $this->inTransaction || $this->onlyUseMaster ?
-                $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER) :
-                $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_SLAVE);
+                $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER) :
+                $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_SLAVE);
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -111,7 +111,7 @@ class Connection implements ConnectionInterface {
      * {@inheritdoc}
      */
     public function execute($sql, array $parameters = null) {
-        $pdo = $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER);
+        $pdo = $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER);
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -154,7 +154,7 @@ class Connection implements ConnectionInterface {
      * {@inheritdoc}
      */
     public function lastInsertId($name = null) {
-        return $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER)->lastInsertId($name);
+        return $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER)->lastInsertId($name);
     }
 
     /**
@@ -162,7 +162,7 @@ class Connection implements ConnectionInterface {
      */
     public function beginTransaction() {
         $this->inTransaction = true;
-        return $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER)->beginTransaction();
+        return $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER)->beginTransaction();
     }
 
     /**
@@ -170,7 +170,7 @@ class Connection implements ConnectionInterface {
      */
     public function commit() {
         $this->inTransaction = false;
-        return $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER)->commit();
+        return $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER)->commit();
     }
 
     /**
@@ -178,7 +178,7 @@ class Connection implements ConnectionInterface {
      */
     public function rollback() {
         $this->inTransaction = false;
-        return $this->pdoFactory->getPDO(PDOFactoryInterface::TYPE_MASTER)->rollBack();
+        return $this->pdoFactory->getPDO(PDOProviderInterface::TYPE_MASTER)->rollBack();
     }
 
     /**

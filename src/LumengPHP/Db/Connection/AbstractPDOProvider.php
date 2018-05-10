@@ -6,11 +6,11 @@ use LumengPHP\Db\Exception\SqlException;
 use PDO;
 
 /**
- * AbstractPDOFactory的描述
+ * 
  *
  * @author zhengluming <luming.zheng@shandjj.com>
  */
-abstract class AbstractPDOFactory implements PDOFactoryInterface {
+abstract class AbstractPDOProvider implements PDOProviderInterface {
 
     /**
      * @var array 连接配置

@@ -5,7 +5,7 @@ namespace LumengPHP\Db;
 use Closure;
 use LumengPHP\Db\Connection\Connection;
 use LumengPHP\Db\Connection\ConnectionInterface;
-use LumengPHP\Db\Connection\PDOFactoryInterface;
+use LumengPHP\Db\Connection\PDOProviderInterface;
 use LumengPHP\Db\Exception\SqlException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -94,7 +94,7 @@ final class ConnectionManager {
             $pdoFactoryClass = $connConfig['pdoFactory'];
             unset($connConfig['pdoFactory']);
 
-            /* @var $conn PDOFactoryInterface */
+            /* @var $conn PDOProviderInterface */
             $pdoFactory = new $pdoFactoryClass($connConfig);
 
             $conn = new Connection($pdoFactory, $this->logger);

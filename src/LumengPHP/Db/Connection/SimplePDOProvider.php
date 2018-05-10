@@ -5,18 +5,18 @@ namespace LumengPHP\Db\Connection;
 use PDO;
 
 /**
- * 单一数据库模式的PDO工厂类
+ * 单一数据库模式的 PDO Provider
  *
  * @author zhengluming <luming.zheng@shandjj.com>
  */
-class SimplePDOFactory extends AbstractPDOFactory {
+class SimplePDOProvider extends AbstractPDOProvider {
 
     /**
      * @var PDO 
      */
     private $pdo;
 
-    public function getPDO($type = PDOFactoryInterface::TYPE_MASTER) {
+    public function getPDO($type = PDOProviderInterface::TYPE_MASTER) {
         if (!is_null($this->pdo)) {
             return $this->pdo;
         }

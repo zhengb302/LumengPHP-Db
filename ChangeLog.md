@@ -6,6 +6,7 @@
 
 ### Changed
 - 连接配置，回调函数的参数可选
+- `PDOFactory`重命名为`PDOProvider`
 
 ### Removed
 

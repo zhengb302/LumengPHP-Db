@@ -9,7 +9,7 @@ use PDO;
  *
  * @author zhengluming <luming.zheng@shandjj.com>
  */
-class MasterSlavePDOFactory extends AbstractPDOFactory {
+class MasterSlavePDOProvider extends AbstractPDOProvider {
 
     /**
      * @var PDO 主数据库连接
@@ -21,7 +21,7 @@ class MasterSlavePDOFactory extends AbstractPDOFactory {
      */
     private $slavePdo;
 
-    public function getPDO($type = PDOFactoryInterface::TYPE_MASTER) {
+    public function getPDO($type = PDOProviderInterface::TYPE_MASTER) {
         switch ($type) {
             case self::TYPE_MASTER:
                 return $this->getMasterPdo();
