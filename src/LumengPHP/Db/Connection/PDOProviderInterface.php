@@ -12,20 +12,16 @@ use PDO;
 interface PDOProviderInterface {
 
     /**
-     * 服务器类型：主服务器
-     */
-    const TYPE_MASTER = 0;
-
-    /**
-     * 服务器类型：从服务器
-     */
-    const TYPE_SLAVE = 1;
-
-    /**
-     * 返回一个<b>PDO</b>实例
+     * 返回<b>主</b>服务器的 PDO 实例
      * 
-     * @param int $type 服务器类型
      * @return PDO
      */
-    public function getPDO($type = PDOProviderInterface::TYPE_MASTER);
+    public function getMasterPDO();
+
+    /**
+     * 返回<b>从</b>服务器的 PDO 实例
+     * 
+     * @return PDO
+     */
+    public function getSlavePDO();
 }

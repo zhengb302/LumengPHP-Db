@@ -72,8 +72,8 @@ class Connection implements ConnectionInterface {
      */
     public function query($sql, $parameters = null) {
         $pdo = $this->inTransaction || $this->onlyUseMaster ?
-                $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER) :
-                $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_SLAVE);
+                $this->pdoProvider->getMasterPDO() :
+                $this->pdoProvider->getSlavePDO();
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -92,8 +92,8 @@ class Connection implements ConnectionInterface {
      */
     public function queryAll($sql, $parameters = null) {
         $pdo = $this->inTransaction || $this->onlyUseMaster ?
-                $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER) :
-                $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_SLAVE);
+                $this->pdoProvider->getMasterPDO() :
+                $this->pdoProvider->getSlavePDO();
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -111,7 +111,7 @@ class Connection implements ConnectionInterface {
      * {@inheritdoc}
      */
     public function execute($sql, array $parameters = null) {
-        $pdo = $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER);
+        $pdo = $this->pdoProvider->getMasterPDO();
 
         $pdoStmt = $this->executeSql($pdo, $sql, $parameters);
 
@@ -154,7 +154,7 @@ class Connection implements ConnectionInterface {
      * {@inheritdoc}
      */
     public function lastInsertId($name = null) {
-        return $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER)->lastInsertId($name);
+        return $this->pdoProvider->getMasterPDO()->lastInsertId($name);
     }
 
     /**
@@ -162,7 +162,7 @@ class Connection implements ConnectionInterface {
      */
     public function beginTransaction() {
         $this->inTransaction = true;
-        return $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER)->beginTransaction();
+        return $this->pdoProvider->getMasterPDO()->beginTransaction();
     }
 
     /**
@@ -170,7 +170,7 @@ class Connection implements ConnectionInterface {
      */
     public function commit() {
         $this->inTransaction = false;
-        return $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER)->commit();
+        return $this->pdoProvider->getMasterPDO()->commit();
     }
 
     /**
@@ -178,7 +178,7 @@ class Connection implements ConnectionInterface {
      */
     public function rollback() {
         $this->inTransaction = false;
-        return $this->pdoProvider->getPDO(PDOProviderInterface::TYPE_MASTER)->rollBack();
+        return $this->pdoProvider->getMasterPDO()->rollBack();
     }
 
     /**

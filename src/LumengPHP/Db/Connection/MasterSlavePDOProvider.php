@@ -21,21 +21,7 @@ class MasterSlavePDOProvider extends AbstractPDOProvider {
      */
     private $slavePdo;
 
-    public function getPDO($type = PDOProviderInterface::TYPE_MASTER) {
-        switch ($type) {
-            case self::TYPE_MASTER:
-                return $this->getMasterPdo();
-            case self::TYPE_SLAVE:
-                return $this->selectSlavePdo();
-        }
-    }
-
-    /**
-     * 获取Master连接
-     * 
-     * @return ConnectionInterface
-     */
-    private function getMasterPdo() {
+    public function getMasterPDO() {
         if (!is_null($this->masterPdo)) {
             return $this->masterPdo;
         }
@@ -51,7 +37,7 @@ class MasterSlavePDOProvider extends AbstractPDOProvider {
         return $this->masterPdo;
     }
 
-    private function selectSlavePdo() {
+    public function getSlavePDO() {
         if (!is_null($this->slavePdo)) {
             return $this->slavePdo;
         }

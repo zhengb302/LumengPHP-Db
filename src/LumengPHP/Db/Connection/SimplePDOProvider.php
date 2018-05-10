@@ -16,7 +16,15 @@ class SimplePDOProvider extends AbstractPDOProvider {
      */
     private $pdo;
 
-    public function getPDO($type = PDOProviderInterface::TYPE_MASTER) {
+    public function getMasterPDO() {
+        return $this->getPDO();
+    }
+
+    public function getSlavePDO() {
+        return $this->getPDO();
+    }
+
+    private function getPDO() {
         if (!is_null($this->pdo)) {
             return $this->pdo;
         }
